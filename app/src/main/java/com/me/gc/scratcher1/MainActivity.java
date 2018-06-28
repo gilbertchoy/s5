@@ -55,14 +55,14 @@ public class MainActivity extends FragmentActivity {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
             // Create a new Fragment to be placed in the activity layout
-            ScratcherFragment scratcherFragment = new ScratcherFragment();
+            BottomFragment bottomFragment = new BottomFragment();
 
             // In case this activity was started with special instructions from an
             // Intent, pass the Intent's extras to the fragment as arguments
-            scratcherFragment.setArguments(getIntent().getExtras());
+            bottomFragment.setArguments(getIntent().getExtras());
 
             // Add the fragment to the 'fragment_container' FrameLayout
-            fragmentTransaction.add(R.id.fragment_bottom, scratcherFragment);
+            fragmentTransaction.add(R.id.fragment_bottom, bottomFragment);
             fragmentTransaction.commit();
 
         }

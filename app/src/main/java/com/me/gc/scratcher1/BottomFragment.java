@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class ScratcherFragment extends Fragment {
+public class BottomFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -20,11 +20,11 @@ public class ScratcherFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View fragmentView = inflater.inflate(R.layout.fragment_scratcher, container, false);
+        View bottomFragmentView = inflater.inflate(R.layout.fragment_scratcher, container, false);
 
 
         context = getActivity();
-        mRecyclerView = (RecyclerView) fragmentView.findViewById(R.id.recycler_view);
+        mRecyclerView = (RecyclerView) bottomFragmentView.findViewById(R.id.recycler_view);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -35,9 +35,9 @@ public class ScratcherFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        mAdapter = new ScratcherAdapter();
+        mAdapter = new ScratcherAdapter(context);
         mRecyclerView.setAdapter(mAdapter);
 
-        return fragmentView;
+        return bottomFragmentView;
     }
 }
