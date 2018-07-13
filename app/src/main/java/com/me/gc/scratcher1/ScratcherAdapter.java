@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,8 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
-
+                    Log.d("bertest","pos 0 clicked");
+                    getActivity();
                 }
             });
 

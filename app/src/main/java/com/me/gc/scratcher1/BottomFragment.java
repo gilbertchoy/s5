@@ -22,7 +22,6 @@ public class BottomFragment extends Fragment {
         // Inflate the layout for this fragment
         View bottomFragmentView = inflater.inflate(R.layout.fragment_scratcher, container, false);
 
-
         context = getActivity();
         mRecyclerView = (RecyclerView) bottomFragmentView.findViewById(R.id.recycler_view);
 
