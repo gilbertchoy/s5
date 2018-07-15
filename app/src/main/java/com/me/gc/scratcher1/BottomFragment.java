@@ -1,5 +1,6 @@
 package com.me.gc.scratcher1;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,10 +16,17 @@ public class BottomFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private Context context;
+    private MainViewModel viewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        /*
+        viewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
+        viewModel.setSelected(2);
+        */
+
         // Inflate the layout for this fragment
         View bottomFragmentView = inflater.inflate(R.layout.fragment_scratcher, container, false);
 
@@ -34,7 +42,7 @@ public class BottomFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        mAdapter = new ScratcherAdapter(context);
+        mAdapter = new ScratcherAdapter(context,BottomFragment.this);
         mRecyclerView.setAdapter(mAdapter);
 
         return bottomFragmentView;

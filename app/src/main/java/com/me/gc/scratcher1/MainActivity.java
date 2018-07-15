@@ -2,17 +2,30 @@ package com.me.gc.scratcher1;
 
 
 
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 
 public class MainActivity extends FragmentActivity {
+    private MainViewModel model;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        context = this;
+
+
+        model = ViewModelProviders.of(this).get(MainViewModel.class);
+        model.getSelected().observe(this, selected -> {
+            Log.d("berttest","item selected via main activity") ;
+        });
+
 
         if (findViewById(R.id.fragment_top) != null) {
 
