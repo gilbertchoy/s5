@@ -70,20 +70,41 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
-                    Log.d("bertest","pos 0 clicked");
-                    viewModel.setSelected(1);
+                    Log.d("berttest","pos 0 clicked");
+                    viewModel.setSelected(0);
                 }
             });
 
         }
         if(position==1) {
             imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.test1, context.getApplicationContext().getTheme()));
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    Log.d("berttest","pos 1 clicked");
+                    viewModel.setSelected(1);
+                }
+            });
         }
         if(position==2) {
             imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.test2, context.getApplicationContext().getTheme()));
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    Log.d("berttest","pos 2 clicked");
+                    viewModel.setSelected(2);
+                }
+            });
         }
         if(position==3) {
-            imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.test, context.getApplicationContext().getTheme()));
+            imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.test1, context.getApplicationContext().getTheme()));
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    Log.d("berttest","pos 0 clicked");
+                    viewModel.setSelected(3);
+                }
+            });
         }
         if(position==4) {
             imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.test1, context.getApplicationContext().getTheme()));

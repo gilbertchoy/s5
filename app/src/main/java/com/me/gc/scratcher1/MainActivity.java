@@ -22,7 +22,7 @@ public class MainActivity extends FragmentActivity {
 
 
         model = ViewModelProviders.of(this).get(MainViewModel.class);
-        model.getSelected().observe(this, selected -> {
+        model.getSelected().observe(this, Integer -> {
             Log.d("berttest","item selected via main activity") ;
         });
 
