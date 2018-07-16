@@ -24,6 +24,20 @@ public class MainActivity extends FragmentActivity {
         model = ViewModelProviders.of(this).get(MainViewModel.class);
         model.getSelected().observe(this, Integer -> {
             Log.d("berttest","item selected via main activity") ;
+            // Create a new FragmentManager
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+            // Create a new Fragment to be placed in the activity layout
+            ScratcherCardFragment scratcherCardFragment = new ScratcherCardFragment();
+
+            // In case this activity was started with special instructions from an
+            // Intent, pass the Intent's extras to the fragment as arguments
+            scratcherCardFragment.setArguments(getIntent().getExtras());
+
+            // Add the fragment to the 'fragment_container' FrameLayout
+            fragmentTransaction.add(R.id.fragment_bottom, scratcherCardFragment);
+            fragmentTransaction.commit();
         });
 
 
@@ -77,7 +91,6 @@ public class MainActivity extends FragmentActivity {
             // Add the fragment to the 'fragment_container' FrameLayout
             fragmentTransaction.add(R.id.fragment_bottom, bottomFragment);
             fragmentTransaction.commit();
-
         }
     }
 }
