@@ -38,7 +38,7 @@ public class BottomFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
-        mLayoutManager = new GridLayoutManager(context,2);
+        mLayoutManager = new GridLayoutManager(context,1);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)

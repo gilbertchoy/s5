@@ -66,7 +66,9 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
         ImageView imageView = holder.view.findViewById(R.id.imageView);
 
         if(position==0) {
-            imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.test, context.getApplicationContext().getTheme()));
+            imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.thumbnail1, context.getApplicationContext().getTheme()));
+            //imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            //imageView.setMaxWidth();
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
@@ -77,7 +79,10 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
 
         }
         if(position==1) {
-            imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.test1, context.getApplicationContext().getTheme()));
+            imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.thumbnail1, context.getApplicationContext().getTheme()));
+            //imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+            //q1Image.setScaleType(ScaleType.FIT_CENTER);
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
@@ -87,7 +92,8 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
             });
         }
         if(position==2) {
-            imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.test2, context.getApplicationContext().getTheme()));
+            imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.thumbnail1, context.getApplicationContext().getTheme()));
+            //imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
