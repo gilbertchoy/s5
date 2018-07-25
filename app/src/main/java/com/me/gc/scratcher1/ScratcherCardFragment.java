@@ -5,12 +5,22 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 public class ScratcherCardFragment extends Fragment {
+    private ImageView backgroundImage;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.scratcher_card, container, false);
+        View v = inflater.inflate(R.layout.scratcher_card, container, false);
+        backgroundImage = v.findViewById(R.id.backgroundImage);
+
+        backgroundImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        //backgroundImage.setBackground(getActivity().getDrawable(R.drawable.test));
+        backgroundImage.setImageResource(R.drawable.scratcher1);
+
+        return v;
     }
 }
