@@ -15,7 +15,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 
 public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.ViewHolder> {
 
@@ -63,6 +65,31 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ScratcherAdapter.ViewHolder holder, int position) {
 
+
+        RelativeLayout cellBackground = (RelativeLayout) holder.view.findViewById(R.id.backgroundImage);
+        cellBackground.setBackgroundResource(R.drawable.thumbnail1);
+
+        if(position==0) {
+            cellBackground.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    Log.d("berttest", "pos 0 clicked");
+                    viewModel.setSelected(0);
+                }
+            });
+        }
+        if(position==1 || position == 2 || position == 3 || position == 4 || position == 5) {
+            cellBackground.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    Log.d("berttest", "pos x clicked");
+                    viewModel.setSelected(0);
+                }
+            });
+        }
+
+
+        /*
         ImageView imageView = holder.view.findViewById(R.id.imageView);
 
         if(position==0) {
@@ -118,6 +145,8 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
         if(position==5) {
             imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.test2, context.getApplicationContext().getTheme()));
         }
+*/
+
     }
 
     @Override

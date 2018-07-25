@@ -1,32 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="wrap_content"
     >
 
-    <ImageView
-        android:padding="10dp"
-        android:id="@+id/imageView"
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:shape="rectangle"
-        android:elevation="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@color/colorAccent"
-        />
+        android:layout_height="200dp"
+        card_view:cardBackgroundColor="@color/lightGrey"
+        app:cardElevation="10dp"
+        app:cardUseCompatPadding="true"
+        card_view:cardCornerRadius="10dp">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="testfwefwelwekflwej"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        <RelativeLayout
+            android:id="@+id/backgroundImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            >
+
+            <!--
+            <shape xmlns:android="http://schemas.android.com/apk/res/android"
+                android:shape="rectangle"
+                android:layout_height="20dp"
+                android:layout_width="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                />
+
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:text="$100 Scratch Card" />
+            -->
+
+            <!--
+                    <android.support.constraint.ConstraintLayout
+                        android:id=""
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/thumbnail1"
+                        >
+
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        />
+
+
+            -->
+
+            <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="testfwefwelwekflwej"
+            android:background="@drawable/rect_background_price_tag"
+                android:layout_alignParentBottom="true"
+                android:textSize="32dp"
+                android:textColor="@color/gold"
+                android:elevation="20dp"
+            />
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+
 
 
 </android.support.constraint.ConstraintLayout>
