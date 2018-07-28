@@ -42,13 +42,12 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/scorecard"
         android:layout_width="250dp"
-        android:layout_height="375dp"
+        android:layout_height="320dp"
+        android:alpha=".9"
+        android:background="@color/darkGrey"
         android:elevation="20dp"
         app:layout_constraintRight_toRightOf="@id/parentGuidelineVertical"
-        app:layout_constraintTop_toTopOf="@id/parentGuidelineHorizontal"
-        android:background="@color/darkGrey"
-        android:alpha=".9"
-        >
+        app:layout_constraintTop_toTopOf="@id/parentGuidelineHorizontal">
 
         <!--
         <ImageView
@@ -144,26 +143,57 @@
     </android.support.constraint.ConstraintLayout>
     <!-- Score Card end-->
 
-    <!--Scratch Image start-->
+    <!--Scratch Card Image start-->
     <com.me.gc.scratcher1.ScratchImageView
+        android:id="@+id/scratchImage"
         android:layout_width="250dp"
-        android:layout_height="375dp"
+        android:layout_height="320dp"
         android:elevation="30dp"
         app:layout_constraintRight_toRightOf="@id/parentGuidelineVertical"
-        app:layout_constraintTop_toTopOf="@id/parentGuidelineHorizontal" />
-    <!--Scratch Image end-->
+        app:layout_constraintTop_toTopOf="@id/parentGuidelineHorizontal"
+        android:src="@drawable/transparent"
+        />
+    <!--Scratch Card Image end-->
 
-    <!-- Extra Card start-->
+    <!-- Extra Score Card start-->
     <android.support.constraint.ConstraintLayout
         android:id="@+id/extraScoreCard"
         android:layout_width="200dp"
         android:layout_height="70dp"
-        android:background="@drawable/greypattern"
+        android:alpha=".9"
+        android:background="@color/darkGrey"
         android:elevation="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/parentGuidelineHorizontal1"></android.support.constraint.ConstraintLayout>
+        app:layout_constraintTop_toTopOf="@id/parentGuidelineHorizontal1">
 
+        <!-- Reward Value -->
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="30dp"
+            android:text="50"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+    <!-- Extra Score Card End-->
+
+    <!--Extra Scratch Card Image start-->
+    <com.me.gc.scratcher1.ScratchImageView
+        android:id="@+id/extraScratchImage"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
+        android:elevation="30dp"
+        android:src="@drawable/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/parentGuidelineHorizontal1" />
+    <!--Extra Scratch Card Image end-->
 
 </android.support.constraint.ConstraintLayout>
