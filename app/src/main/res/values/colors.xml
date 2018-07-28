@@ -6,4 +6,9 @@
     <color name="black">#000000</color>
     <color name="lightGrey">#D3D3D3</color>
     <color name="gold">#ffcc00</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="scratch_start_gradient">#e5e5e5</color>
+    <color name="scratch_end_gradient">#cccccc</color>
+    <color name="white">#ffffff</color>
+    <color name="darkGrey">#606060</color>
 </resources>

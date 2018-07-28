@@ -1,31 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/backgroundImage"
-        android:scaleType="centerCrop"
-        />
-
-    <android.support.constraint.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </android.support.constraint.ConstraintLayout>
-
-    <Button
-        android:id="@+id/button"
+    <!--Guidelines for scratcher card start-->
+    <android.support.constraint.Guideline
+        android:id="@+id/parentGuidelineVertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Scratcher Card"
-        tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="231dp" />
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.92" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/parentGuidelineHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.12" />
+    <!--Guidelines for scratcher card end-->
+
+    <!--Guidelines for scratcher card start-->
+    <android.support.constraint.Guideline
+        android:id="@+id/parentGuidelineHorizontal1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
+    <!--Guidelines for scratcher card end-->
+
+    <!--Background Image start-->
+    <ImageView
+        android:id="@+id/backgroundImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
+    <!--Background Image end-->
+
+    <!-- Score Card start-->
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/scorecard"
+        android:layout_width="250dp"
+        android:layout_height="375dp"
+        android:elevation="20dp"
+        app:layout_constraintRight_toRightOf="@id/parentGuidelineVertical"
+        app:layout_constraintTop_toTopOf="@id/parentGuidelineHorizontal"
+        android:background="@color/darkGrey"
+        android:alpha=".9"
+        >
+
+        <!--
+        <ImageView
+            android:id="@+id/scorecardBackgroundImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.95"
+            android:scaleType="centerCrop" />
+        -->
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guidelineVertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guidelineHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.3333" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guidelineHorizontal1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.6666" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50"
+            app:layout_constraintBottom_toBottomOf="@id/guidelineHorizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="@id/guidelineVertical"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50"
+            app:layout_constraintBottom_toBottomOf="@id/guidelineHorizontal"
+            app:layout_constraintLeft_toLeftOf="@id/guidelineVertical"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50"
+            app:layout_constraintBottom_toBottomOf="@id/guidelineHorizontal1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="@id/guidelineVertical"
+            app:layout_constraintTop_toTopOf="@id/guidelineHorizontal" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50"
+            app:layout_constraintBottom_toBottomOf="@id/guidelineHorizontal1"
+            app:layout_constraintLeft_toLeftOf="@id/guidelineVertical"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guidelineHorizontal" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="@id/guidelineVertical"
+            app:layout_constraintTop_toTopOf="@id/guidelineHorizontal1" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@id/guidelineVertical"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guidelineHorizontal1" />
+
+
+    </android.support.constraint.ConstraintLayout>
+    <!-- Score Card end-->
+
+    <!--Scratch Image start-->
+    <com.me.gc.scratcher1.ScratchImageView
+        android:layout_width="250dp"
+        android:layout_height="375dp"
+        android:elevation="30dp"
+        app:layout_constraintRight_toRightOf="@id/parentGuidelineVertical"
+        app:layout_constraintTop_toTopOf="@id/parentGuidelineHorizontal" />
+    <!--Scratch Image end-->
+
+    <!-- Extra Card start-->
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/extraScoreCard"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
+        android:background="@drawable/greypattern"
+        android:elevation="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/parentGuidelineHorizontal1"></android.support.constraint.ConstraintLayout>
+
+
 </android.support.constraint.ConstraintLayout>
