@@ -34,6 +34,7 @@ public class ScratcherCardFragment extends Fragment {
     private TextView textView5;
     private TextView textView6;
     private Integer sum;
+    private Boolean revealFlag;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,6 +43,9 @@ public class ScratcherCardFragment extends Fragment {
         backgroundImage = v.findViewById(R.id.backgroundImage);
         backgroundImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
         backgroundImage.setImageResource(R.drawable.scratcher1);
+
+        //revealFlag set to true in beginning and changes to false after both scratchers fields revealed
+        revealFlag = true;
 
         //selected value
         viewModel = ViewModelProviders.of(this.getActivity()).get(MainViewModel.class);
@@ -85,7 +89,9 @@ public class ScratcherCardFragment extends Fragment {
             public void onRevealPercentChangedListener(ScratchImageView siv, float percent) {
                 if(percent>0.1) {
                     scratchRevealed = percent;
-                    revealCheck();
+                    if(revealFlag==true){
+                        revealCheck();
+                    }
                 }
             }
         });
@@ -101,7 +107,9 @@ public class ScratcherCardFragment extends Fragment {
             public void onRevealPercentChangedListener(ScratchImageView siv, float percent) {
                 if(percent>0.1) {
                     extraScratchRevealed = percent;
-                    revealCheck();
+                    if(revealFlag==true){
+                        revealCheck();
+                    }
                 }
             }
         });
@@ -110,14 +118,15 @@ public class ScratcherCardFragment extends Fragment {
     }
 
     public void revealCheck(){
-        if(extraScratchRevealed>0.8){
-            if(scratchRevealed>0.8){
-                getActivity().getPreferences(Context.MODE_PRIVATE);
-                int points = viewModel.getPoints().getValue() + sum;
+        if(extraScratchRevealed>0.1){
+            if(scratchRevealed>0.1){
+                sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                int totalPoints = viewModel.getPoints().getValue() + sum;
                 SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt("points", points);
+                editor.putInt("points", totalPoints);
                 editor.commit();
-                viewModel.setPoints(points);
+                viewModel.setPoints(totalPoints);
+                revealFlag = false;
             }
         }
     }

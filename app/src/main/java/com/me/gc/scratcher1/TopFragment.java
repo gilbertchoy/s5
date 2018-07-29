@@ -1,8 +1,10 @@
 package com.me.gc.scratcher1;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -29,11 +31,15 @@ public class TopFragment extends Fragment {
         pointsTextView = v.findViewById(R.id.points);
         pointsTextView.setText(points.toString());
 
-        viewModel.getPoints().observe(this, Integer -> {
-            Log.d("berttest","TopFragment revealed") ;
-            int points1 =
-            pointsTextView.setText();
+
+        viewModel.getPoints().observe(this, new Observer() {
+            @Override
+            public void onChanged(@Nullable Object o){
+                Log.d("berttest", "osberved: " + o.toString());
+            }
+
         });
+
 
         return v;
     }
