@@ -4,6 +4,7 @@ package com.me.gc.scratcher1;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -12,10 +13,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
 public class MainActivity extends FragmentActivity {
-    private MainViewModel model;
+    private MainViewModel viewModel;
     private Context context;
     private FragmentManager fragmentManager;
     private BottomFragment bottomFragment;
+    private SharedPreferences sharedPref;
+    private int points;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +26,8 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         context = this;
 
-
-        model = ViewModelProviders.of(this).get(MainViewModel.class);
-        model.getSelected().observe(this, Integer -> {
+        viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        viewModel.getSelected().observe(this, Integer -> {
             Log.d("berttest","item selected via main activity") ;
             // Create a new FragmentManager
             this.fragmentManager = getSupportFragmentManager();
@@ -126,5 +128,22 @@ public class MainActivity extends FragmentActivity {
             fragmentTransaction.commit();
         }
         */
+
+        //1st time init - if points value is null then add points
+        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        points = sharedPref.getInt("points",-1); //returns -1 if points value is 0
+        if(points == -1) { //check if 1st time init, check if points value exists if not then input starting points value
+            Log.d("berttest", "input points");
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt("points", 1000);
+            editor.commit();
+            viewModel.setPoints(1000);
+        }else{
+            viewModel.setPoints(points);
+        }
+
+
+
+
     }
 }
