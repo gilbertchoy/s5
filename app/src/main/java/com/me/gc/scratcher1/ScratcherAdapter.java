@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
@@ -24,6 +25,7 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
     private Context context;
     private MainViewModel viewModel;
     private Fragment fragment;
+    private SharedPreferences sharedPref;
 
     public ScratcherAdapter(Context c, BottomFragment f){
         fragment = f;
@@ -69,21 +71,21 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
         RelativeLayout cellBackground = (RelativeLayout) holder.view.findViewById(R.id.backgroundImage);
         cellBackground.setBackgroundResource(R.drawable.thumbnail1);
 
-        if(position==0) {
+
+        if(position==0 || position==1 || position == 2 || position == 3 || position == 4 || position == 5) {
             cellBackground.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
-                    Log.d("berttest", "pos 0 clicked");
+                    Log.d("berttest", "pos clicked: " + position);
                     viewModel.setSelected(0);
-                }
-            });
-        }
-        if(position==1 || position == 2 || position == 3 || position == 4 || position == 5) {
-            cellBackground.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(final View v) {
-                    Log.d("berttest", "pos x clicked");
-                    viewModel.setSelected(0);
+                    //minus points shared pref points
+                    sharedPref = fragment.getActivity().getPreferences(Context.MODE_PRIVATE);
+                    int totalPoints = viewModel.getPoints().getValue() - 200;
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putInt("points", totalPoints);
+                    editor.commit();
+                    //minus viewModel points
+                    viewModel.setPoints(viewModel.getPoints().getValue() - 200);
                 }
             });
         }
