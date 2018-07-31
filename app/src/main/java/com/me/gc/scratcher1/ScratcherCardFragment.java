@@ -101,6 +101,7 @@ public class ScratcherCardFragment extends Fragment {
             @Override
             public void onRevealed(ScratchImageView tv) {
                 // on reveal
+                
             }
 
             @Override
