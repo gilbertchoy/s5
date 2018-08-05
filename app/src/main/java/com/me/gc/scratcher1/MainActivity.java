@@ -182,7 +182,10 @@ public class MainActivity extends FragmentActivity {
 
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         viewModel.getSelected().observe(this, Integer -> {
-            interstitialAd.show();
+
+            if(scratcherCount%3 == 0) {
+                interstitialAd.show();
+            }
 
             Log.d("berttest","item selected via main activity") ;
             // Create a new FragmentManager
