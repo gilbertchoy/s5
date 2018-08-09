@@ -11,6 +11,7 @@ import android.util.Log;
 public class MainViewModel extends ViewModel {
     private final MutableLiveData<Integer> selected = new MutableLiveData<Integer>();
     private final MutableLiveData<Integer> points = new MutableLiveData<Integer>();
+    private final MutableLiveData<Integer> backToHome = new MutableLiveData<Integer>();
 
     public void setSelected(Integer i) {
         Log.d("berttest","setSelected works");
@@ -30,6 +31,16 @@ public class MainViewModel extends ViewModel {
     public LiveData<Integer> getPoints() {
         Log.d("berttest", "getPoints works");
         return points;
+    }
+
+    public void setBackToHome(Integer i) {
+        Log.d("berttest","viewmodel setbackToHome works");
+        backToHome.setValue(i);
+    }
+
+    public LiveData<Integer> getBackToHome() {
+        Log.d("berttest", "viewmodel getbackToHome works");
+        return backToHome;
     }
 
 

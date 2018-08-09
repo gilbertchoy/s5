@@ -48,6 +48,7 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         context = this;
         scratcherCount = 0;
+        this.fragmentManager = getSupportFragmentManager();
 
         /////////////////////
         //Ads start
@@ -189,30 +190,25 @@ public class MainActivity extends FragmentActivity {
 
             Log.d("berttest","item selected via main activity") ;
             // Create a new FragmentManager
-            this.fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = this.fragmentManager.beginTransaction();
-
-            // Create a new Fragment to be placed in the activity layout
             ScratcherCardFragment scratcherCardFragment = new ScratcherCardFragment();
-
-            // In case this activity was started with special instructions from an
-            // Intent, pass the Intent's extras to the fragment as arguments
             scratcherCardFragment.setArguments(getIntent().getExtras());
-
-            // Add the fragment to the 'fragment_container' FrameLayout
-            //fragmentTransaction.replace(R.id.fragment_bottom, )
-            //fragmentTransaction.add(R.id.fragment_bottom, scratcherCardFragment);
             fragmentTransaction.replace(R.id.fragment_bottom, scratcherCardFragment)
                     .addToBackStack(null).commit();
-
             scratcherCount++;
         });
+
+        viewModel.getBackToHome().observe(this, Integer -> {
+            Log.d("berttest","bertest backtohome received in mainActivity");
+            this.fragmentManager.popBackStack();
+        });
+
 
         if (findViewById(R.id.fragment_top) != null) {
             if (savedInstanceState != null) {
                 return;
             }
-            this.fragmentManager = getSupportFragmentManager();
+            //this.fragmentManager = getSupportFragmentManager();
             // Create a new Fragment to be placed in the activity layout
             FragmentTransaction fragmentTransaction = this.fragmentManager.beginTransaction();
             TopFragment topFragment = new TopFragment();
@@ -228,7 +224,6 @@ public class MainActivity extends FragmentActivity {
             if (savedInstanceState != null) {
                 return;
             }
-            this.fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = this.fragmentManager.beginTransaction();
             this.bottomFragment = new BottomFragment();
             this.bottomFragment.setArguments(getIntent().getExtras());
