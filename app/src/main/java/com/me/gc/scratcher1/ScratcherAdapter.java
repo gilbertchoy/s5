@@ -69,7 +69,9 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
 
 
         RelativeLayout cellBackground = (RelativeLayout) holder.view.findViewById(R.id.backgroundImage);
-        cellBackground.setBackgroundResource(R.drawable.thumbnail1);
+        cellBackground.setBackgroundResource(R.drawable.sm_grilling);
+
+        //cellBackground.setBackgroundResource(R.drawable.thumbnail1);
 
 
         if(position==0 || position==1 || position == 2 || position == 3 || position == 4 || position == 5) {
