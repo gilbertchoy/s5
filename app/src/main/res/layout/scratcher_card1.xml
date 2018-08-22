@@ -5,31 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--Guidelines for scratcher card start-->
-    <android.support.constraint.Guideline
-        android:id="@+id/parentGuidelineVertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.92" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/parentGuidelineHorizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.12" />
-    <!--Guidelines for scratcher card end-->
-
-    <!--Guidelines for scratcher card start-->
-    <android.support.constraint.Guideline
-        android:id="@+id/parentGuidelineHorizontal1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
-    <!--Guidelines for scratcher card end-->
-
     <!--Background Image start-->
     <ImageView
         android:id="@+id/backgroundImage"
@@ -38,25 +13,72 @@
         android:scaleType="centerCrop" />
     <!--Background Image end-->
 
+    <ImageView
+        android:id="@+id/title"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:scaleType="fitStart"
+        android:background="@drawable/title_drone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        />
+
+    <!--Guidelines for scratcher card start-->
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelineHorizontalScorecardTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.55" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelineHorizontalScorecardBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelineVerticalScorecardLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelineVerticalScorecardRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <!--Guidelines for scratcher card end-->
+
+    <!--Guidelines for extra scratcher card end-->
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelineHorizontalExtraBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.50" />
+
+    <!--Guidelines for extra scratcher card end-->
+
     <!-- Score Card start-->
     <android.support.constraint.ConstraintLayout
         android:id="@+id/scorecard"
-        android:layout_width="250dp"
-        android:layout_height="320dp"
         android:alpha=".9"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@color/darkGrey"
         android:elevation="20dp"
-        app:layout_constraintRight_toRightOf="@id/parentGuidelineVertical"
-        app:layout_constraintTop_toTopOf="@id/parentGuidelineHorizontal">
-
-        <!--
-        <ImageView
-            android:id="@+id/scorecardBackgroundImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0.95"
-            android:scaleType="centerCrop" />
-        -->
+        app:layout_constraintRight_toLeftOf="@id/guidelineVerticalScorecardRight"
+        app:layout_constraintLeft_toRightOf="@id/guidelineVerticalScorecardLeft"
+        app:layout_constraintTop_toBottomOf="@id/guidelineHorizontalScorecardTop"
+        app:layout_constraintBottom_toTopOf="@id/guidelineHorizontalScorecardBottom">
 
         <android.support.constraint.Guideline
             android:id="@+id/guidelineVertical"
@@ -83,8 +105,9 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/lilita_one"
             android:text="0"
+            android:fontFamily="@font/lilita_one"
+            android:textSize=""
             app:layout_constraintBottom_toBottomOf="@id/guidelineHorizontal"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="@id/guidelineVertical"
@@ -94,7 +117,6 @@
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/lilita_one"
             android:text="0"
             app:layout_constraintBottom_toBottomOf="@id/guidelineHorizontal"
             app:layout_constraintLeft_toLeftOf="@id/guidelineVertical"
@@ -105,7 +127,6 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/lilita_one"
             android:text="0"
             app:layout_constraintBottom_toBottomOf="@id/guidelineHorizontal1"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -116,7 +137,6 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/lilita_one"
             android:text="0"
             app:layout_constraintBottom_toBottomOf="@id/guidelineHorizontal1"
             app:layout_constraintLeft_toLeftOf="@id/guidelineVertical"
@@ -127,7 +147,6 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/lilita_one"
             android:text="0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -138,13 +157,11 @@
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/lilita_one"
             android:text="0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="@id/guidelineVertical"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/guidelineHorizontal1" />
-
 
     </android.support.constraint.ConstraintLayout>
     <!-- Score Card end-->
@@ -152,26 +169,28 @@
     <!--Scratch Card Image start-->
     <com.me.gc.scratcher1.ScratchImageView
         android:id="@+id/scratchImage"
-        android:layout_width="250dp"
-        android:layout_height="320dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:elevation="30dp"
         android:src="@drawable/transparent"
-        app:layout_constraintRight_toRightOf="@id/parentGuidelineVertical"
-        app:layout_constraintTop_toTopOf="@id/parentGuidelineHorizontal" />
+        app:layout_constraintRight_toLeftOf="@id/guidelineVerticalScorecardRight"
+        app:layout_constraintLeft_toRightOf="@id/guidelineVerticalScorecardLeft"
+        app:layout_constraintTop_toBottomOf="@id/guidelineHorizontalScorecardTop"
+        app:layout_constraintBottom_toTopOf="@id/guidelineHorizontalScorecardBottom"
+         />
     <!--Scratch Card Image end-->
 
     <!-- Extra Score Card start-->
     <android.support.constraint.ConstraintLayout
         android:id="@+id/extraScoreCard"
-        android:layout_width="200dp"
+        android:layout_width="130dp"
         android:layout_height="70dp"
         android:alpha=".9"
         android:background="@color/darkGrey"
         android:elevation="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/parentGuidelineHorizontal1">
+        android:layout_marginRight="20dp"
+        app:layout_constraintRight_toLeftOf="@id/guidelineVerticalScorecardRight"
+        app:layout_constraintBottom_toTopOf="@id/guidelineHorizontalExtraBottom">
 
         <!-- Reward Value -->
         <TextView
@@ -179,7 +198,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:elevation="30dp"
-            android:fontFamily="@font/lilita_one"
             android:text="50"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -192,14 +210,12 @@
     <!--Extra Scratch Card Image start-->
     <com.me.gc.scratcher1.ScratchImageView
         android:id="@+id/extraScratchImage"
-        android:layout_width="200dp"
+        android:layout_width="130dp"
         android:layout_height="70dp"
         android:elevation="30dp"
         android:src="@drawable/transparent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/parentGuidelineHorizontal1" />
+        app:layout_constraintRight_toLeftOf="@id/guidelineVerticalScorecardRight"
+        app:layout_constraintBottom_toTopOf="@id/guidelineHorizontalExtraBottom" />
     <!--Extra Scratch Card Image end-->
 
     <!--Lottie Animatins Start-->

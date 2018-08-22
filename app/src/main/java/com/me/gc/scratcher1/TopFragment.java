@@ -31,7 +31,6 @@ public class TopFragment extends Fragment {
         pointsTextView = v.findViewById(R.id.points);
         pointsTextView.setText(points.toString());
 
-
         viewModel.getPoints().observe(this, new Observer() {
             @Override
             public void onChanged(@Nullable Object curPoints){
