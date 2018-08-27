@@ -41,6 +41,7 @@ public class ScratcherCardFragment extends Fragment {
     private TextView rewardTitle;
     private Integer sum;
     private Boolean revealFlag;
+    private ConstraintLayout onRewardTransparent;
 
     //animations
     private LottieAnimationView aMiniStar;
@@ -86,6 +87,7 @@ public class ScratcherCardFragment extends Fragment {
         textView6 = (TextView) v.findViewById(R.id.textView6);
         rewardTextView = (TextView) v.findViewById(R.id.rewardAmount);
         rewardTitle = (TextView) v.findViewById(R.id.rewardTitle);
+        onRewardTransparent = (ConstraintLayout) v.findViewById(R.id.onRewardTransparent);
 
         textView.setText(r.toString());
         textView1.setText(r1.toString());
@@ -167,6 +169,7 @@ public class ScratcherCardFragment extends Fragment {
     }
 
     public void showEndAnimation(int reward){
+        onRewardTransparent.setVisibility(VISIBLE);
         if(reward < 200){
             Log.d("berttest","berttest reward amount 200");
             aBackgroundStar.setVisibility(VISIBLE);

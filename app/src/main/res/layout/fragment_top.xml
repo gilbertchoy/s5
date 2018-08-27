@@ -4,17 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:elevation="30dp"
-    android:background="@color/lightGreen">
+    android:elevation="0dp">
 
     <TextView
         android:id="@+id/points"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:font="@font/lilita_one"
         android:text="00"
+        android:textColor="@color/accentRed"
+        android:textSize="30dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- position this imageview relative to points  -->
+    <ImageView
+        android:id="@+id/backgroundImage"
+        android:layout_width="75px"
+        android:layout_height="75px"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@id/points"
+        app:layout_constraintLeft_toRightOf="@id/points"
+        android:src="@drawable/goldicon"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="5dp"
+        />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/bottomLine"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/accentGreen"
+        />
+
 </android.support.constraint.ConstraintLayout>
