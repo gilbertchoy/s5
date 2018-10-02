@@ -2,42 +2,54 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     >
 
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/card_view"
+        android:id="@+id/card_view_outer"
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        card_view:cardBackgroundColor="@color/lightGrey"
+        card_view:cardBackgroundColor="@color/accentLime"
         app:cardElevation="10dp"
         app:cardUseCompatPadding="true"
-        card_view:cardCornerRadius="10dp">
+        card_view:cardCornerRadius="5dp"
+        >
 
-        <RelativeLayout
-            android:id="@+id/backgroundImage"
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
+            card_view:cardBackgroundColor="@color/accentLime"
+            app:cardUseCompatPadding="true"
+            android:layout_margin="5dp"
+            card_view:cardCornerRadius="5dp"
             >
+            <RelativeLayout
+                android:id="@+id/backgroundImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:background="@color/accentRed"
+                >
 
-            <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginBottom="5dp"
-            android:text="200"
-            android:background="@drawable/rect_background_price_tag"
-                android:layout_alignParentBottom="true"
-                android:textSize="32dp"
-                android:textColor="@color/gold"
-                android:elevation="20dp"
-            />
-        </RelativeLayout>
+                <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginBottom="5dp"
+                android:text="200"
+                android:background="@drawable/rect_background_price_tag"
+                    android:layout_alignParentBottom="true"
+                    android:textSize="32dp"
+                    android:textColor="@color/gold"
+                    android:elevation="20dp"
+                />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
     </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>

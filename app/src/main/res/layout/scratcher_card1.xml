@@ -10,20 +10,8 @@
         android:id="@+id/backgroundImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop" />
+        android:scaleType="fitStart" />
     <!--Background Image end-->
-
-    <ImageView
-        android:id="@+id/title"
-        android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:scaleType="fitStart"
-        android:background="@drawable/title_drone"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        />
 
     <!-- card cost amount start -->
     <android.support.constraint.ConstraintLayout
