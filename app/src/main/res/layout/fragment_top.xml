@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- position this imageview relative to points -->
-    
+
     <ImageView
         android:id="@+id/backgroundImage"
         android:layout_width="75px"

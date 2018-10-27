@@ -17,6 +17,10 @@
         app:layout_constraintBottom_toTopOf="@id/fragment_bottom"
         />
 
+
+
+    
+
     <FrameLayout
         android:id="@+id/fragment_bottom"
         android:layout_width="match_parent"
