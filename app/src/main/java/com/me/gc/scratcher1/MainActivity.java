@@ -10,6 +10,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 
 import com.google.ads.consent.ConsentForm;
@@ -37,6 +39,7 @@ public class MainActivity extends FragmentActivity {
     private AdRequest adRequest;
     private Bundle extras;
     private int scratcherCount;
+    private DrawerLayout drawerLayout;
 
     //ads
     private InterstitialAd interstitialAd;
@@ -243,5 +246,14 @@ public class MainActivity extends FragmentActivity {
         }else{
             viewModel.setPoints(points);
         }
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+
+
+        float x = drawerLayout.getDrawerElevation();
+
+        Log.d("berttest","berttest " + x);
+
+        drawerLayout.openDrawer(GravityCompat.START);
     }
 }
