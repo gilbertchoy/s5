@@ -2,10 +2,12 @@ package com.me.gc.scratcher1;
 
 
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -247,13 +249,12 @@ public class MainActivity extends FragmentActivity {
             viewModel.setPoints(points);
         }
 
+
+        //drawer
         drawerLayout = findViewById(R.id.drawer_layout);
-
-
-        float x = drawerLayout.getDrawerElevation();
-
-        Log.d("berttest","berttest " + x);
-
-        drawerLayout.openDrawer(GravityCompat.START);
+        viewModel.getOpenDrawer().observe(this, Integer -> {
+            Log.d("berttest", "osberved openDrawer()");
+            drawerLayout.openDrawer(GravityCompat.START);
+        });
     }
 }

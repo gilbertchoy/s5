@@ -12,6 +12,7 @@ public class MainViewModel extends ViewModel {
     private final MutableLiveData<Integer> selected = new MutableLiveData<Integer>();
     private final MutableLiveData<Integer> points = new MutableLiveData<Integer>();
     private final MutableLiveData<Integer> backToHome = new MutableLiveData<Integer>();
+    private final MutableLiveData<Integer> openDrawer = new MutableLiveData<Integer>();
 
     public void setSelected(Integer i) {
         Log.d("berttest","setSelected works");
@@ -43,5 +44,13 @@ public class MainViewModel extends ViewModel {
         return backToHome;
     }
 
+    public void setOpenDrawer(Integer i) {
+        Log.d("berttest","viewmodel setbackToHome works");
+        openDrawer.setValue(i);
+    }
 
+    public LiveData<Integer> getOpenDrawer() {
+        Log.d("berttest", "viewmodel openDrawer works");
+        return openDrawer;
+    }
 }
