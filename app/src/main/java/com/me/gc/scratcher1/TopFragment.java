@@ -40,7 +40,12 @@ public class TopFragment extends Fragment {
             @Override
             public void onChanged(@Nullable Object curPoints){
                 Log.d("berttest", "osberved: " + curPoints.toString());
-                pointsTextView.setText(curPoints.toString());
+                Integer currentPoints = (Integer) curPoints;
+
+                pointsTextView.setText(currentPoints.toString());
+
+                //trigger viewModel to set points in drawer
+                //viewModel.setPointsDrawer(currentPoints);
             }
 
         });

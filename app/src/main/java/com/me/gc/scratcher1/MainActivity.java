@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -15,6 +16,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.ads.consent.ConsentForm;
 import com.google.ads.consent.ConsentFormListener;
@@ -42,6 +45,9 @@ public class MainActivity extends FragmentActivity {
     private Bundle extras;
     private int scratcherCount;
     private DrawerLayout drawerLayout;
+    private NavigationView navView;
+    private View headerLayoutDrawer;
+    private TextView pointsDrawerTextView;
 
     //ads
     private InterstitialAd interstitialAd;
@@ -249,8 +255,27 @@ public class MainActivity extends FragmentActivity {
             viewModel.setPoints(points);
         }
 
+        //update drawer points when points in top fragment updated
+        navView = findViewById(R.id.nav_view);
+        headerLayoutDrawer = navView.getHeaderView(0);
+        pointsDrawerTextView = headerLayoutDrawer.findViewById(R.id.pointsDrawer);
+        //pointsTextViewDrawer = findViewById(R.id.pointsDrawer);
+        //pointsTextViewDrawer.setText("awfewfewfwefw");
+        viewModel.getPoints().observe(this, new Observer() {
+            @Override
+            public void onChanged(@Nullable Object curPoints){
+                Log.d("berttest", "drawer points osberved: " + curPoints.toString());
+                Integer currentPoints = (Integer) curPoints;
 
-        //drawer
+                pointsDrawerTextView.setText(currentPoints.toString());
+            }
+
+        });
+
+
+
+
+        //open drawer when drawer button pressed
         drawerLayout = findViewById(R.id.drawer_layout);
         viewModel.getOpenDrawer().observe(this, Integer -> {
             Log.d("berttest", "osberved openDrawer()");

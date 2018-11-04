@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:font="@font/lilita_one"
         android:text="00"
-        android:textColor="@color/accentRed"
+        android:textColor="@color/color2"
         android:textSize="30dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

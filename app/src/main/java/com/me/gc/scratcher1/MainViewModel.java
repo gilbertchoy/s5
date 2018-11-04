@@ -24,11 +24,13 @@ public class MainViewModel extends ViewModel {
         return selected;
     }
 
+    //for points in top fragment
     public void setPoints(Integer i) {
         Log.d("berttest","setPoints works");
         points.setValue(i);
     }
 
+    //for points in top fragment
     public LiveData<Integer> getPoints() {
         Log.d("berttest", "getPoints works");
         return points;
@@ -53,4 +55,18 @@ public class MainViewModel extends ViewModel {
         Log.d("berttest", "viewmodel openDrawer works");
         return openDrawer;
     }
+
+    /*
+    //for points in drawer
+    public void setPointsDrawer(Integer i) {
+        Log.d("berttest","viewmodel setbackToHome works");
+        openDrawer.setValue(i);
+    }
+
+    //for points in drawer
+    public LiveData<Integer> getPointsDrawer() {
+        Log.d("berttest", "viewmodel openDrawer works");
+        return openDrawer;
+    }
+    */
 }

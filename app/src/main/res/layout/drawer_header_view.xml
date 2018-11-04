@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="192dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/color1"
+    android:padding="16dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:orientation="vertical"
+    android:gravity="bottom">
+
+    <TextView
+        android:id="@+id/pointsDrawer"
+        android:layout_width="207dp"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:text="My header title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/color2"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/backgroundImage"
+        android:layout_width="75px"
+        android:layout_height="75px"
+        android:scaleType="centerCrop"
+        android:src="@drawable/goldicon"
+        app:layout_constraintLeft_toRightOf="@id/pointsDrawer" />
+
+</LinearLayout>
