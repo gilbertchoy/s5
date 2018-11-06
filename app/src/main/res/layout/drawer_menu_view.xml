@@ -4,16 +4,12 @@
     android:layout_width="match_parent">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:title="import" />
+            android:id="@+id/deposit"
+            android:title="Deposit"
+            android:icon="@drawable/icon_plus_white_24dp" />
         <item
-            android:id="@+id/nav_gallery"
-            android:title="gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:title="slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:title="tools" />
+            android:id="@+id/withdraw"
+            android:title="Withdraw"
+            android:icon="@drawable/icon_redeem_white_24dp" />
     </group>
 </menu>
