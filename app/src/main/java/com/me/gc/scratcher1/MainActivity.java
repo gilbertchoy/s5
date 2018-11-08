@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -16,6 +17,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -97,7 +99,7 @@ public class MainActivity extends FragmentActivity {
                 URL privacyUrl = null;
                 try {
                     // TODO: Replace with your app's privacy policy URL.
-                    privacyUrl = new URL("https://www.google.com");
+                    privacyUrl = new URL("https://policies.google.com/technologies/partner-sites");
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                     Log.d("berttest","error loading privacyUrl");
@@ -255,6 +257,9 @@ public class MainActivity extends FragmentActivity {
             viewModel.setPoints(points);
         }
 
+        /////////////////////
+        //Drawer start
+        /////////////////////
         //update drawer points when points in top fragment updated
         navView = findViewById(R.id.nav_view);
         headerLayoutDrawer = navView.getHeaderView(0);
@@ -272,14 +277,38 @@ public class MainActivity extends FragmentActivity {
 
         });
 
-
-
-
         //open drawer when drawer button pressed
         drawerLayout = findViewById(R.id.drawer_layout);
         viewModel.getOpenDrawer().observe(this, Integer -> {
             Log.d("berttest", "osberved openDrawer()");
             drawerLayout.openDrawer(GravityCompat.START);
         });
+
+        navView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        String selected = menuItem.getTitle().toString();
+                        switch(selected) {
+                            case "Deposit":
+                                Log.d("berttest","Deposit selected");
+                                break;
+                            case "Withdraw":
+                                Log.d("berttest","Withdraw selected");
+                                Snackbar sb = Snackbar.make(findViewById(R.id.snackbar_action),
+                                        R.string.snackbar_withdraw_not_enough_coins,
+                                        Snackbar.LENGTH_INDEFINITE);
+                                sb.show();
+
+                                break;
+                            default:
+                                Log.d("berttest","defualt drawer selection");
+                        }
+                        return true;
+                    }
+                });
+        /////////////////////
+        //Drawer End
+        /////////////////////
     }
 }
