@@ -6,8 +6,10 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -16,7 +18,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -50,6 +54,8 @@ public class MainActivity extends FragmentActivity {
     private NavigationView navView;
     private View headerLayoutDrawer;
     private TextView pointsDrawerTextView;
+    private int screenHeight;
+    private int snackbarHeight;
 
     //ads
     private InterstitialAd interstitialAd;
@@ -62,6 +68,10 @@ public class MainActivity extends FragmentActivity {
         context = this;
         scratcherCount = 0;
         this.fragmentManager = getSupportFragmentManager();
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        screenHeight = displayMetrics.heightPixels;
 
         /////////////////////
         //Ads start
@@ -264,8 +274,8 @@ public class MainActivity extends FragmentActivity {
         navView = findViewById(R.id.nav_view);
         headerLayoutDrawer = navView.getHeaderView(0);
         pointsDrawerTextView = headerLayoutDrawer.findViewById(R.id.pointsDrawer);
-        //pointsTextViewDrawer = findViewById(R.id.pointsDrawer);
-        //pointsTextViewDrawer.setText("awfewfewfwefw");
+        snackbarHeight = (int) screenHeight/2;
+
         viewModel.getPoints().observe(this, new Observer() {
             @Override
             public void onChanged(@Nullable Object curPoints){
@@ -298,6 +308,23 @@ public class MainActivity extends FragmentActivity {
                                 Snackbar sb = Snackbar.make(findViewById(R.id.snackbar_action),
                                         R.string.snackbar_withdraw_not_enough_coins,
                                         Snackbar.LENGTH_INDEFINITE);
+
+                                View sbView = sb.getView();
+                                TextView sbTextView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+
+
+
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                                    sbTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                                } else {
+                                    sbTextView.setGravity(Gravity.CENTER_HORIZONTAL);
+                                }
+
+                                CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams)
+                                        sb.getView().getLayoutParams();
+                                params.setMargins(0, 0, 0, snackbarHeight);
+                                sbView.setLayoutParams(params);
+
                                 sb.show();
 
                                 break;
