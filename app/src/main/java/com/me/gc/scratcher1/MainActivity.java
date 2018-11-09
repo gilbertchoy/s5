@@ -23,6 +23,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.google.ads.consent.ConsentForm;
@@ -56,6 +57,7 @@ public class MainActivity extends FragmentActivity {
     private TextView pointsDrawerTextView;
     private int screenHeight;
     private int snackbarHeight;
+    private Snackbar snackbar;
 
     //ads
     private InterstitialAd interstitialAd;
@@ -281,7 +283,6 @@ public class MainActivity extends FragmentActivity {
             public void onChanged(@Nullable Object curPoints){
                 Log.d("berttest", "drawer points osberved: " + curPoints.toString());
                 Integer currentPoints = (Integer) curPoints;
-
                 pointsDrawerTextView.setText(currentPoints.toString());
             }
 
@@ -302,35 +303,41 @@ public class MainActivity extends FragmentActivity {
                         switch(selected) {
                             case "Deposit":
                                 Log.d("berttest","Deposit selected");
+                                snackbar = Snackbar.make(findViewById(R.id.snackbar_action),
+                                        R.string.coming_soon,
+                                        Snackbar.LENGTH_SHORT);
                                 break;
                             case "Withdraw":
                                 Log.d("berttest","Withdraw selected");
-                                Snackbar sb = Snackbar.make(findViewById(R.id.snackbar_action),
-                                        R.string.snackbar_withdraw_not_enough_coins,
-                                        Snackbar.LENGTH_INDEFINITE);
+                                int pointsTemp = viewModel.getPoints().getValue();
 
-                                View sbView = sb.getView();
-                                TextView sbTextView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-
-
-
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                                    sbTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                                } else {
-                                    sbTextView.setGravity(Gravity.CENTER_HORIZONTAL);
+                                if(pointsTemp>10000){
+                                    snackbar = Snackbar.make(findViewById(R.id.snackbar_action),
+                                            R.string.coming_soon,
+                                            Snackbar.LENGTH_SHORT);
+                                }else {
+                                    snackbar = Snackbar.make(findViewById(R.id.snackbar_action),
+                                            R.string.snackbar_withdraw_not_enough_coins,
+                                            Snackbar.LENGTH_SHORT);
                                 }
-
-                                CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams)
-                                        sb.getView().getLayoutParams();
-                                params.setMargins(0, 0, 0, snackbarHeight);
-                                sbView.setLayoutParams(params);
-
-                                sb.show();
-
                                 break;
                             default:
                                 Log.d("berttest","defualt drawer selection");
                         }
+
+                        //snackbar - center text and move to middle of screen
+                        View sbView = snackbar.getView();
+                        TextView sbTextView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                            sbTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        } else {
+                            sbTextView.setGravity(Gravity.CENTER_HORIZONTAL);
+                        }
+                        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams)
+                                snackbar.getView().getLayoutParams();
+                        params.setMargins(0, 0, 0, snackbarHeight);
+                        sbView.setLayoutParams(params);
+                        snackbar.show();
                         return true;
                     }
                 });
