@@ -20,6 +20,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import java.util.Random;
 
 import static android.view.View.VISIBLE;
+import static android.widget.ImageView.ScaleType.CENTER_CROP;
 import static android.widget.ImageView.ScaleType.FIT_START;
 
 public class ScratcherCardFragment extends Fragment {
@@ -59,11 +60,7 @@ public class ScratcherCardFragment extends Fragment {
         backgroundImage = v.findViewById(R.id.backgroundImage);
         //backgroundImage.setImageResource(R.drawable.scratcher1);
         backgroundImage.setImageResource(R.drawable.lg_drone2);
-        backgroundImage.setScaleType(FIT_START);
-
-
-
-
+        backgroundImage.setScaleType(CENTER_CROP);
 
         //revealFlag set to true in beginning and changes to false after both scratchers fields revealed
         revealFlag = true;
