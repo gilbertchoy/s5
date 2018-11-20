@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="My header title"
-        android:textColor="@color/color2"
+        android:textColor="@color/color5"
         android:textSize="30dp"
         android:textStyle="bold"
         android:gravity="center"

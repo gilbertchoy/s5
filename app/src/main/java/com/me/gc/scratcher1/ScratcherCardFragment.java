@@ -59,7 +59,7 @@ public class ScratcherCardFragment extends Fragment {
         View v = inflater.inflate(R.layout.scratcher_card1, container, false);
         backgroundImage = v.findViewById(R.id.backgroundImage);
         //backgroundImage.setImageResource(R.drawable.scratcher1);
-        backgroundImage.setImageResource(R.drawable.lg_drone2);
+        backgroundImage.setImageResource(R.drawable.lg_dunkfest);
         backgroundImage.setScaleType(CENTER_CROP);
 
         //revealFlag set to true in beginning and changes to false after both scratchers fields revealed

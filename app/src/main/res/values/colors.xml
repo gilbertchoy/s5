@@ -16,6 +16,8 @@
     <color name="accentLime">#15A527</color>
     <color name="accentOrange">#FFFF00</color>
     <color name="color1">#4286f4</color>
-    <color name="color2">#ffffff</color>
-    <color name="color3">#22467F</color>
+    <color name="color2">#1E57B2</color>
+    <color name="color3">#F5F5F5</color>
+    <color name="color4">#A0CC23</color>
+    <color name="color5">#FF735E</color>
 </resources>
