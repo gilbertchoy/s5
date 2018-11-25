@@ -69,7 +69,7 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
 
 
         RelativeLayout cellBackground = (RelativeLayout) holder.view.findViewById(R.id.backgroundImage);
-        cellBackground.setBackgroundResource(R.drawable.sm_dunkfest1);
+        cellBackground.setBackgroundResource(R.drawable.sm_guns);
 
         //cellBackground.setBackgroundResource(R.drawable.thumbnail1);
 
