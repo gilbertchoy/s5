@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Matrix;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
@@ -60,37 +61,26 @@ public class ScratcherCardFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.scratcher_card1, container, false);
         backgroundImage = v.findViewById(R.id.backgroundImage);
-        //backgroundImage.setImageResource(R.drawable.scratcher1);
-        backgroundImage.setImageResource(R.drawable.lg_guns);
-        //backgroundImage.setScaleType(CENTER_CROP);
 
+        //scale background image start - scale ratio using width and move image to top
+        backgroundImage.setScaleType(ImageView.ScaleType.MATRIX);
         Matrix m = backgroundImage.getImageMatrix();
-        //float scaleFactor = backgroundImage.getWidth()/(float)getDrawable().getIntrinsicWidth();
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int windowHeight = displayMetrics.heightPixels;
-        int windowWidth = displayMetrics.widthPixels;
+        int windowWidth = displayMetrics.widthPixels;  //window width
 
+        Drawable drawable = getResources().getDrawable(R.drawable.lg_guns);
+        int drawableWidth = drawable.getIntrinsicWidth();  //image width
 
-        //stopped here, no log statements!!
-        Log.d("berttest","berttest windowHeight:" + windowHeight);
-        Log.d("berttest", "berttest imageView width:" + backgroundImage.getWidth());
+        float scaleWidth = (float) windowWidth/drawableWidth;
 
+        m.setScale(scaleWidth, scaleWidth ,0,0);
+        backgroundImage.setImageMatrix(m);
 
-        /*
-        RectF drawableRect = new RectF(0, 0, imageWidth, imageHeight);
-        RectF viewRect = new RectF(0, 0, imageView.getWidth(), imageView.getHeight());
-        m.setRectToRect(drawableRect, viewRect, Matrix.ScaleToFit.CENTER);
-        imageView.setImageMatrix(m);
+        backgroundImage.setImageResource(R.drawable.lg_guns);
+        //scale background image end
 
-
-        Matrix matrix = getImageMatrix();
-        float scaleFactor = getWidth()/(float)getDrawable().getIntrinsicWidth();
-        matrix.setScale(scaleFactor, scaleFactor, 0, 0);
-        setImageMatrix(matrix);
-        return super.setFrame(l, t, r, b);
-        */
 
         //revealFlag set to true in beginning and changes to false after both scratchers fields revealed
         revealFlag = true;
