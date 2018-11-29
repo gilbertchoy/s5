@@ -74,6 +74,8 @@ public class ScratcherCardFragment extends Fragment {
         int drawableWidth = drawable.getIntrinsicWidth();  //image width
 
         float scaleWidth = (float) windowWidth/drawableWidth;
+        Log.d("berttest", "scratcherCardFragment windowWidth:" + windowWidth);
+        Log.d("berttest", "scratcherCardFragment drawableWidth:" + drawableWidth);
 
         m.setScale(scaleWidth, scaleWidth ,0,0);
         backgroundImage.setImageMatrix(m);
