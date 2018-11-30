@@ -28,12 +28,12 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
     private MainViewModel viewModel;
     private Fragment fragment;
     private SharedPreferences sharedPref;
-    private ViewTreeObserver vto;
-    private ViewTreeObserver vto2;
+    private boolean flagViewTreeLoaded;
 
     public ScratcherAdapter(Context c, BottomFragment f){
         fragment = f;
         context = c;
+        flagViewTreeLoaded = false;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -46,6 +46,7 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
 
     @Override
     public ScratcherAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
 
 
         viewModel = ViewModelProviders.of(fragment.getActivity()).get(MainViewModel.class);
@@ -63,6 +64,7 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
 
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.scratcher_cell, parent, false);
+
 /*
         RelativeLayout cellBackground = v.findViewById(R.id.backgroundImage);
         cellBackground.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -83,68 +85,79 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ScratcherAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ScratcherAdapter.ViewHolder holder, int pos) {
 
-
+        int position = pos;
 
         RelativeLayout cellBackground = (RelativeLayout) holder.view.findViewById(R.id.backgroundImage);
 
-        cellBackground.setBackgroundResource(R.drawable.sm_guns);
-        int cellWidth = cellBackground.getBackground().getIntrinsicWidth();
-        int cellHeight = cellBackground.getBackground().getIntrinsicHeight();
+        //cellBackground.setBackgroundResource(R.drawable.sm_guns);
+        //int cellWidth = cellBackground.getBackground().getIntrinsicWidth();
+        //int cellHeight = cellBackground.getBackground().getIntrinsicHeight();
 
-        Log.d("bertest", "berttest cell width:"+ cellWidth + " cell height:" + cellHeight);
 
         //cellBackground.setBackgroundResource(R.drawable.thumbnail1);
 
 
+        /*
+        //this runs when view of each cell is ready to be measured for height and width
         cellBackground.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                         public void onGlobalLayout() {
+                            //RelativeLayout cellBackgroundTemp = holder.view.findViewById(R.id.backgroundImage);
 
-                            cellBackground.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+
                             int width = cellBackground.getWidth();
                             int height = cellBackground.getHeight();
 
                             Log.d("berttest", "cell2 width:" + width + " height:" + height);
+                            cellBackground.setBackgroundResource(R.drawable.thumbnail1);
+
+                            // kill this listener so it doesn't keep running, different method for older os
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                cellBackground.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                            } else {
+                                cellBackground.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                            }
 
                         }
                     });
+*/
 
 
+        Log.d("berttest", "berttest this is rerun");
 
-
-/*
-        vto2 = holder.view.getViewTreeObserver();
-
-        vto2.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        //this runs when view of each cell is ready to be measured for height and width
+        ViewTreeObserver vto = holder.view.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                holder.view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-
-                Log.d("berttest", "keeps on running");
+                ViewTreeObserver vtoTemp = holder.view.getViewTreeObserver();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    vtoTemp.removeOnGlobalLayoutListener(this);
+                } else {
+                    vtoTemp.removeGlobalOnLayoutListener(this);
+                }
+                if(position==0 || position==1 || position == 2 || position == 3 || position == 4 || position == 5 ||
+                        position == 6 || position == 7 || position == 8 || position == 9) {
+                    cellBackground.setBackgroundResource(R.drawable.sm_drone);
                 }
 
+                Log.d("berttest", "keeps on running");
+                flagViewTreeLoaded = true;
 
+                // kill this listener so it doesn't keep running, different method for older os
+
+                }
         });
-    */
+
+        if (flagViewTreeLoaded == true){
+            cellBackground.setBackgroundResource(R.drawable.thumbnail1);
+        }
 
 
-        /*
-        final LinearLayout layout = (LinearLayout) findViewById(R.id.layout);
-        final ViewTreeObserver observer= layout.getViewTreeObserver();
-        observer.addOnGlobalLayoutListener(
-                new ViewTreeObserver.OnGlobalLayoutListener() {
-                    @Override
-                    public void onGlobalLayout() {
-                        Log.d("Log", "Height: " + layout.getHeight());
-                    }
-                });
-        */
-
-
-
-
-        if(position==0 || position==1 || position == 2 || position == 3 || position == 4 || position == 5) {
+        if(position==0 || position==1 || position == 2 || position == 3 || position == 4 || position == 5 ||
+                position == 6 || position == 7 || position == 8 || position == 9) {
             cellBackground.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
@@ -225,8 +238,14 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
 
     }
 
+    public void setCardBackground(int position){
+        //cellBackground.setBackgroundResource(R.drawable.thumbnail1);
+    }
+
+
+
     @Override
     public int getItemCount() {
-        return 6;
+        return 10;
     }
 }
