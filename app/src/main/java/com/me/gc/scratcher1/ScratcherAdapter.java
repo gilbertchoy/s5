@@ -7,11 +7,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -89,9 +92,32 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
 
         int position = pos;
 
-        RelativeLayout cellBackground = (RelativeLayout) holder.view.findViewById(R.id.backgroundImage);
+        ImageView cellBackgroundImage = holder.view.findViewById(R.id.backgroundImage);
+        RelativeLayout cell = holder.view.findViewById(R.id.cell);
 
-        //cellBackground.setBackgroundResource(R.drawable.sm_guns);
+        //cell.setBackgroundResource(R.drawable.lg_guns);
+
+//        Drawable drawable = context.getResources().getDrawable(R.drawable.lg_guns);
+//        int drawableWidth = drawable.getIntrinsicWidth();
+//        int drawableHeight = drawable.getIntrinsicHeight();
+//
+//
+//
+//
+
+        //Drawable drawable = context.getResources().getDrawable(R.drawable.lg_guns);
+
+        //cell.setBackgroundResource(R.drawable.lg_guns);
+
+
+
+        cellBackgroundImage.setImageResource(R.drawable.lg_guns);
+
+        //cellBackgroundImage.setFrame(0,0, 50, 50);
+        //cellBackgroundImage.setImageResource();
+
+
+
         //int cellWidth = cellBackground.getBackground().getIntrinsicWidth();
         //int cellHeight = cellBackground.getBackground().getIntrinsicHeight();
 
@@ -127,38 +153,54 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
 
         Log.d("berttest", "berttest this is rerun");
 
+        /*
         //this runs when view of each cell is ready to be measured for height and width
-        ViewTreeObserver vto = holder.view.getViewTreeObserver();
-        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                ViewTreeObserver vtoTemp = holder.view.getViewTreeObserver();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    vtoTemp.removeOnGlobalLayoutListener(this);
-                } else {
-                    vtoTemp.removeGlobalOnLayoutListener(this);
+        if (flagViewTreeLoaded == false) {
+            ViewTreeObserver vto = holder.view.getViewTreeObserver();
+            vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    // kill this addOnGlobalLayoutListener so it doesn't keep running
+                    ViewTreeObserver vtoTemp = holder.view.getViewTreeObserver();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        vtoTemp.removeOnGlobalLayoutListener(this);
+                    } else {
+                        vtoTemp.removeGlobalOnLayoutListener(this);
+                    }
+
+                    //if (position == 0 || position == 1 || position == 2 || position == 3 || position == 4 || position == 5 ||
+                    //        position == 6 || position == 7 || position == 8 || position == 9) {
+                        int cellWidth = cellBackgroundImage.getWidth();
+                        Matrix m = cellBackgroundImage.getImageMatrix();
+                        Drawable drawable = context.getResources().getDrawable(R.drawable.lg_guns);
+                        int drawableWidth = drawable.getIntrinsicWidth();  //image width
+                        float scaleWidth = (float) cellWidth/drawableWidth;
+                        m.setScale(scaleWidth, scaleWidth ,0,0);
+                        cellBackgroundImage.setImageMatrix(m);
+                        cellBackgroundImage.setImageResource(R.drawable.lg_guns);
+                    //}
+                    flagViewTreeLoaded = true;
                 }
-                if(position==0 || position==1 || position == 2 || position == 3 || position == 4 || position == 5 ||
-                        position == 6 || position == 7 || position == 8 || position == 9) {
-                    cellBackground.setBackgroundResource(R.drawable.sm_drone);
-                }
-
-                Log.d("berttest", "keeps on running");
-                flagViewTreeLoaded = true;
-
-                // kill this listener so it doesn't keep running, different method for older os
-
-                }
-        });
-
-        if (flagViewTreeLoaded == true){
-            cellBackground.setBackgroundResource(R.drawable.thumbnail1);
+            });
         }
-
+        else{
+//            if (position == 0 || position == 1 || position == 2 || position == 3 || position == 4 || position == 5 ||
+//                    position == 6 || position == 7 || position == 8 || position == 9) {
+                int cellWidth = cellBackgroundImage.getWidth();
+                Matrix m = cellBackgroundImage.getImageMatrix();
+                Drawable drawable = context.getResources().getDrawable(R.drawable.thumbnail1);
+                int drawableWidth = drawable.getIntrinsicWidth();  //image width
+                float scaleWidth = (float) cellWidth/drawableWidth;
+                m.setScale(scaleWidth, scaleWidth ,0,0);
+                cellBackgroundImage.setImageMatrix(m);
+                cellBackgroundImage.setImageResource(R.drawable.thumbnail1);
+            //}
+        }
+*/
 
         if(position==0 || position==1 || position == 2 || position == 3 || position == 4 || position == 5 ||
                 position == 6 || position == 7 || position == 8 || position == 9) {
-            cellBackground.setOnClickListener(new View.OnClickListener() {
+            cell.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
                     Log.d("berttest", "ScratcherAdaper cell onclick width:" + v.getWidth() + " height:" + v.getHeight());

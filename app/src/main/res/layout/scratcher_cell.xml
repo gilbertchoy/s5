@@ -30,11 +30,17 @@
             card_view:cardCornerRadius="5dp"
             >
             <RelativeLayout
-                android:id="@+id/backgroundImage"
+                android:id="@+id/cell"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 >
-
+                <ImageView
+                    android:id="@+id/backgroundImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitStart"
+                    android:scaleX=""
+                    />
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
