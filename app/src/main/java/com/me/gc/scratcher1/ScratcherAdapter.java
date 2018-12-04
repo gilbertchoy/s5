@@ -88,115 +88,85 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ScratcherAdapter.ViewHolder holder, int pos) {
-
-        int position = pos;
-
+    public void onBindViewHolder(@NonNull ScratcherAdapter.ViewHolder holder, int position) {
         ImageView cellBackgroundImage = holder.view.findViewById(R.id.backgroundImage);
         RelativeLayout cell = holder.view.findViewById(R.id.cell);
 
-        //cell.setBackgroundResource(R.drawable.lg_guns);
-
-//        Drawable drawable = context.getResources().getDrawable(R.drawable.lg_guns);
-//        int drawableWidth = drawable.getIntrinsicWidth();
-//        int drawableHeight = drawable.getIntrinsicHeight();
-//
-//
-//
-//
-
-        //Drawable drawable = context.getResources().getDrawable(R.drawable.lg_guns);
-
-        //cell.setBackgroundResource(R.drawable.lg_guns);
-
-
-
-        cellBackgroundImage.setImageResource(R.drawable.lg_guns);
-
-        //cellBackgroundImage.setFrame(0,0, 50, 50);
-        //cellBackgroundImage.setImageResource();
-
-
-
-        //int cellWidth = cellBackground.getBackground().getIntrinsicWidth();
-        //int cellHeight = cellBackground.getBackground().getIntrinsicHeight();
-
-
-        //cellBackground.setBackgroundResource(R.drawable.thumbnail1);
-
-
-        /*
-        //this runs when view of each cell is ready to be measured for height and width
-        cellBackground.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                        public void onGlobalLayout() {
-                            //RelativeLayout cellBackgroundTemp = holder.view.findViewById(R.id.backgroundImage);
-
-
-
-                            int width = cellBackground.getWidth();
-                            int height = cellBackground.getHeight();
-
-                            Log.d("berttest", "cell2 width:" + width + " height:" + height);
-                            cellBackground.setBackgroundResource(R.drawable.thumbnail1);
-
-                            // kill this listener so it doesn't keep running, different method for older os
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                cellBackground.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                            } else {
-                                cellBackground.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                            }
-
-                        }
-                    });
-*/
-
-
-        Log.d("berttest", "berttest this is rerun");
-
-        /*
-        //this runs when view of each cell is ready to be measured for height and width
-        if (flagViewTreeLoaded == false) {
-            ViewTreeObserver vto = holder.view.getViewTreeObserver();
-            vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        if(position==0){
+            holder.view.post(new Runnable() {
                 @Override
-                public void onGlobalLayout() {
-                    // kill this addOnGlobalLayoutListener so it doesn't keep running
-                    ViewTreeObserver vtoTemp = holder.view.getViewTreeObserver();
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        vtoTemp.removeOnGlobalLayoutListener(this);
-                    } else {
-                        vtoTemp.removeGlobalOnLayoutListener(this);
-                    }
+                public void run() {
 
-                    //if (position == 0 || position == 1 || position == 2 || position == 3 || position == 4 || position == 5 ||
-                    //        position == 6 || position == 7 || position == 8 || position == 9) {
-                        int cellWidth = cellBackgroundImage.getWidth();
-                        Matrix m = cellBackgroundImage.getImageMatrix();
-                        Drawable drawable = context.getResources().getDrawable(R.drawable.lg_guns);
-                        int drawableWidth = drawable.getIntrinsicWidth();  //image width
-                        float scaleWidth = (float) cellWidth/drawableWidth;
-                        m.setScale(scaleWidth, scaleWidth ,0,0);
-                        cellBackgroundImage.setImageMatrix(m);
-                        cellBackgroundImage.setImageResource(R.drawable.lg_guns);
-                    //}
-                    flagViewTreeLoaded = true;
+                    int cellWidth = holder.view.getWidth();// this will give you cell width dynamically
+                    int cellHeight = holder.view.getHeight();// this will give you cell height dynamically
+
+                    Matrix m = cellBackgroundImage.getImageMatrix();
+                    Drawable drawable = context.getResources().getDrawable(R.drawable.thumbnail1);
+                    int drawableWidth = drawable.getIntrinsicWidth();  //image width
+                    float scaleWidth = (float) cellWidth / drawableWidth;
+                    m.setScale(scaleWidth, scaleWidth, 0, 0);
+                    cellBackgroundImage.setImageMatrix(m);
+                    cellBackgroundImage.setImageResource(R.drawable.thumbnail1);
                 }
             });
         }
-        else{
-//            if (position == 0 || position == 1 || position == 2 || position == 3 || position == 4 || position == 5 ||
-//                    position == 6 || position == 7 || position == 8 || position == 9) {
-                int cellWidth = cellBackgroundImage.getWidth();
-                Matrix m = cellBackgroundImage.getImageMatrix();
-                Drawable drawable = context.getResources().getDrawable(R.drawable.thumbnail1);
-                int drawableWidth = drawable.getIntrinsicWidth();  //image width
-                float scaleWidth = (float) cellWidth/drawableWidth;
-                m.setScale(scaleWidth, scaleWidth ,0,0);
-                cellBackgroundImage.setImageMatrix(m);
-                cellBackgroundImage.setImageResource(R.drawable.thumbnail1);
-            //}
+        if(position==1){
+            holder.view.post(new Runnable() {
+                @Override
+                public void run() {
+
+                    int cellWidth = holder.view.getWidth();// this will give you cell width dynamically
+                    int cellHeight = holder.view.getHeight();// this will give you cell height dynamically
+
+                    Matrix m = cellBackgroundImage.getImageMatrix();
+                    Drawable drawable = context.getResources().getDrawable(R.drawable.thumbnail1);
+                    int drawableWidth = drawable.getIntrinsicWidth();  //image width
+                    float scaleWidth = (float) cellWidth / drawableWidth;
+                    m.setScale(scaleWidth, scaleWidth, 0, 0);
+                    cellBackgroundImage.setImageMatrix(m);
+                    cellBackgroundImage.setImageResource(R.drawable.thumbnail1);
+                }
+            });
         }
-*/
+        if(position==2){
+            holder.view.post(new Runnable() {
+                @Override
+                public void run() {
+
+                    int cellWidth = holder.view.getWidth();// this will give you cell width dynamically
+                    int cellHeight = holder.view.getHeight();// this will give you cell height dynamically
+
+                    Matrix m = cellBackgroundImage.getImageMatrix();
+                    Drawable drawable = context.getResources().getDrawable(R.drawable.thumbnail1);
+                    int drawableWidth = drawable.getIntrinsicWidth();  //image width
+                    float scaleWidth = (float) cellWidth / drawableWidth;
+                    m.setScale(scaleWidth, scaleWidth, 0, 0);
+                    cellBackgroundImage.setImageMatrix(m);
+                    cellBackgroundImage.setImageResource(R.drawable.thumbnail1);
+                }
+            });
+        }
+        if(position==9){
+            holder.view.post(new Runnable() {
+                @Override
+                public void run() {
+
+                    int cellWidth = holder.view.getWidth();// this will give you cell width dynamically
+                    int cellHeight = holder.view.getHeight();// this will give you cell height dynamically
+
+                    Matrix m = cellBackgroundImage.getImageMatrix();
+                    Drawable drawable = context.getResources().getDrawable(R.drawable.lg_guns);
+                    int drawableWidth = drawable.getIntrinsicWidth();  //image width
+                    float scaleWidth = (float) cellWidth / drawableWidth;
+                    m.setScale(scaleWidth, scaleWidth, 0, 0);
+                    cellBackgroundImage.setImageMatrix(m);
+                    cellBackgroundImage.setImageResource(R.drawable.lg_dunkfest);
+                }
+            });
+        }
+
+
+
 
         if(position==0 || position==1 || position == 2 || position == 3 || position == 4 || position == 5 ||
                 position == 6 || position == 7 || position == 8 || position == 9) {
