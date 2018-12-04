@@ -101,12 +101,12 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
                     int cellHeight = holder.view.getHeight();// this will give you cell height dynamically
 
                     Matrix m = cellBackgroundImage.getImageMatrix();
-                    Drawable drawable = context.getResources().getDrawable(R.drawable.thumbnail1);
+                    Drawable drawable = context.getResources().getDrawable(R.drawable.sm_guns);
                     int drawableWidth = drawable.getIntrinsicWidth();  //image width
                     float scaleWidth = (float) cellWidth / drawableWidth;
                     m.setScale(scaleWidth, scaleWidth, 0, 0);
                     cellBackgroundImage.setImageMatrix(m);
-                    cellBackgroundImage.setImageResource(R.drawable.thumbnail1);
+                    cellBackgroundImage.setImageResource(R.drawable.sm_guns);
                 }
             });
         }
@@ -119,12 +119,12 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
                     int cellHeight = holder.view.getHeight();// this will give you cell height dynamically
 
                     Matrix m = cellBackgroundImage.getImageMatrix();
-                    Drawable drawable = context.getResources().getDrawable(R.drawable.thumbnail1);
+                    Drawable drawable = context.getResources().getDrawable(R.drawable.sm_surfing);
                     int drawableWidth = drawable.getIntrinsicWidth();  //image width
                     float scaleWidth = (float) cellWidth / drawableWidth;
                     m.setScale(scaleWidth, scaleWidth, 0, 0);
                     cellBackgroundImage.setImageMatrix(m);
-                    cellBackgroundImage.setImageResource(R.drawable.thumbnail1);
+                    cellBackgroundImage.setImageResource(R.drawable.sm_surfing);
                 }
             });
         }
@@ -168,8 +168,7 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
 
 
 
-        if(position==0 || position==1 || position == 2 || position == 3 || position == 4 || position == 5 ||
-                position == 6 || position == 7 || position == 8 || position == 9) {
+        if(position==0) {
             cell.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
@@ -177,6 +176,27 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
 
                     Log.d("berttest", "pos clicked: " + position);
                     viewModel.setSelected(0);
+                    //minus points shared pref points
+                    sharedPref = fragment.getActivity().getPreferences(Context.MODE_PRIVATE);
+                    int totalPoints = viewModel.getPoints().getValue() - 200;
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putInt("points", totalPoints);
+                    editor.commit();
+                    //minus viewModel points
+                    viewModel.setPoints(viewModel.getPoints().getValue() - 200);
+                }
+            });
+        }
+
+        if(position==1 || position == 2 || position == 3 || position == 4 || position == 5 ||
+                position == 6 || position == 7 || position == 8 || position == 9) {
+            cell.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    Log.d("berttest", "ScratcherAdaper cell onclick width:" + v.getWidth() + " height:" + v.getHeight());
+
+                    Log.d("berttest", "pos clicked: " + position);
+                    viewModel.setSelected(1);
                     //minus points shared pref points
                     sharedPref = fragment.getActivity().getPreferences(Context.MODE_PRIVATE);
                     int totalPoints = viewModel.getPoints().getValue() - 200;

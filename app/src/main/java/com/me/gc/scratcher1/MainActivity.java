@@ -5,6 +5,7 @@ package com.me.gc.scratcher1;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -110,7 +111,6 @@ public class MainActivity extends FragmentActivity {
             if(consentInformation.isRequestLocationInEeaOrUnknown() == true){
                 URL privacyUrl = null;
                 try {
-                    // TODO: Replace with your app's privacy policy URL.
                     privacyUrl = new URL("https://policies.google.com/technologies/partner-sites");
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
@@ -207,7 +207,7 @@ public class MainActivity extends FragmentActivity {
         ///////////////
 
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        viewModel.getSelected().observe(this, Integer -> {
+/*        viewModel.getSelected().observe(this, Integer -> {
 
             if(scratcherCount%3 == 0) {
                 interstitialAd.show();
@@ -221,6 +221,28 @@ public class MainActivity extends FragmentActivity {
             fragmentTransaction.replace(R.id.fragment_bottom, scratcherCardFragment)
                     .addToBackStack(null).commit();
             scratcherCount++;
+        });*/
+
+        viewModel.getSelected().observe(this, new Observer() {
+            @Override
+            public void onChanged(@Nullable Object position){
+                Integer selected = (Integer) position;
+                Log.d("berttest", "MainActivity selected osberved: " + selected.toString());
+
+                if(scratcherCount%3 == 0) {
+                    interstitialAd.show();
+                }
+                // Create a new FragmentManager
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                ScratcherCardFragment scratcherCardFragment = new ScratcherCardFragment();
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.putExtra("selected", selected.intValue());
+                scratcherCardFragment.setArguments(intent.getExtras());
+                fragmentTransaction.replace(R.id.fragment_bottom, scratcherCardFragment)
+                        .addToBackStack(null).commit();
+                scratcherCount++;
+            }
+
         });
 
         viewModel.getBackToHome().observe(this, Integer -> {

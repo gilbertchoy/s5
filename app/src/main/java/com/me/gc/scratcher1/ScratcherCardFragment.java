@@ -1,11 +1,13 @@
 package com.me.gc.scratcher1;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -27,11 +29,14 @@ import static android.widget.ImageView.ScaleType.CENTER_CROP;
 import static android.widget.ImageView.ScaleType.FIT_START;
 
 public class ScratcherCardFragment extends Fragment {
+    private Context context;
     private ImageView backgroundImage;
     private ImageView scorecardBackgroundImage;
     private com.me.gc.scratcher1.ScratchImageView scratchImageView;
     private ScratchImageView extraScratchImageView;
     private MainViewModel viewModel;
+    private int selected;
+    private Drawable drawable;
     private float scratchRevealed;
     private float extraScratchRevealed;
     private SharedPreferences sharedPref;
@@ -56,9 +61,19 @@ public class ScratcherCardFragment extends Fragment {
     private LottieAnimationView aStar;
     private LottieAnimationView aBackgroundStar;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+
+        //stopped here cant get selected value
+
+        selected = getActivity().getIntent().getIntExtra("selected",0);
+
+
+
+
         View v = inflater.inflate(R.layout.scratcher_card1, container, false);
         backgroundImage = v.findViewById(R.id.backgroundImage);
 
@@ -67,14 +82,25 @@ public class ScratcherCardFragment extends Fragment {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int windowWidth = displayMetrics.widthPixels;  //window width
-        Drawable drawable = getResources().getDrawable(R.drawable.lg_guns);
+
+        if (selected == 0){
+            drawable = getResources().getDrawable(R.drawable.lg_surfing);
+        }
+        if(selected == 1){
+            drawable = getResources().getDrawable(R.drawable.lg_surfing);
+        }
+
         int drawableWidth = drawable.getIntrinsicWidth();  //image width
         float scaleWidth = (float) windowWidth/drawableWidth;
         Log.d("berttest", "scratcherCardFragment windowWidth:" + windowWidth);
         Log.d("berttest", "scratcherCardFragment drawableWidth:" + drawableWidth);
         m.setScale(scaleWidth, scaleWidth ,0,0);
         backgroundImage.setImageMatrix(m);
-        backgroundImage.setImageResource(R.drawable.lg_guns);
+        backgroundImage.setBackground(drawable);
+
+
+
+        //backgroundImage.setImageResource(R.drawable.lg_guns);
         //scale background image end
 
 
@@ -83,7 +109,9 @@ public class ScratcherCardFragment extends Fragment {
 
         //selected value
         viewModel = ViewModelProviders.of(this.getActivity()).get(MainViewModel.class);
-        int selected = (int) viewModel.getSelected().getValue();
+        int selected1 = (int) viewModel.getSelected().getValue();
+
+        Log.d("berttest", "ScratcherCardFragment test selected value:" + selected1);
 
         //set values for loot
         Random random = new Random();
