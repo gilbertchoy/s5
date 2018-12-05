@@ -49,40 +49,11 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
 
     @Override
     public ScratcherAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-
-
         viewModel = ViewModelProviders.of(fragment.getActivity()).get(MainViewModel.class);
 
-        /*
-        viewModel = ViewModelProviders.of()
-        ((MainActivity)context).get()
-
-
-        model = ViewModelProviders.of(context.getActivity()).get(SharedViewModel.class);
-        itemSelector.setOnClickListener(item -> {
-            model.select(item);
-        });
-        */
 
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.scratcher_cell, parent, false);
-
-/*
-        RelativeLayout cellBackground = v.findViewById(R.id.backgroundImage);
-        cellBackground.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            public void onGlobalLayout() {
-
-                cellBackground.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                int width = cellBackground.getWidth();
-                int height = cellBackground.getHeight();
-
-                Log.d("berttest", "cell3 width:" + width + " height:" + height);
-
-            }
-        });
-        */
-
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
@@ -114,10 +85,7 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
             holder.view.post(new Runnable() {
                 @Override
                 public void run() {
-
                     int cellWidth = holder.view.getWidth();// this will give you cell width dynamically
-                    int cellHeight = holder.view.getHeight();// this will give you cell height dynamically
-
                     Matrix m = cellBackgroundImage.getImageMatrix();
                     Drawable drawable = context.getResources().getDrawable(R.drawable.sm_surfing);
                     int drawableWidth = drawable.getIntrinsicWidth();  //image width
@@ -132,10 +100,7 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
             holder.view.post(new Runnable() {
                 @Override
                 public void run() {
-
                     int cellWidth = holder.view.getWidth();// this will give you cell width dynamically
-                    int cellHeight = holder.view.getHeight();// this will give you cell height dynamically
-
                     Matrix m = cellBackgroundImage.getImageMatrix();
                     Drawable drawable = context.getResources().getDrawable(R.drawable.thumbnail1);
                     int drawableWidth = drawable.getIntrinsicWidth();  //image width

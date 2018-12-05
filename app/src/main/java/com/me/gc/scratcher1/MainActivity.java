@@ -235,9 +235,7 @@ public class MainActivity extends FragmentActivity {
                 // Create a new FragmentManager
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 ScratcherCardFragment scratcherCardFragment = new ScratcherCardFragment();
-                Intent intent = new Intent(context, MainActivity.class);
-                intent.putExtra("selected", selected.intValue());
-                scratcherCardFragment.setArguments(intent.getExtras());
+                scratcherCardFragment.setArguments(getIntent().getExtras());
                 fragmentTransaction.replace(R.id.fragment_bottom, scratcherCardFragment)
                         .addToBackStack(null).commit();
                 scratcherCount++;

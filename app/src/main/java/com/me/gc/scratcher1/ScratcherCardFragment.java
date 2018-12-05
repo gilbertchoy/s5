@@ -35,7 +35,6 @@ public class ScratcherCardFragment extends Fragment {
     private com.me.gc.scratcher1.ScratchImageView scratchImageView;
     private ScratchImageView extraScratchImageView;
     private MainViewModel viewModel;
-    private int selected;
     private Drawable drawable;
     private float scratchRevealed;
     private float extraScratchRevealed;
@@ -65,14 +64,10 @@ public class ScratcherCardFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-
-        //stopped here cant get selected value
-
-        selected = getActivity().getIntent().getIntExtra("selected",0);
-
-
-
+        //selected value
+        viewModel = ViewModelProviders.of(this.getActivity()).get(MainViewModel.class);
+        int selected = (int) viewModel.getSelected().getValue();
+        Log.d("berttest", "ScratcherCardFragment test selected value:" + selected);
 
         View v = inflater.inflate(R.layout.scratcher_card1, container, false);
         backgroundImage = v.findViewById(R.id.backgroundImage);
@@ -84,7 +79,7 @@ public class ScratcherCardFragment extends Fragment {
         int windowWidth = displayMetrics.widthPixels;  //window width
 
         if (selected == 0){
-            drawable = getResources().getDrawable(R.drawable.lg_surfing);
+            drawable = getResources().getDrawable(R.drawable.lg_guns);
         }
         if(selected == 1){
             drawable = getResources().getDrawable(R.drawable.lg_surfing);
@@ -107,11 +102,7 @@ public class ScratcherCardFragment extends Fragment {
         //revealFlag set to true in beginning and changes to false after both scratchers fields revealed
         revealFlag = true;
 
-        //selected value
-        viewModel = ViewModelProviders.of(this.getActivity()).get(MainViewModel.class);
-        int selected1 = (int) viewModel.getSelected().getValue();
 
-        Log.d("berttest", "ScratcherCardFragment test selected value:" + selected1);
 
         //set values for loot
         Random random = new Random();
