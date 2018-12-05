@@ -126,6 +126,36 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
                 }
             });
         }
+        if(position==4){
+            holder.view.post(new Runnable() {
+                @Override
+                public void run() {
+                    int cellWidth = holder.view.getWidth();// this will give you cell width dynamically
+                    Matrix m = cellBackgroundImage.getImageMatrix();
+                    Drawable drawable = context.getResources().getDrawable(R.drawable.sm_fruit);
+                    int drawableWidth = drawable.getIntrinsicWidth();  //image width
+                    float scaleWidth = (float) cellWidth / drawableWidth;
+                    m.setScale(scaleWidth, scaleWidth, 0, 0);
+                    cellBackgroundImage.setImageMatrix(m);
+                    cellBackgroundImage.setImageResource(R.drawable.sm_fruit);
+                }
+            });
+        }
+        if(position==5){
+            holder.view.post(new Runnable() {
+                @Override
+                public void run() {
+                    int cellWidth = holder.view.getWidth();// this will give you cell width dynamically
+                    Matrix m = cellBackgroundImage.getImageMatrix();
+                    Drawable drawable = context.getResources().getDrawable(R.drawable.sm_city);
+                    int drawableWidth = drawable.getIntrinsicWidth();  //image width
+                    float scaleWidth = (float) cellWidth / drawableWidth;
+                    m.setScale(scaleWidth, scaleWidth, 0, 0);
+                    cellBackgroundImage.setImageMatrix(m);
+                    cellBackgroundImage.setImageResource(R.drawable.sm_city);
+                }
+            });
+        }
 
 
         //setting onclick for each cell
@@ -159,6 +189,22 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
                     @Override
                     public void onClick(final View v) {
                         setSharedPrefViewModel(3, 200);
+                    }
+                });
+                break;
+            case 4:
+                cell.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View v) {
+                        setSharedPrefViewModel(4, 200);
+                    }
+                });
+                break;
+            case 5:
+                cell.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View v) {
+                        setSharedPrefViewModel(5, 200);
                     }
                 });
                 break;
