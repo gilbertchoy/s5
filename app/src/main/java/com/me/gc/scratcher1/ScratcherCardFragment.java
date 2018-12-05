@@ -98,6 +98,15 @@ public class ScratcherCardFragment extends Fragment {
             case 5:
                 drawable = getResources().getDrawable(R.drawable.lg_city);
                 break;
+            case 6:
+                drawable = getResources().getDrawable(R.drawable.lg_bestfriends);
+                break;
+            case 7:
+                drawable = getResources().getDrawable(R.drawable.lg_fishing);
+                break;
+            case 8:
+                drawable = getResources().getDrawable(R.drawable.lg_paradise);
+                break;
             default:
                 drawable = getResources().getDrawable(R.drawable.lg_guns);
                 break;

@@ -67,10 +67,7 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
             holder.view.post(new Runnable() {
                 @Override
                 public void run() {
-
                     int cellWidth = holder.view.getWidth();// this will give you cell width dynamically
-                    int cellHeight = holder.view.getHeight();// this will give you cell height dynamically
-
                     Matrix m = cellBackgroundImage.getImageMatrix();
                     Drawable drawable = context.getResources().getDrawable(R.drawable.sm_guns);
                     int drawableWidth = drawable.getIntrinsicWidth();  //image width
@@ -156,6 +153,51 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
                 }
             });
         }
+        if(position==6){
+            holder.view.post(new Runnable() {
+                @Override
+                public void run() {
+                    int cellWidth = holder.view.getWidth();// this will give you cell width dynamically
+                    Matrix m = cellBackgroundImage.getImageMatrix();
+                    Drawable drawable = context.getResources().getDrawable(R.drawable.sm_bestfriends);
+                    int drawableWidth = drawable.getIntrinsicWidth();  //image width
+                    float scaleWidth = (float) cellWidth / drawableWidth;
+                    m.setScale(scaleWidth, scaleWidth, 0, 0);
+                    cellBackgroundImage.setImageMatrix(m);
+                    cellBackgroundImage.setImageResource(R.drawable.sm_bestfriends);
+                }
+            });
+        }
+        if(position==7){
+            holder.view.post(new Runnable() {
+                @Override
+                public void run() {
+                    int cellWidth = holder.view.getWidth();// this will give you cell width dynamically
+                    Matrix m = cellBackgroundImage.getImageMatrix();
+                    Drawable drawable = context.getResources().getDrawable(R.drawable.sm_fishing);
+                    int drawableWidth = drawable.getIntrinsicWidth();  //image width
+                    float scaleWidth = (float) cellWidth / drawableWidth;
+                    m.setScale(scaleWidth, scaleWidth, 0, 0);
+                    cellBackgroundImage.setImageMatrix(m);
+                    cellBackgroundImage.setImageResource(R.drawable.sm_fishing);
+                }
+            });
+        }
+        if(position==8){
+            holder.view.post(new Runnable() {
+                @Override
+                public void run() {
+                    int cellWidth = holder.view.getWidth();// this will give you cell width dynamically
+                    Matrix m = cellBackgroundImage.getImageMatrix();
+                    Drawable drawable = context.getResources().getDrawable(R.drawable.sm_paradise);
+                    int drawableWidth = drawable.getIntrinsicWidth();  //image width
+                    float scaleWidth = (float) cellWidth / drawableWidth;
+                    m.setScale(scaleWidth, scaleWidth, 0, 0);
+                    cellBackgroundImage.setImageMatrix(m);
+                    cellBackgroundImage.setImageResource(R.drawable.sm_paradise);
+                }
+            });
+        }
 
 
         //setting onclick for each cell
@@ -205,6 +247,30 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
                     @Override
                     public void onClick(final View v) {
                         setSharedPrefViewModel(5, 200);
+                    }
+                });
+                break;
+            case 6:
+                cell.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View v) {
+                        setSharedPrefViewModel(6, 200);
+                    }
+                });
+                break;
+            case 7:
+                cell.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View v) {
+                        setSharedPrefViewModel(7, 200);
+                    }
+                });
+                break;
+            case 8:
+                cell.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View v) {
+                        setSharedPrefViewModel(8, 200);
                     }
                 });
                 break;
