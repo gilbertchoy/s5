@@ -50,7 +50,7 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
     @Override
     public ScratcherAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         viewModel = ViewModelProviders.of(fragment.getActivity()).get(MainViewModel.class);
-
+        sharedPref = fragment.getActivity().getPreferences(Context.MODE_PRIVATE);
 
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.scratcher_cell, parent, false);
@@ -102,141 +102,87 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
                 public void run() {
                     int cellWidth = holder.view.getWidth();// this will give you cell width dynamically
                     Matrix m = cellBackgroundImage.getImageMatrix();
-                    Drawable drawable = context.getResources().getDrawable(R.drawable.thumbnail1);
+                    Drawable drawable = context.getResources().getDrawable(R.drawable.sm_dunkfest);
                     int drawableWidth = drawable.getIntrinsicWidth();  //image width
                     float scaleWidth = (float) cellWidth / drawableWidth;
                     m.setScale(scaleWidth, scaleWidth, 0, 0);
                     cellBackgroundImage.setImageMatrix(m);
-                    cellBackgroundImage.setImageResource(R.drawable.thumbnail1);
+                    cellBackgroundImage.setImageResource(R.drawable.sm_dunkfest);
                 }
             });
         }
-        if(position==9){
+        if(position==3){
             holder.view.post(new Runnable() {
                 @Override
                 public void run() {
-
                     int cellWidth = holder.view.getWidth();// this will give you cell width dynamically
-                    int cellHeight = holder.view.getHeight();// this will give you cell height dynamically
-
                     Matrix m = cellBackgroundImage.getImageMatrix();
-                    Drawable drawable = context.getResources().getDrawable(R.drawable.lg_guns);
+                    Drawable drawable = context.getResources().getDrawable(R.drawable.sm_drone);
                     int drawableWidth = drawable.getIntrinsicWidth();  //image width
                     float scaleWidth = (float) cellWidth / drawableWidth;
                     m.setScale(scaleWidth, scaleWidth, 0, 0);
                     cellBackgroundImage.setImageMatrix(m);
-                    cellBackgroundImage.setImageResource(R.drawable.lg_dunkfest);
+                    cellBackgroundImage.setImageResource(R.drawable.sm_drone);
                 }
             });
         }
 
 
-
-
-        if(position==0) {
-            cell.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(final View v) {
-                    Log.d("berttest", "ScratcherAdaper cell onclick width:" + v.getWidth() + " height:" + v.getHeight());
-
-                    Log.d("berttest", "pos clicked: " + position);
-                    viewModel.setSelected(0);
-                    //minus points shared pref points
-                    sharedPref = fragment.getActivity().getPreferences(Context.MODE_PRIVATE);
-                    int totalPoints = viewModel.getPoints().getValue() - 200;
-                    SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putInt("points", totalPoints);
-                    editor.commit();
-                    //minus viewModel points
-                    viewModel.setPoints(viewModel.getPoints().getValue() - 200);
-                }
-            });
+        //setting onclick for each cell
+        switch (position){
+            case 0:
+                cell.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View v) {
+                        setSharedPrefViewModel(0, 200);
+                    }
+                });
+                break;
+            case 1:
+                cell.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View v) {
+                        setSharedPrefViewModel(1, 200);
+                    }
+                });
+                break;
+            case 2:
+                cell.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View v) {
+                        setSharedPrefViewModel(2, 200);
+                    }
+                });
+                break;
+            case 3:
+                cell.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View v) {
+                        setSharedPrefViewModel(3, 200);
+                    }
+                });
+                break;
+            default:
+                cell.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View v) {
+                        setSharedPrefViewModel(0, 200);
+                    }
+                });
+                break;
         }
-
-        if(position==1 || position == 2 || position == 3 || position == 4 || position == 5 ||
-                position == 6 || position == 7 || position == 8 || position == 9) {
-            cell.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(final View v) {
-                    Log.d("berttest", "ScratcherAdaper cell onclick width:" + v.getWidth() + " height:" + v.getHeight());
-
-                    Log.d("berttest", "pos clicked: " + position);
-                    viewModel.setSelected(1);
-                    //minus points shared pref points
-                    sharedPref = fragment.getActivity().getPreferences(Context.MODE_PRIVATE);
-                    int totalPoints = viewModel.getPoints().getValue() - 200;
-                    SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putInt("points", totalPoints);
-                    editor.commit();
-                    //minus viewModel points
-                    viewModel.setPoints(viewModel.getPoints().getValue() - 200);
-                }
-            });
-        }
-
-
-        /*
-        ImageView imageView = holder.view.findViewById(R.id.imageView);
-
-        if(position==0) {
-            imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.thumbnail1, context.getApplicationContext().getTheme()));
-            //imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            //imageView.setMaxWidth();
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(final View v) {
-                    Log.d("berttest","pos 0 clicked");
-                    viewModel.setSelected(0);
-                }
-            });
-
-        }
-        if(position==1) {
-            imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.thumbnail1, context.getApplicationContext().getTheme()));
-            //imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
-            //q1Image.setScaleType(ScaleType.FIT_CENTER);
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(final View v) {
-                    Log.d("berttest","pos 1 clicked");
-                    viewModel.setSelected(1);
-                }
-            });
-        }
-        if(position==2) {
-            imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.thumbnail1, context.getApplicationContext().getTheme()));
-            //imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(final View v) {
-                    Log.d("berttest","pos 2 clicked");
-                    viewModel.setSelected(2);
-                }
-            });
-        }
-        if(position==3) {
-            imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.test1, context.getApplicationContext().getTheme()));
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(final View v) {
-                    Log.d("berttest","pos 0 clicked");
-                    viewModel.setSelected(3);
-                }
-            });
-        }
-        if(position==4) {
-            imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.test1, context.getApplicationContext().getTheme()));
-        }
-        if(position==5) {
-            imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.test2, context.getApplicationContext().getTheme()));
-        }
-*/
-
     }
 
-    public void setCardBackground(int position){
-        //cellBackground.setBackgroundResource(R.drawable.thumbnail1);
+    public void setSharedPrefViewModel(int position, int points){
+        Log.d("berttest", "changePoints: " + position);
+        viewModel.setSelected(position);
+        //minus points shared pref points
+        int totalPoints = viewModel.getPoints().getValue() - points;
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("points", totalPoints);
+        editor.commit();
+        //minus viewModel points
+        viewModel.setPoints(viewModel.getPoints().getValue() - points);
     }
 
 

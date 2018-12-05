@@ -78,25 +78,31 @@ public class ScratcherCardFragment extends Fragment {
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int windowWidth = displayMetrics.widthPixels;  //window width
 
-        if (selected == 0){
-            drawable = getResources().getDrawable(R.drawable.lg_guns);
-        }
-        if(selected == 1){
-            drawable = getResources().getDrawable(R.drawable.lg_surfing);
+        //set background image
+        switch (selected){
+            case 0:
+                drawable = getResources().getDrawable(R.drawable.lg_guns);
+                break;
+            case 1:
+                drawable = getResources().getDrawable(R.drawable.lg_surfing);
+                break;
+            case 2:
+                drawable = getResources().getDrawable(R.drawable.lg_dunkfest);
+                break;
+            case 3:
+                drawable = getResources().getDrawable(R.drawable.lg_drone);
+                break;
+            default:
+                drawable = getResources().getDrawable(R.drawable.lg_guns);
+                break;
         }
 
+        //scale image
         int drawableWidth = drawable.getIntrinsicWidth();  //image width
         float scaleWidth = (float) windowWidth/drawableWidth;
-        Log.d("berttest", "scratcherCardFragment windowWidth:" + windowWidth);
-        Log.d("berttest", "scratcherCardFragment drawableWidth:" + drawableWidth);
         m.setScale(scaleWidth, scaleWidth ,0,0);
         backgroundImage.setImageMatrix(m);
         backgroundImage.setBackground(drawable);
-
-
-
-        //backgroundImage.setImageResource(R.drawable.lg_guns);
-        //scale background image end
 
 
         //revealFlag set to true in beginning and changes to false after both scratchers fields revealed
