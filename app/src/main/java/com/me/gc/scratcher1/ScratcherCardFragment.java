@@ -72,11 +72,7 @@ public class ScratcherCardFragment extends Fragment {
         View v = inflater.inflate(R.layout.scratcher_card1, container, false);
         backgroundImage = v.findViewById(R.id.backgroundImage);
 
-        //scale background image start - scale ratio using width and move image to top
-        Matrix m = backgroundImage.getImageMatrix();
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int windowWidth = displayMetrics.widthPixels;  //window width
+
 
         //set background image
         switch (selected){
@@ -113,17 +109,18 @@ public class ScratcherCardFragment extends Fragment {
         }
 
         //scale image
+        Matrix m = backgroundImage.getImageMatrix();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int windowWidth = displayMetrics.widthPixels;  //window width
         int drawableWidth = drawable.getIntrinsicWidth();  //image width
         float scaleWidth = (float) windowWidth/drawableWidth;
         m.setScale(scaleWidth, scaleWidth ,0,0);
         backgroundImage.setImageMatrix(m);
-        backgroundImage.setBackground(drawable);
-
+        backgroundImage.setImageDrawable(drawable);
 
         //revealFlag set to true in beginning and changes to false after both scratchers fields revealed
         revealFlag = true;
-
-
 
         //set values for loot
         Random random = new Random();
