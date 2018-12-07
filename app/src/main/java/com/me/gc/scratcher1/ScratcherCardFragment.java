@@ -1,23 +1,19 @@
 package com.me.gc.scratcher1;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -25,8 +21,6 @@ import com.airbnb.lottie.LottieAnimationView;
 import java.util.Random;
 
 import static android.view.View.VISIBLE;
-import static android.widget.ImageView.ScaleType.CENTER_CROP;
-import static android.widget.ImageView.ScaleType.FIT_START;
 
 public class ScratcherCardFragment extends Fragment {
     private Context context;
@@ -69,10 +63,8 @@ public class ScratcherCardFragment extends Fragment {
         int selected = (int) viewModel.getSelected().getValue();
         Log.d("berttest", "ScratcherCardFragment test selected value:" + selected);
 
-        View v = inflater.inflate(R.layout.scratcher_card1, container, false);
+        View v = inflater.inflate(R.layout.scratcher_card, container, false);
         backgroundImage = v.findViewById(R.id.backgroundImage);
-
-
 
         //set background image
         switch (selected){
