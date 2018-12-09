@@ -54,7 +54,6 @@ public class ScratcherCardFragment extends Fragment {
     private LottieAnimationView aStar;
     private LottieAnimationView aBackgroundStar;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
