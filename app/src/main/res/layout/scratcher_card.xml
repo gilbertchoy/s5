@@ -94,22 +94,28 @@
     <!-- Score Card start-->
     <android.support.constraint.ConstraintLayout
         android:id="@+id/scorecard"
-        android:alpha=".9"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/darkGrey"
-        android:elevation="20dp"
         app:layout_constraintRight_toLeftOf="@id/guidelineVerticalScorecardRight"
         app:layout_constraintLeft_toRightOf="@id/guidelineVerticalScorecardLeft"
         app:layout_constraintTop_toBottomOf="@id/guidelineHorizontalScorecardTop"
         app:layout_constraintBottom_toTopOf="@id/guidelineHorizontalScorecardBottom">
+
+        <!-- transparent layer over background, where reward values are on-->
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha=".9"
+            android:elevation="20dp"
+            android:background="@color/darkGrey"
+            />
 
         <!-- scratch area overlay start -->
         <com.me.gc.scratcher1.ScratchImageView
             android:id="@+id/scratchImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:elevation="30dp"
+            android:elevation="31dp"
             android:src="@drawable/transparent"
             />
         <!-- scratch area overlay end -->
@@ -142,6 +148,7 @@
             android:text="0"
             android:fontFamily="@font/lilita_one"
             android:textSize="30dp"
+            android:elevation="21dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/guidelineHorizontal"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -155,6 +162,7 @@
             android:text="0"
             android:fontFamily="@font/lilita_one"
             android:textSize="30dp"
+            android:elevation="21dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/guidelineHorizontal"
             app:layout_constraintLeft_toLeftOf="@id/guidelineVertical"
@@ -168,6 +176,7 @@
             android:text="0"
             android:fontFamily="@font/lilita_one"
             android:textSize="30dp"
+            android:elevation="21dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/guidelineHorizontal1"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -181,6 +190,7 @@
             android:text="0"
             android:fontFamily="@font/lilita_one"
             android:textSize="30dp"
+            android:elevation="21dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/guidelineHorizontal1"
             app:layout_constraintLeft_toLeftOf="@id/guidelineVertical"
@@ -194,6 +204,7 @@
             android:text="0"
             android:fontFamily="@font/lilita_one"
             android:textSize="30dp"
+            android:elevation="21dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -207,6 +218,7 @@
             android:text="0"
             android:fontFamily="@font/lilita_one"
             android:textSize="30dp"
+            android:elevation="21dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="@id/guidelineVertical"
@@ -221,19 +233,25 @@
         android:id="@+id/extraScoreCard"
         android:layout_width="130dp"
         android:layout_height="70dp"
-        android:alpha=".9"
-        android:background="@color/darkGrey"
         android:elevation="20dp"
         android:layout_marginRight="20dp"
         app:layout_constraintRight_toLeftOf="@id/guidelineVerticalScorecardRight"
         app:layout_constraintBottom_toTopOf="@id/guidelineHorizontalExtraBottom">
+
+        <!-- transparent layer over background, where reward value is on -->
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha=".9"
+            android:background="@color/darkGrey"
+            android:elevation="20dp"/>
 
         <!-- scratch area overlay start -->
         <com.me.gc.scratcher1.ScratchImageView
             android:id="@+id/extraScratchImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:elevation="30dp"
+            android:elevation="22dp"
             android:src="@drawable/transparent"
             />
         <!-- scratch area overlay end -->
