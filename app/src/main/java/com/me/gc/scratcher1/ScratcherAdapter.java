@@ -206,7 +206,7 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
                 cell.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
-                        setSharedPrefViewModel(0, 200);
+                        setSharedPrefViewModel(0, R.integer.scratcher_cost);
                     }
                 });
                 break;
@@ -267,6 +267,14 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
                 });
                 break;
             case 8:
+                cell.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View v) {
+                        setSharedPrefViewModel(8, 200);
+                    }
+                });
+                break;
+            case 9:
                 cell.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
