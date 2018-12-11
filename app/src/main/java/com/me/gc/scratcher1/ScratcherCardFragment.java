@@ -25,11 +25,14 @@ import static android.view.View.VISIBLE;
 public class ScratcherCardFragment extends Fragment {
     private Context context;
     private ImageView backgroundImage;
+    private TextView scratcherCost;
     private ImageView scorecardBackgroundImage;
     private com.me.gc.scratcher1.ScratchImageView scratchImageView;
     private ScratchImageView extraScratchImageView;
     private MainViewModel viewModel;
     private Drawable drawable;
+    private int resID;
+    private int rewardAvgValue;
     private float scratchRevealed;
     private float extraScratchRevealed;
     private SharedPreferences sharedPref;
@@ -60,44 +63,69 @@ public class ScratcherCardFragment extends Fragment {
         //selected value
         viewModel = ViewModelProviders.of(this.getActivity()).get(MainViewModel.class);
         int selected = (int) viewModel.getSelected().getValue();
+        int cost = (int) viewModel.getCost().getValue();
         Log.d("berttest", "ScratcherCardFragment test selected value:" + selected);
 
         View v = inflater.inflate(R.layout.scratcher_card, container, false);
         backgroundImage = v.findViewById(R.id.backgroundImage);
+        scratcherCost = v.findViewById(R.id.scratcherCost);
+
+        scratcherCost.setText(cost);
 
         //set background image
         switch (selected){
             case 0:
-                drawable = getResources().getDrawable(R.drawable.lg_guns);
+                String imageName = getString(R.string.lg_name);
+                resID = getResources().getIdentifier(imageName, "drawable", getActivity().getPackageName());
+                rewardAvgValue = getResources().getInteger(R.integer.reward);
                 break;
             case 1:
-                drawable = getResources().getDrawable(R.drawable.lg_surfing);
+                imageName = getString(R.string.lg_name1);
+                resID = getResources().getIdentifier(imageName, "drawable", getActivity().getPackageName());
+                rewardAvgValue = getResources().getInteger(R.integer.reward);
                 break;
             case 2:
-                drawable = getResources().getDrawable(R.drawable.lg_dunkfest);
+                imageName = getString(R.string.lg_name2);
+                resID = getResources().getIdentifier(imageName, "drawable", getActivity().getPackageName());
+                rewardAvgValue = getResources().getInteger(R.integer.reward1);
                 break;
             case 3:
-                drawable = getResources().getDrawable(R.drawable.lg_drone);
+                imageName = getString(R.string.lg_name3);
+                resID = getResources().getIdentifier(imageName, "drawable", getActivity().getPackageName());
+                rewardAvgValue = getResources().getInteger(R.integer.reward1);
                 break;
             case 4:
-                drawable = getResources().getDrawable(R.drawable.lg_fruit);
+                imageName = getString(R.string.lg_name4);
+                resID = getResources().getIdentifier(imageName, "drawable", getActivity().getPackageName());
+                rewardAvgValue = getResources().getInteger(R.integer.reward2);
                 break;
             case 5:
-                drawable = getResources().getDrawable(R.drawable.lg_city);
+                imageName = getString(R.string.lg_name5);
+                resID = getResources().getIdentifier(imageName, "drawable", getActivity().getPackageName());
+                rewardAvgValue = getResources().getInteger(R.integer.reward2);
                 break;
             case 6:
-                drawable = getResources().getDrawable(R.drawable.lg_bestfriends);
+                imageName = getString(R.string.lg_name6);
+                resID = getResources().getIdentifier(imageName, "drawable", getActivity().getPackageName());
+                rewardAvgValue = getResources().getInteger(R.integer.reward3);
                 break;
             case 7:
-                drawable = getResources().getDrawable(R.drawable.lg_fishing);
+                imageName = getString(R.string.lg_name7);
+                resID = getResources().getIdentifier(imageName, "drawable", getActivity().getPackageName());
+                rewardAvgValue = getResources().getInteger(R.integer.reward3);
                 break;
             case 8:
-                drawable = getResources().getDrawable(R.drawable.lg_paradise);
+                imageName = getString(R.string.lg_name8);
+                resID = getResources().getIdentifier(imageName, "drawable", getActivity().getPackageName());
+                rewardAvgValue = getResources().getInteger(R.integer.reward4);
                 break;
             default:
-                drawable = getResources().getDrawable(R.drawable.lg_guns);
+                imageName = getString(R.string.lg_name9);
+                resID = getResources().getIdentifier(imageName, "drawable", getActivity().getPackageName());
+                rewardAvgValue = getResources().getInteger(R.integer.reward5);
                 break;
         }
+        drawable = getResources().getDrawable(resID);
 
         //scale image
         Matrix m = backgroundImage.getImageMatrix();
@@ -115,13 +143,13 @@ public class ScratcherCardFragment extends Fragment {
 
         //set values for loot
         Random random = new Random();
-        Integer r = random.nextInt(11) * 10;
-        Integer r1 = random.nextInt(11) * 10;
-        Integer r2 = random.nextInt(11) * 10;
-        Integer r3 = random.nextInt(11) * 10;
-        Integer r4 = random.nextInt(11) * 10;
-        Integer r5 = random.nextInt(11) * 10;
-        Integer r6 = random.nextInt(11) * 10;
+        Integer r = random.nextInt(rewardAvgValue * 2);
+        Integer r1 = random.nextInt(rewardAvgValue * 2);
+        Integer r2 = random.nextInt(rewardAvgValue * 2);
+        Integer r3 = random.nextInt(rewardAvgValue * 2);
+        Integer r4 = random.nextInt(rewardAvgValue * 2);
+        Integer r5 = random.nextInt(rewardAvgValue * 2);
+        Integer r6 = random.nextInt(rewardAvgValue * 2);
         sum = r + r1 + r2 + r3 + r4 + r5 +r6;
 
         textView = (TextView) v.findViewById(R.id.textView);

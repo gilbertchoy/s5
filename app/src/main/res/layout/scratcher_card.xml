@@ -14,7 +14,7 @@
         />
     <!--Background Image end-->
 
-    <!-- card cost amount start -->
+    <!-- cost amount start -->
     <android.support.constraint.ConstraintLayout
         android:id="@+id/upperRight"
         android:layout_width="90dp"
@@ -31,13 +31,12 @@
             android:elevation="20dp"
             />
 
-        <!-- Reward Value -->
+        <!-- Cost -->
         <TextView
             android:id="@+id/scratcherCost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:elevation="30dp"
-            android:text="200"
             android:textColor="@color/color5"
             android:textSize="20dp"
             android:textStyle="bold"
@@ -47,7 +46,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
-    <!-- value amount end -->
+    <!-- cost amount end -->
 
     <!--Guidelines for scratcher card start-->
 

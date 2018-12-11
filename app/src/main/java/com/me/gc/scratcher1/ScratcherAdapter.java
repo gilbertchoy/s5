@@ -24,6 +24,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 
 public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.ViewHolder> {
 
@@ -62,19 +64,24 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
     public void onBindViewHolder(@NonNull ScratcherAdapter.ViewHolder holder, int position) {
         ImageView cellBackgroundImage = holder.view.findViewById(R.id.backgroundImage);
         RelativeLayout cell = holder.view.findViewById(R.id.cell);
+        TextView tvScratcherCost = holder.view.findViewById(R.id.scratcherCost);
 
         if(position==0){
             holder.view.post(new Runnable() {
                 @Override
                 public void run() {
+                    String imageName = context.getResources().getString(R.string.sm_name);
+                    int resID = context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
+                    Integer costID = context.getResources().getInteger(R.integer.cost);
                     int cellWidth = holder.view.getWidth();// this will give you cell width dynamically
                     Matrix m = cellBackgroundImage.getImageMatrix();
-                    Drawable drawable = context.getResources().getDrawable(R.drawable.sm_guns);
+                    Drawable drawable = context.getResources().getDrawable(resID);
                     int drawableWidth = drawable.getIntrinsicWidth();  //image width
                     float scaleWidth = (float) cellWidth / drawableWidth;
                     m.setScale(scaleWidth, scaleWidth, 0, 0);
                     cellBackgroundImage.setImageMatrix(m);
-                    cellBackgroundImage.setImageResource(R.drawable.sm_guns);
+                    cellBackgroundImage.setImageResource(resID);
+                    tvScratcherCost.setText(costID.toString());
                 }
             });
         }
@@ -82,14 +89,18 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
             holder.view.post(new Runnable() {
                 @Override
                 public void run() {
+                    String imageName = context.getResources().getString(R.string.sm_name1);
+                    int resID = context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
+                    Integer costID = context.getResources().getInteger(R.integer.cost);
                     int cellWidth = holder.view.getWidth();// this will give you cell width dynamically
                     Matrix m = cellBackgroundImage.getImageMatrix();
-                    Drawable drawable = context.getResources().getDrawable(R.drawable.sm_surfing);
+                    Drawable drawable = context.getResources().getDrawable(resID);
                     int drawableWidth = drawable.getIntrinsicWidth();  //image width
                     float scaleWidth = (float) cellWidth / drawableWidth;
                     m.setScale(scaleWidth, scaleWidth, 0, 0);
                     cellBackgroundImage.setImageMatrix(m);
-                    cellBackgroundImage.setImageResource(R.drawable.sm_surfing);
+                    cellBackgroundImage.setImageResource(resID);
+                    tvScratcherCost.setText(costID.toString());
                 }
             });
         }
@@ -97,14 +108,18 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
             holder.view.post(new Runnable() {
                 @Override
                 public void run() {
+                    String imageName = context.getResources().getString(R.string.sm_name2);
+                    int resID = context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
+                    Integer costID = context.getResources().getInteger(R.integer.cost1);
                     int cellWidth = holder.view.getWidth();// this will give you cell width dynamically
                     Matrix m = cellBackgroundImage.getImageMatrix();
-                    Drawable drawable = context.getResources().getDrawable(R.drawable.sm_dunkfest);
+                    Drawable drawable = context.getResources().getDrawable(resID);
                     int drawableWidth = drawable.getIntrinsicWidth();  //image width
                     float scaleWidth = (float) cellWidth / drawableWidth;
                     m.setScale(scaleWidth, scaleWidth, 0, 0);
                     cellBackgroundImage.setImageMatrix(m);
-                    cellBackgroundImage.setImageResource(R.drawable.sm_dunkfest);
+                    cellBackgroundImage.setImageResource(resID);
+                    tvScratcherCost.setText(costID.toString());
                 }
             });
         }
@@ -112,14 +127,18 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
             holder.view.post(new Runnable() {
                 @Override
                 public void run() {
+                    String imageName = context.getResources().getString(R.string.sm_name3);
+                    int resID = context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
+                    Integer costID = context.getResources().getInteger(R.integer.cost1);
                     int cellWidth = holder.view.getWidth();// this will give you cell width dynamically
                     Matrix m = cellBackgroundImage.getImageMatrix();
-                    Drawable drawable = context.getResources().getDrawable(R.drawable.sm_drone);
+                    Drawable drawable = context.getResources().getDrawable(resID);
                     int drawableWidth = drawable.getIntrinsicWidth();  //image width
                     float scaleWidth = (float) cellWidth / drawableWidth;
                     m.setScale(scaleWidth, scaleWidth, 0, 0);
                     cellBackgroundImage.setImageMatrix(m);
-                    cellBackgroundImage.setImageResource(R.drawable.sm_drone);
+                    cellBackgroundImage.setImageResource(resID);
+                    tvScratcherCost.setText(costID.toString());
                 }
             });
         }
@@ -127,14 +146,18 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
             holder.view.post(new Runnable() {
                 @Override
                 public void run() {
+                    String imageName = context.getResources().getString(R.string.sm_name4);
+                    int resID = context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
+                    Integer costID = context.getResources().getInteger(R.integer.cost2);
                     int cellWidth = holder.view.getWidth();// this will give you cell width dynamically
                     Matrix m = cellBackgroundImage.getImageMatrix();
-                    Drawable drawable = context.getResources().getDrawable(R.drawable.sm_fruit);
+                    Drawable drawable = context.getResources().getDrawable(resID);
                     int drawableWidth = drawable.getIntrinsicWidth();  //image width
                     float scaleWidth = (float) cellWidth / drawableWidth;
                     m.setScale(scaleWidth, scaleWidth, 0, 0);
                     cellBackgroundImage.setImageMatrix(m);
-                    cellBackgroundImage.setImageResource(R.drawable.sm_fruit);
+                    cellBackgroundImage.setImageResource(resID);
+                    tvScratcherCost.setText(costID.toString());
                 }
             });
         }
@@ -142,14 +165,18 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
             holder.view.post(new Runnable() {
                 @Override
                 public void run() {
+                    String imageName = context.getResources().getString(R.string.sm_name5);
+                    int resID = context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
+                    Integer costID = context.getResources().getInteger(R.integer.cost2);
                     int cellWidth = holder.view.getWidth();// this will give you cell width dynamically
                     Matrix m = cellBackgroundImage.getImageMatrix();
-                    Drawable drawable = context.getResources().getDrawable(R.drawable.sm_city);
+                    Drawable drawable = context.getResources().getDrawable(resID);
                     int drawableWidth = drawable.getIntrinsicWidth();  //image width
                     float scaleWidth = (float) cellWidth / drawableWidth;
                     m.setScale(scaleWidth, scaleWidth, 0, 0);
                     cellBackgroundImage.setImageMatrix(m);
-                    cellBackgroundImage.setImageResource(R.drawable.sm_city);
+                    cellBackgroundImage.setImageResource(resID);
+                    tvScratcherCost.setText(costID.toString());
                 }
             });
         }
@@ -157,14 +184,18 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
             holder.view.post(new Runnable() {
                 @Override
                 public void run() {
+                    String imageName = context.getResources().getString(R.string.sm_name6);
+                    int resID = context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
+                    Integer costID = context.getResources().getInteger(R.integer.cost3);
                     int cellWidth = holder.view.getWidth();// this will give you cell width dynamically
                     Matrix m = cellBackgroundImage.getImageMatrix();
-                    Drawable drawable = context.getResources().getDrawable(R.drawable.sm_bestfriends);
+                    Drawable drawable = context.getResources().getDrawable(resID);
                     int drawableWidth = drawable.getIntrinsicWidth();  //image width
                     float scaleWidth = (float) cellWidth / drawableWidth;
                     m.setScale(scaleWidth, scaleWidth, 0, 0);
                     cellBackgroundImage.setImageMatrix(m);
-                    cellBackgroundImage.setImageResource(R.drawable.sm_bestfriends);
+                    cellBackgroundImage.setImageResource(resID);
+                    tvScratcherCost.setText(costID.toString());
                 }
             });
         }
@@ -172,14 +203,18 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
             holder.view.post(new Runnable() {
                 @Override
                 public void run() {
+                    String imageName = context.getResources().getString(R.string.sm_name7);
+                    int resID = context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
+                    Integer costID = context.getResources().getInteger(R.integer.cost3);
                     int cellWidth = holder.view.getWidth();// this will give you cell width dynamically
                     Matrix m = cellBackgroundImage.getImageMatrix();
-                    Drawable drawable = context.getResources().getDrawable(R.drawable.sm_fishing);
+                    Drawable drawable = context.getResources().getDrawable(resID);
                     int drawableWidth = drawable.getIntrinsicWidth();  //image width
                     float scaleWidth = (float) cellWidth / drawableWidth;
                     m.setScale(scaleWidth, scaleWidth, 0, 0);
                     cellBackgroundImage.setImageMatrix(m);
-                    cellBackgroundImage.setImageResource(R.drawable.sm_fishing);
+                    cellBackgroundImage.setImageResource(resID);
+                    tvScratcherCost.setText(costID.toString());
                 }
             });
         }
@@ -187,14 +222,37 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
             holder.view.post(new Runnable() {
                 @Override
                 public void run() {
+                    String imageName = context.getResources().getString(R.string.sm_name8);
+                    int resID = context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
+                    Integer costID = context.getResources().getInteger(R.integer.cost4);
                     int cellWidth = holder.view.getWidth();// this will give you cell width dynamically
                     Matrix m = cellBackgroundImage.getImageMatrix();
-                    Drawable drawable = context.getResources().getDrawable(R.drawable.sm_paradise);
+                    Drawable drawable = context.getResources().getDrawable(resID);
                     int drawableWidth = drawable.getIntrinsicWidth();  //image width
                     float scaleWidth = (float) cellWidth / drawableWidth;
                     m.setScale(scaleWidth, scaleWidth, 0, 0);
                     cellBackgroundImage.setImageMatrix(m);
-                    cellBackgroundImage.setImageResource(R.drawable.sm_paradise);
+                    cellBackgroundImage.setImageResource(resID);
+                    tvScratcherCost.setText(costID.toString());
+                }
+            });
+        }
+        if(position==9){
+            holder.view.post(new Runnable() {
+                @Override
+                public void run() {
+                    String imageName = context.getResources().getString(R.string.sm_name9);
+                    int resID = context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
+                    Integer costID = context.getResources().getInteger(R.integer.cost5);
+                    int cellWidth = holder.view.getWidth();// this will give you cell width dynamically
+                    Matrix m = cellBackgroundImage.getImageMatrix();
+                    Drawable drawable = context.getResources().getDrawable(resID);
+                    int drawableWidth = drawable.getIntrinsicWidth();  //image width
+                    float scaleWidth = (float) cellWidth / drawableWidth;
+                    m.setScale(scaleWidth, scaleWidth, 0, 0);
+                    cellBackgroundImage.setImageMatrix(m);
+                    cellBackgroundImage.setImageResource(resID);
+                    tvScratcherCost.setText(costID.toString());
                 }
             });
         }
@@ -206,7 +264,7 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
                 cell.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
-                        setSharedPrefViewModel(0, R.integer.scratcher_cost);
+                        setSharedPrefViewModel(0, R.integer.cost);
                     }
                 });
                 break;
@@ -214,7 +272,7 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
                 cell.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
-                        setSharedPrefViewModel(1, 200);
+                        setSharedPrefViewModel(1, R.integer.cost);
                     }
                 });
                 break;
@@ -222,7 +280,7 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
                 cell.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
-                        setSharedPrefViewModel(2, 200);
+                        setSharedPrefViewModel(2, R.integer.cost1);
                     }
                 });
                 break;
@@ -230,7 +288,7 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
                 cell.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
-                        setSharedPrefViewModel(3, 200);
+                        setSharedPrefViewModel(3, R.integer.cost1);
                     }
                 });
                 break;
@@ -238,7 +296,7 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
                 cell.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
-                        setSharedPrefViewModel(4, 200);
+                        setSharedPrefViewModel(4, R.integer.cost2);
                     }
                 });
                 break;
@@ -246,7 +304,7 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
                 cell.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
-                        setSharedPrefViewModel(5, 200);
+                        setSharedPrefViewModel(5, R.integer.cost2);
                     }
                 });
                 break;
@@ -254,7 +312,7 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
                 cell.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
-                        setSharedPrefViewModel(6, 200);
+                        setSharedPrefViewModel(6, R.integer.cost3);
                     }
                 });
                 break;
@@ -262,7 +320,7 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
                 cell.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
-                        setSharedPrefViewModel(7, 200);
+                        setSharedPrefViewModel(7, R.integer.cost3);
                     }
                 });
                 break;
@@ -270,7 +328,7 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
                 cell.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
-                        setSharedPrefViewModel(8, 200);
+                        setSharedPrefViewModel(8, R.integer.cost4);
                     }
                 });
                 break;
@@ -278,7 +336,7 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
                 cell.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
-                        setSharedPrefViewModel(8, 200);
+                        setSharedPrefViewModel(9, R.integer.cost5);
                     }
                 });
                 break;
@@ -296,6 +354,7 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
     public void setSharedPrefViewModel(int position, int points){
         Log.d("berttest", "changePoints: " + position);
         viewModel.setSelected(position);
+        viewModel.setCost(points);
         //minus points shared pref points
         int totalPoints = viewModel.getPoints().getValue() - points;
         SharedPreferences.Editor editor = sharedPref.edit();

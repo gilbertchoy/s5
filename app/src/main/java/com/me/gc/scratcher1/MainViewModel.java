@@ -10,6 +10,7 @@ import android.util.Log;
 
 public class MainViewModel extends ViewModel {
     private final MutableLiveData<Integer> selected = new MutableLiveData<Integer>();
+    private final MutableLiveData<Integer> cost = new MutableLiveData<Integer>();
     private final MutableLiveData<Integer> points = new MutableLiveData<Integer>();
     private final MutableLiveData<Integer> backToHome = new MutableLiveData<Integer>();
     private final MutableLiveData<Integer> openDrawer = new MutableLiveData<Integer>();
@@ -34,6 +35,16 @@ public class MainViewModel extends ViewModel {
     public LiveData<Integer> getPoints() {
         Log.d("berttest", "getPoints works");
         return points;
+    }
+
+    public void setCost(Integer i) {
+        Log.d("berttest","setCost works");
+        cost.setValue(i);
+    }
+
+    public LiveData<Integer> getCost() {
+        Log.d("berttest", "getCost works");
+        return cost;
     }
 
     public void setBackToHome(Integer i) {
