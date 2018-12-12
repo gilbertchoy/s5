@@ -21,7 +21,7 @@
     <string name="sm_name6">sm_fishing</string>
     <string name="sm_name7">sm_surfing</string>
     <string name="sm_name8">sm_guns</string>
-    <string name="sm_name9">sm_bestfriends</string>
+    <string name="sm_name9">sm_cat</string>
     <string name="lg_name">lg_bestfriends</string>
     <string name="lg_name1">lg_fruit</string>
     <string name="lg_name2">lg_city</string>
@@ -31,6 +31,6 @@
     <string name="lg_name6">lg_fishing</string>
     <string name="lg_name7">lg_surfing</string>
     <string name="lg_name8">lg_guns</string>
-    <string name="lg_name9">lg_bestfriends</string>
+    <string name="lg_name9">lg_cat</string>
 </resources>
 
