@@ -13,6 +13,7 @@ public class MainViewModel extends ViewModel {
     private final MutableLiveData<Integer> cost = new MutableLiveData<Integer>();
     private final MutableLiveData<Integer> points = new MutableLiveData<Integer>();
     private final MutableLiveData<Integer> backToHome = new MutableLiveData<Integer>();
+    private final MutableLiveData<Integer> notEnoughPointsPurchaseScratcher = new MutableLiveData<Integer>();
     private final MutableLiveData<Integer> openDrawer = new MutableLiveData<Integer>();
 
     public void setSelected(Integer i) {
@@ -55,6 +56,16 @@ public class MainViewModel extends ViewModel {
     public LiveData<Integer> getBackToHome() {
         Log.d("berttest", "viewmodel getbackToHome works");
         return backToHome;
+    }
+
+    public void setNotEnoughPointsPurchaseScratcher(Integer i) {
+        Log.d("berttest","viewmodel setNotEnoughPoints works");
+        notEnoughPointsPurchaseScratcher.setValue(i);
+    }
+
+    public LiveData<Integer> getNotEnoughPointsPurchaseScratcher() {
+        Log.d("berttest", "viewmodel getNotEnoughPoints works");
+        return notEnoughPointsPurchaseScratcher;
     }
 
     public void setOpenDrawer(Integer i) {

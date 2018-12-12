@@ -63,14 +63,14 @@ public class ScratcherCardFragment extends Fragment {
         //selected value
         viewModel = ViewModelProviders.of(this.getActivity()).get(MainViewModel.class);
         int selected = (int) viewModel.getSelected().getValue();
-        int cost = (int) viewModel.getCost().getValue();
+        Integer cost = viewModel.getCost().getValue();
         Log.d("berttest", "ScratcherCardFragment test selected value:" + selected);
 
         View v = inflater.inflate(R.layout.scratcher_card, container, false);
         backgroundImage = v.findViewById(R.id.backgroundImage);
         scratcherCost = v.findViewById(R.id.scratcherCost);
 
-        scratcherCost.setText(cost);
+        scratcherCost.setText(cost.toString());
 
         //set background image
         switch (selected){

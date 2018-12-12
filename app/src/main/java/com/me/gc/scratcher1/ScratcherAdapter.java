@@ -264,7 +264,8 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
                 cell.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
-                        setSharedPrefViewModel(0, R.integer.cost);
+                        Integer costID = context.getResources().getInteger(R.integer.cost);
+                        setSharedPrefViewModel(0, costID.intValue());
                     }
                 });
                 break;
@@ -272,7 +273,8 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
                 cell.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
-                        setSharedPrefViewModel(1, R.integer.cost);
+                        Integer costID = context.getResources().getInteger(R.integer.cost);
+                        setSharedPrefViewModel(1, costID.intValue());
                     }
                 });
                 break;
@@ -280,7 +282,8 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
                 cell.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
-                        setSharedPrefViewModel(2, R.integer.cost1);
+                        Integer costID = context.getResources().getInteger(R.integer.cost1);
+                        setSharedPrefViewModel(2, costID.intValue());
                     }
                 });
                 break;
@@ -288,7 +291,8 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
                 cell.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
-                        setSharedPrefViewModel(3, R.integer.cost1);
+                        Integer costID = context.getResources().getInteger(R.integer.cost1);
+                        setSharedPrefViewModel(3, costID.intValue());
                     }
                 });
                 break;
@@ -296,7 +300,8 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
                 cell.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
-                        setSharedPrefViewModel(4, R.integer.cost2);
+                        Integer costID = context.getResources().getInteger(R.integer.cost2);
+                        setSharedPrefViewModel(4, costID.intValue());
                     }
                 });
                 break;
@@ -304,7 +309,8 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
                 cell.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
-                        setSharedPrefViewModel(5, R.integer.cost2);
+                        Integer costID = context.getResources().getInteger(R.integer.cost2);
+                        setSharedPrefViewModel(5, costID.intValue());
                     }
                 });
                 break;
@@ -312,7 +318,8 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
                 cell.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
-                        setSharedPrefViewModel(6, R.integer.cost3);
+                        Integer costID = context.getResources().getInteger(R.integer.cost3);
+                        setSharedPrefViewModel(6, costID.intValue());
                     }
                 });
                 break;
@@ -320,7 +327,8 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
                 cell.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
-                        setSharedPrefViewModel(7, R.integer.cost3);
+                        Integer costID = context.getResources().getInteger(R.integer.cost3);
+                        setSharedPrefViewModel(7, costID.intValue());
                     }
                 });
                 break;
@@ -328,7 +336,8 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
                 cell.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
-                        setSharedPrefViewModel(8, R.integer.cost4);
+                        Integer costID = context.getResources().getInteger(R.integer.cost4);
+                        setSharedPrefViewModel(8, costID.intValue());
                     }
                 });
                 break;
@@ -336,7 +345,8 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
                 cell.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(final View v) {
-                        setSharedPrefViewModel(9, R.integer.cost5);
+                        Integer costID = context.getResources().getInteger(R.integer.cost5);
+                        setSharedPrefViewModel(9, costID.intValue());
                     }
                 });
                 break;
@@ -353,15 +363,20 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
 
     public void setSharedPrefViewModel(int position, int points){
         Log.d("berttest", "changePoints: " + position);
-        viewModel.setSelected(position);
-        viewModel.setCost(points);
         //minus points shared pref points
         int totalPoints = viewModel.getPoints().getValue() - points;
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("points", totalPoints);
-        editor.commit();
-        //minus viewModel points
-        viewModel.setPoints(viewModel.getPoints().getValue() - points);
+        if(totalPoints>-1) {
+            viewModel.setSelected(position);
+            viewModel.setCost(points);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt("points", totalPoints);
+            editor.commit();
+            //minus viewModel points
+            viewModel.setPoints(viewModel.getPoints().getValue() - points);
+        }
+        else{//not enough points snackbar
+            viewModel.setNotEnoughPointsPurchaseScratcher(0);
+        }
     }
 
 

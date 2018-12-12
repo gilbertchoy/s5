@@ -48,6 +48,7 @@ public class MainActivity extends FragmentActivity {
     private FragmentManager fragmentManager;
     private BottomFragment bottomFragment;
     private SharedPreferences sharedPref;
+    private SharedPreferences.Editor editor;
     private int points;
     private AdRequest adRequest;
     private Bundle extras;
@@ -71,10 +72,36 @@ public class MainActivity extends FragmentActivity {
         context = this;
         scratcherCount = 0;
         this.fragmentManager = getSupportFragmentManager();
+        viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         screenHeight = displayMetrics.heightPixels;
+
+        //1st time init - if points value is null then add points
+        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        points = sharedPref.getInt("points",1000); //returns -1 if points value is 0
+
+        //test code for setting points
+        editor = sharedPref.edit();
+        editor.putInt("points", 10000);
+        editor.commit();
+        viewModel.setPoints(10000);
+
+        /*  works this is deployment code
+        if(points == -1) { //check if 1st time init, check if points value exists if not then input starting points value
+            Log.d("berttest", "input points");
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt("points", 1000);
+            editor.commit();
+            viewModel.setPoints(1000);
+        }else{
+            viewModel.setPoints(points);
+        }
+
+*/
+
+
 
         /////////////////////
         //Ads start
@@ -177,7 +204,7 @@ public class MainActivity extends FragmentActivity {
                 ConsentInformation.getInstance(context)
                         .setConsentStatus(ConsentStatus.PERSONALIZED);
                 //set shared pref variable to personalized
-                SharedPreferences.Editor editor = sharedPref.edit();
+                editor = sharedPref.edit();
                 editor.putInt("targeted", 1); //1 personalized, 2 non-personalized, 0 no value
                 editor.commit();
                 adRequest = new AdRequest.Builder().build();
@@ -206,7 +233,7 @@ public class MainActivity extends FragmentActivity {
         //Ads end
         ///////////////
 
-        viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+
 /*        viewModel.getSelected().observe(this, Integer -> {
 
             if(scratcherCount%3 == 0) {
@@ -248,12 +275,30 @@ public class MainActivity extends FragmentActivity {
             this.fragmentManager.popBackStack();
         });
 
+        //not enough coins to purchase scratcher
+        viewModel.getNotEnoughPointsPurchaseScratcher().observe(this, Integer -> {
+            Log.d("berttest","bertest notEnoughPoints received in mainActivity");
+            snackbar = Snackbar.make(findViewById(R.id.snackbar_action),
+                    R.string.snackbar_purchase_card_not_enough_coins,
+                    Snackbar.LENGTH_SHORT);
+            View sbView = snackbar.getView();
+            TextView sbTextView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                sbTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            } else {
+                sbTextView.setGravity(Gravity.CENTER_HORIZONTAL);
+            }
+            CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams)
+                    snackbar.getView().getLayoutParams();
+            params.setMargins(0, 0, 0, snackbarHeight);
+            sbView.setLayoutParams(params);
+            snackbar.show();
+        });
 
         if (findViewById(R.id.fragment_top) != null) {
             if (savedInstanceState != null) {
                 return;
             }
-            //this.fragmentManager = getSupportFragmentManager();
             // Create a new Fragment to be placed in the activity layout
             FragmentTransaction fragmentTransaction = this.fragmentManager.beginTransaction();
             TopFragment topFragment = new TopFragment();
@@ -274,19 +319,6 @@ public class MainActivity extends FragmentActivity {
             this.bottomFragment.setArguments(getIntent().getExtras());
             fragmentTransaction.add(R.id.fragment_bottom, this.bottomFragment);
             fragmentTransaction.commit();
-        }
-
-        //1st time init - if points value is null then add points
-        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        points = sharedPref.getInt("points",-1); //returns -1 if points value is 0
-        if(points == -1) { //check if 1st time init, check if points value exists if not then input starting points value
-            Log.d("berttest", "input points");
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putInt("points", 1000);
-            editor.commit();
-            viewModel.setPoints(1000);
-        }else{
-            viewModel.setPoints(points);
         }
 
         /////////////////////
@@ -331,7 +363,7 @@ public class MainActivity extends FragmentActivity {
                                 Log.d("berttest","Withdraw selected");
                                 int pointsTemp = viewModel.getPoints().getValue();
 
-                                if(pointsTemp>10000){
+                                if(pointsTemp>1000000){
                                     snackbar = Snackbar.make(findViewById(R.id.snackbar_action),
                                             R.string.coming_soon,
                                             Snackbar.LENGTH_SHORT);
