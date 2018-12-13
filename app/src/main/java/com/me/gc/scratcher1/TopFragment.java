@@ -23,6 +23,7 @@ public class TopFragment extends Fragment {
     private Integer points;
     private View v;
     private Button menuButton;
+    private Button playButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,6 +34,7 @@ public class TopFragment extends Fragment {
         points = viewModel.getPoints().getValue();
 
         menuButton = v.findViewById(R.id.menuButton);
+        playButton = v.findViewById(R.id.playButton);
         pointsTextView = v.findViewById(R.id.points);
 
         pointsTextView.setText(points.toString());
@@ -42,11 +44,7 @@ public class TopFragment extends Fragment {
             public void onChanged(@Nullable Object curPoints){
                 Log.d("berttest", "osberved: " + curPoints.toString());
                 Integer currentPoints = (Integer) curPoints;
-
                 pointsTextView.setText(currentPoints.toString());
-
-                //trigger viewModel to set points in drawer
-                //viewModel.setPointsDrawer(currentPoints);
             }
 
         });
@@ -56,6 +54,14 @@ public class TopFragment extends Fragment {
             @Override
             public void onClick(final View v) {
                 viewModel.setOpenDrawer(1);
+            }
+        });
+
+        //play ad
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                viewModel.setAdOfDayPressed(1);
             }
         });
 

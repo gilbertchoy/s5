@@ -15,6 +15,7 @@ public class MainViewModel extends ViewModel {
     private final MutableLiveData<Integer> backToHome = new MutableLiveData<Integer>();
     private final MutableLiveData<Integer> notEnoughPointsPurchaseScratcher = new MutableLiveData<Integer>();
     private final MutableLiveData<Integer> openDrawer = new MutableLiveData<Integer>();
+    private final MutableLiveData<Integer> adOfDayPressed = new MutableLiveData<Integer>();
 
     public void setSelected(Integer i) {
         Log.d("berttest","setSelected works");
@@ -56,6 +57,16 @@ public class MainViewModel extends ViewModel {
     public LiveData<Integer> getBackToHome() {
         Log.d("berttest", "viewmodel getbackToHome works");
         return backToHome;
+    }
+
+    public void setAdOfDayPressed(Integer i) {
+        Log.d("berttest","viewmodel setAdOfDayPressed works");
+        adOfDayPressed.setValue(i);
+    }
+
+    public LiveData<Integer> getAdOfDayPressed() {
+        Log.d("berttest", "viewmodel getAdOfDayPressed works");
+        return adOfDayPressed;
     }
 
     public void setNotEnoughPointsPurchaseScratcher(Integer i) {

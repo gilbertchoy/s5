@@ -60,6 +60,7 @@ public class MainActivity extends FragmentActivity {
     private int screenHeight;
     private int snackbarHeight;
     private Snackbar snackbar;
+    private boolean flagRewardUserAfterAdOfDay;
 
     //ads
     private InterstitialAd interstitialAd;
@@ -71,6 +72,7 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         context = this;
         scratcherCount = 0;
+        flagRewardUserAfterAdOfDay = false;
         this.fragmentManager = getSupportFragmentManager();
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
@@ -227,28 +229,45 @@ public class MainActivity extends FragmentActivity {
             public void onAdClosed() {
                 // Load the next interstitial.
                 interstitialAd.loadAd(adRequest);
+                if(flagRewardUserAfterAdOfDay==true){
+                    flagRewardUserAfterAdOfDay = false;
+                    //add points
+                    int totalPoints = viewModel.getPoints().getValue() + 200;
+                    editor = sharedPref.edit();
+                    editor.putInt("points", totalPoints);
+                    editor.commit();
+                    viewModel.setPoints(totalPoints);
+                    //show snackbar
+                    snackbar = Snackbar.make(findViewById(R.id.snackbar_action),
+                            R.string.snackbar_200_coins_earned,
+                            Snackbar.LENGTH_SHORT);
+                    View sbView = snackbar.getView();
+                    TextView sbTextView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                        sbTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                    } else {
+                        sbTextView.setGravity(Gravity.CENTER_HORIZONTAL);
+                    }
+                    CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams)
+                            snackbar.getView().getLayoutParams();
+                    params.setMargins(0, 0, 0, snackbarHeight);
+                    sbView.setLayoutParams(params);
+                    snackbar.show();
+                }
             }
         });
         ////////////////
         //Ads end
         ///////////////
 
-
-/*        viewModel.getSelected().observe(this, Integer -> {
-
-            if(scratcherCount%3 == 0) {
+        //Play Ad when play ad button pressed
+        viewModel.getAdOfDayPressed().observe(this, new Observer() {
+            @Override
+            public void onChanged(@Nullable Object position){
+                flagRewardUserAfterAdOfDay = true;
                 interstitialAd.show();
             }
-
-            Log.d("berttest","item selected via main activity") ;
-            // Create a new FragmentManager
-            FragmentTransaction fragmentTransaction = this.fragmentManager.beginTransaction();
-            ScratcherCardFragment scratcherCardFragment = new ScratcherCardFragment();
-            scratcherCardFragment.setArguments(getIntent().getExtras());
-            fragmentTransaction.replace(R.id.fragment_bottom, scratcherCardFragment)
-                    .addToBackStack(null).commit();
-            scratcherCount++;
-        });*/
+        });
 
         viewModel.getSelected().observe(this, new Observer() {
             @Override
@@ -267,7 +286,6 @@ public class MainActivity extends FragmentActivity {
                         .addToBackStack(null).commit();
                 scratcherCount++;
             }
-
         });
 
         viewModel.getBackToHome().observe(this, Integer -> {

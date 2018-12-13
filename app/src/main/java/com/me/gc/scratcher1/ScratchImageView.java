@@ -159,7 +159,7 @@ public class ScratchImageView extends ImageView {
         //Bitmap scratchBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_scratch_pattern);
 
         //bert change overlay image here
-        Bitmap scratchBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.greypattern);
+        Bitmap scratchBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.scratchhere);
         mDrawable = new BitmapDrawable(getResources(), scratchBitmap);
         mDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
 
