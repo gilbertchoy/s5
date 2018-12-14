@@ -223,7 +223,6 @@
             app:layout_constraintLeft_toLeftOf="@id/guidelineVertical"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/guidelineHorizontal1" />
-
     </android.support.constraint.ConstraintLayout>
     <!-- Score Card end-->
 
@@ -295,7 +294,6 @@
         android:visibility="invisible"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <!--Lottie Animatins Start-->
     <com.airbnb.lottie.LottieAnimationView
@@ -405,12 +403,25 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/lilita_one"
         android:elevation="32dp"
-        android:text="300"
+        android:textStyle="bold"
+        android:text="0"
         android:textSize="24sp"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@+id/rewardTitle"
         app:layout_constraintStart_toStartOf="@+id/rewardTitle"
         app:layout_constraintTop_toBottomOf="@+id/rewardTitle" />
-
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/returnToHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="32dp"
+        android:fontFamily="@font/lilita_one"
+        android:text="OK"
+        android:visibility="invisible"
+        android:background="@color/color4"
+        android:paddingTop="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/rewardTitle"
+        app:layout_constraintStart_toStartOf="@+id/rewardTitle"
+        app:layout_constraintTop_toBottomOf="@+id/rewardTitle" />
 
 </android.support.constraint.ConstraintLayout>

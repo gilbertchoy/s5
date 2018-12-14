@@ -8,11 +8,13 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatButton;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,7 +47,9 @@ public class ScratcherCardFragment extends Fragment {
     private TextView textView6;
     private TextView rewardTextView;
     private TextView rewardTitle;
+    private TextView returnToHomeButton;
     private Integer sum;
+    private Integer cost;
     private Boolean revealFlag;
     private ConstraintLayout onRewardTransparent;
 
@@ -63,13 +67,12 @@ public class ScratcherCardFragment extends Fragment {
         //selected value
         viewModel = ViewModelProviders.of(this.getActivity()).get(MainViewModel.class);
         int selected = (int) viewModel.getSelected().getValue();
-        Integer cost = viewModel.getCost().getValue();
+        cost = viewModel.getCost().getValue();
         Log.d("berttest", "ScratcherCardFragment test selected value:" + selected);
 
         View v = inflater.inflate(R.layout.scratcher_card, container, false);
         backgroundImage = v.findViewById(R.id.backgroundImage);
         scratcherCost = v.findViewById(R.id.scratcherCost);
-
         scratcherCost.setText(cost.toString());
 
         //set background image
@@ -161,6 +164,7 @@ public class ScratcherCardFragment extends Fragment {
         textView6 = (TextView) v.findViewById(R.id.textView6);
         rewardTextView = (TextView) v.findViewById(R.id.rewardAmount);
         rewardTitle = (TextView) v.findViewById(R.id.rewardTitle);
+        returnToHomeButton = (AppCompatButton) v.findViewById(R.id.returnToHome);
         onRewardTransparent = (ConstraintLayout) v.findViewById(R.id.onRewardTransparent);
 
         textView.setText(r.toString());
@@ -216,10 +220,9 @@ public class ScratcherCardFragment extends Fragment {
             }
         });
 
-        rewardTextView.setOnClickListener(new View.OnClickListener() {
+        returnToHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                Log.d("berttest","pos 0 clicked");
                 viewModel.setBackToHome(0);
             }
         });
@@ -244,7 +247,7 @@ public class ScratcherCardFragment extends Fragment {
 
     public void showEndAnimation(int reward){
         onRewardTransparent.setVisibility(VISIBLE);
-        if(reward < 200){
+        if(reward < cost){
             Log.d("berttest","berttest reward amount 200");
             aBackgroundStar.setVisibility(VISIBLE);
             aSmallFireworks.setVisibility(VISIBLE);
@@ -252,7 +255,7 @@ public class ScratcherCardFragment extends Fragment {
             aBackgroundStar.playAnimation();
             aSmallFireworks.playAnimation();
         }
-        else if(reward < 300){
+        else if(reward < (rewardAvgValue * 7)){
             Log.d("berttest","berttest reward amount 300");
             aBackgroundStar.setVisibility(VISIBLE);
             aConfetti.setVisibility(VISIBLE);
@@ -260,7 +263,7 @@ public class ScratcherCardFragment extends Fragment {
             aBackgroundStar.playAnimation();
             aConfetti.playAnimation();
         }
-        else if(reward <400){
+        else if(reward < (rewardAvgValue * 7 * 1.2)){
             Log.d("berttest","berttest reward amount 400");
             aBackgroundStar.setVisibility(VISIBLE);
             aFireworks.setVisibility(VISIBLE);
@@ -268,7 +271,7 @@ public class ScratcherCardFragment extends Fragment {
             aBackgroundStar.playAnimation();
             aFireworks.playAnimation();
         }
-        else if(reward < 500){
+        else if(reward < (rewardAvgValue * 7 * 1.5)){
             Log.d("berttest","berttest reward amount 500");
             aBackgroundStar.setVisibility(VISIBLE);
             aFireworks.setVisibility(VISIBLE);
@@ -290,8 +293,10 @@ public class ScratcherCardFragment extends Fragment {
             aConfetti.playAnimation();
             aStar.playAnimation();
         }
+
         rewardTextView.setVisibility(VISIBLE);
         rewardTitle.setVisibility(VISIBLE);
+        returnToHomeButton.setVisibility(VISIBLE);
     }
 
 }
