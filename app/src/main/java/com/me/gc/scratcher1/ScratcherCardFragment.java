@@ -47,7 +47,7 @@ public class ScratcherCardFragment extends Fragment {
     private TextView textView6;
     private TextView rewardTextView;
     private TextView rewardTitle;
-    private TextView returnToHomeButton;
+    private Button returnToHomeButton;
     private Integer sum;
     private Integer cost;
     private Boolean revealFlag;
@@ -164,7 +164,7 @@ public class ScratcherCardFragment extends Fragment {
         textView6 = (TextView) v.findViewById(R.id.textView6);
         rewardTextView = (TextView) v.findViewById(R.id.rewardAmount);
         rewardTitle = (TextView) v.findViewById(R.id.rewardTitle);
-        returnToHomeButton = (AppCompatButton) v.findViewById(R.id.returnToHome);
+        returnToHomeButton = (Button) v.findViewById(R.id.returnToHome);
         onRewardTransparent = (ConstraintLayout) v.findViewById(R.id.onRewardTransparent);
 
         textView.setText(r.toString());

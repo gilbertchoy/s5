@@ -410,18 +410,20 @@
         app:layout_constraintEnd_toEndOf="@+id/rewardTitle"
         app:layout_constraintStart_toStartOf="@+id/rewardTitle"
         app:layout_constraintTop_toBottomOf="@+id/rewardTitle" />
-    <android.support.v7.widget.AppCompatButton
+    <Button
         android:id="@+id/returnToHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="32dp"
+        android:translationZ="32dp"
+        android:stateListAnimator="@null"
         android:fontFamily="@font/lilita_one"
         android:text="OK"
         android:visibility="invisible"
         android:background="@color/color4"
-        android:paddingTop="10dp"
-        app:layout_constraintEnd_toEndOf="@+id/rewardTitle"
-        app:layout_constraintStart_toStartOf="@+id/rewardTitle"
-        app:layout_constraintTop_toBottomOf="@+id/rewardTitle" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.7"
+        />
 
 </android.support.constraint.ConstraintLayout>
