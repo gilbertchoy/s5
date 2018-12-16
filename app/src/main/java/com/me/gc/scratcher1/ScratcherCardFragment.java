@@ -47,7 +47,8 @@ public class ScratcherCardFragment extends Fragment {
     private TextView textView6;
     private TextView rewardTextView;
     private TextView rewardTitle;
-    private Button returnToHomeButton;
+    private TextView clickHere;
+    private ConstraintLayout clickArea;
     private Integer sum;
     private Integer cost;
     private Boolean revealFlag;
@@ -164,8 +165,9 @@ public class ScratcherCardFragment extends Fragment {
         textView6 = (TextView) v.findViewById(R.id.textView6);
         rewardTextView = (TextView) v.findViewById(R.id.rewardAmount);
         rewardTitle = (TextView) v.findViewById(R.id.rewardTitle);
-        returnToHomeButton = (Button) v.findViewById(R.id.returnToHome);
         onRewardTransparent = (ConstraintLayout) v.findViewById(R.id.onRewardTransparent);
+        clickHere = (TextView) v.findViewById(R.id.clickHere);
+        clickArea = (ConstraintLayout) v.findViewById(R.id.clickArea);
 
         textView.setText(r.toString());
         textView1.setText(r1.toString());
@@ -220,7 +222,7 @@ public class ScratcherCardFragment extends Fragment {
             }
         });
 
-        returnToHomeButton.setOnClickListener(new View.OnClickListener() {
+        clickArea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
                 viewModel.setBackToHome(0);
@@ -230,8 +232,8 @@ public class ScratcherCardFragment extends Fragment {
     }
 
     public void revealCheck(){
-        if(extraScratchRevealed>0.1){
-            if(scratchRevealed>0.1){
+        if(extraScratchRevealed>0.9){
+            if(scratchRevealed>0.9){
                 sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
                 int totalPoints = viewModel.getPoints().getValue() + sum;
                 SharedPreferences.Editor editor = sharedPref.edit();
@@ -296,7 +298,8 @@ public class ScratcherCardFragment extends Fragment {
 
         rewardTextView.setVisibility(VISIBLE);
         rewardTitle.setVisibility(VISIBLE);
-        returnToHomeButton.setVisibility(VISIBLE);
+        clickHere.setVisibility(VISIBLE);
+        clickArea.setVisibility(VISIBLE);
     }
 
 }
