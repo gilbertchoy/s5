@@ -2,11 +2,14 @@ package com.me.gc.scratcher1;
 
 
 
+import android.Manifest;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +20,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.DisplayMetrics;
@@ -38,9 +42,26 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class MainActivity extends FragmentActivity {
     private MainViewModel viewModel;
@@ -61,6 +82,18 @@ public class MainActivity extends FragmentActivity {
     private int snackbarHeight;
     private Snackbar snackbar;
     private boolean flagRewardUserAfterAdOfDay;
+    private FusedLocationProviderClient mFusedLocationClient;
+
+    //device info
+    String model;
+    String brand;
+    String device;
+    String buildId;
+    String manufacturer;
+    String user;
+    String product;
+    String version;
+    int sdkVersion;
 
     //ads
     private InterstitialAd interstitialAd;
@@ -103,6 +136,64 @@ public class MainActivity extends FragmentActivity {
 
 */
 
+
+        /////////////////////
+        //Get device info start
+        /////////////////////
+        String model = android.os.Build.MODEL;
+        String brand = Build.BRAND;
+        String device = Build.DEVICE;
+        String buildId = Build.ID;
+        String manufacturer = Build.MANUFACTURER;
+        String user = Build.USER;
+        String product = Build.PRODUCT;
+        String version = Build.VERSION.RELEASE;
+        int sdkVersion = android.os.Build.VERSION.SDK_INT;
+
+        Log.d ("berttest", "berttest model:" + model + " brand:"+brand+" device:"+device+" id:"
+            +buildId + " manufacturer:" + manufacturer + " user:" + user + " product:" + product + " version:" + version + " sdkVersion:" + sdkVersion);
+
+        /////////////////////
+        //Get device info end
+        /////////////////////
+
+        MediaType MEDIA_TYPE =
+                MediaType.parse("application/json");
+
+        //RequestBody body = RequestBody.create(json, jsonstring);
+        JSONObject postdata = new JSONObject();
+        try {
+            postdata.put("model", "booyah");
+            postdata.put("Email", "anand.abhay1910@gmail.com");
+        } catch(JSONException e){
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        RequestBody body = RequestBody.create(MEDIA_TYPE,
+                postdata.toString());
+        Request request = new Request.Builder()
+                .addHeader("Content-Type", "application/json")
+                .url("https://scratcherserver.herokuapp.com/api/create")
+                .post(body)
+                .build();
+
+        OkHttpClient client = new OkHttpClient();
+        client.newCall(request).enqueue(new Callback() {
+                                            @Override
+                                            public void onFailure(Call call, IOException e) {
+                                                e.printStackTrace();
+                                                Log.d("berttest", "berttest onFailure http not sent");
+                                            }
+
+                                            @Override
+                                            public void onResponse(Call call, final Response response) throws IOException {
+                                                Log.d("berttest", "berttest onResponse http sent");
+                                                if (!response.isSuccessful()) {
+                                                    throw new IOException("Unexpected code " + response);
+                                                }
+                                            }
+                                        });
 
 
         /////////////////////
