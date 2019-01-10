@@ -21,6 +21,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.util.ArrayMap;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.DisplayMetrics;
@@ -90,17 +91,7 @@ public class MainActivity extends FragmentActivity {
     private boolean flagRewardUserAfterAdOfDay;
     private FusedLocationProviderClient mFusedLocationClient;
     private String deviceuid;
-
-    //device info
-    String model;
-    String brand;
-    String device;
-    String buildId;
-    String manufacturer;
-    String user;
-    String product;
-    String version;
-    int sdkVersion;
+    private ArrayMap<String,String> deviceInfo = new ArrayMap<>();
 
     //ads
     private InterstitialAd interstitialAd;
@@ -143,23 +134,21 @@ public class MainActivity extends FragmentActivity {
 
 */
 
-
         /////////////////////
         //Get device info start
         /////////////////////
-        String model = android.os.Build.MODEL;
-        String brand = Build.BRAND;
-        String device = Build.DEVICE;
-        String buildId = Build.ID;
-        String manufacturer = Build.MANUFACTURER;
-        String user = Build.USER;
-        String product = Build.PRODUCT;
-        String version = Build.VERSION.RELEASE;
-        int sdkVersion = android.os.Build.VERSION.SDK_INT;
+        deviceInfo.put("model", android.os.Build.MODEL);
+        deviceInfo.put("brand", Build.BRAND);
+        deviceInfo.put("device", Build.DEVICE);
+        deviceInfo.put("buildid", Build.ID);
+        deviceInfo.put("manufacturer", Build.MANUFACTURER);
+        deviceInfo.put("user", Build.USER);
+        deviceInfo.put("product", Build.PRODUCT);
+        deviceInfo.put("releaseversion", Build.VERSION.RELEASE);
+        Integer sdkInt = android.os.Build.VERSION.SDK_INT;
+        deviceInfo.put("sdkversion", sdkInt.toString());
 
-        Log.d ("berttest", "berttest model:" + model + " brand:"+brand+" device:"+device+" id:"
-            +buildId + " manufacturer:" + manufacturer + " user:" + user + " product:" + product + " version:" + version + " sdkVersion:" + sdkVersion);
-
+        Log.d("berttest", "array test model:" + deviceInfo.get("model") + " sdkversio:" + deviceInfo.get("sdkversion"));
         /////////////////////
         //Get device info end
         /////////////////////
@@ -168,40 +157,27 @@ public class MainActivity extends FragmentActivity {
         /////////////////////
         //Create new deviceuid start
         /////////////////////
-        File file = new File("startdust");
-        if(file.exists())
-            Log.d("berttest", "file exists");
-        else{
-            Log.d("berttest", "file DNE");
-        }
-
-        /* works except for the check
         try {
-            Log.d("berttest", "create start");
             FileInputStream userInputStream = context.openFileInput("startdust");
-            Log.d("berttest", "userInputStream");
             InputStreamReader inputStreamReader = new InputStreamReader(userInputStream);
-            if(userInputStream.available() == 1){
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                String lineData = bufferedReader.readLine();
-                Log.d("berttest","lineData length is:" + lineData.length());
-                int fileLength = lineData.length();
-                if(fileLength>29 && fileLength<58){
-                    //deviceuid exists do nothing
-                }else{
-                    createNewDeviceUID();
-                }
-            }
-            else{
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            String lineData = bufferedReader.readLine();
+            Log.d("berttest","lineData length is:" + lineData.length());
+            int fileLength = lineData.length();
+            if(fileLength>29 && fileLength<58){
+                //deviceuid exists do nothing
+                deviceuid = lineData;
+                Log.d("berttest", "deviceuid exists and is:" + deviceuid);
+            }else{
                 createNewDeviceUID();
             }
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            createNewDeviceUID();
         } catch (IOException e) {
             e.printStackTrace();
+            createNewDeviceUID();
         }
-        */
         /////////////////////
         //Create new deviceuid end
         /////////////////////
@@ -326,6 +302,9 @@ public class MainActivity extends FragmentActivity {
         interstitialAd.loadAd(adRequest);
 
         interstitialAd.setAdListener(new AdListener() {
+            @Override
+            public
+
             @Override
             public void onAdClosed() {
                 // Load the next interstitial.
@@ -524,8 +503,15 @@ public class MainActivity extends FragmentActivity {
         //RequestBody body = RequestBody.create(json, jsonstring);
         JSONObject postdata = new JSONObject();
         try {
-            postdata.put("model", "booyah");
-            postdata.put("Email", "anand.abhay1910@gmail.com");
+            postdata.put("model", deviceInfo.get("model"));
+            postdata.put("brand", deviceInfo.get("brand"));
+            postdata.put("device", deviceInfo.get("device"));
+            postdata.put("buildid", deviceInfo.get("buildid"));
+            postdata.put("manufacturer", deviceInfo.get("manufacturer"));
+            postdata.put("user", deviceInfo.get("user"));
+            postdata.put("product", deviceInfo.get("product"));
+            postdata.put("releaseversion", deviceInfo.get("releaseversion"));
+            postdata.put("sdkversion", deviceInfo.get("sdkversion"));
         } catch(JSONException e){
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -559,12 +545,14 @@ public class MainActivity extends FragmentActivity {
                 Log.d("berttest","jsonData string is:" + jsonData);
                 try {
                     JSONObject jsonObject = new JSONObject(jsonData);
-                    String deviceuid = jsonObject.getString("deviceuid");
-                    Log.d("berttest", "deviceuid:"+deviceuid);
+                    String newdeviceuid = jsonObject.getString("deviceuid");
+                    Log.d("berttest", "deviceuid:"+newdeviceuid);
 
                     //create new file start
+                    //creates new file and new entry even if exists
                     String filename = "startdust";
-                    String fileContents = deviceuid;
+                    deviceuid = newdeviceuid;
+                    String fileContents = newdeviceuid;
                     FileOutputStream outputStream;
                     try {
                         outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
