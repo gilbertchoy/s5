@@ -59,6 +59,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -92,6 +94,8 @@ public class MainActivity extends FragmentActivity {
     private FusedLocationProviderClient mFusedLocationClient;
     private String deviceuid;
     private ArrayMap<String,String> deviceInfo = new ArrayMap<>();
+    //for running thread synchronously
+    private ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     //ads
     private InterstitialAd interstitialAd;
@@ -134,6 +138,10 @@ public class MainActivity extends FragmentActivity {
 
 */
 
+
+        executorService.submit(playad);
+        executorService.submit(adclosed);
+
         /////////////////////
         //Get device info start
         /////////////////////
@@ -169,14 +177,17 @@ public class MainActivity extends FragmentActivity {
                 deviceuid = lineData;
                 Log.d("berttest", "deviceuid exists and is:" + deviceuid);
             }else{
-                createNewDeviceUID();
+                //createNewDeviceUID();
+                executorService.submit(createNewDeviceUID);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            createNewDeviceUID();
+            //createNewDeviceUID();
+            executorService.submit(createNewDeviceUID);
         } catch (IOException e) {
             e.printStackTrace();
-            createNewDeviceUID();
+            //createNewDeviceUID();
+            executorService.submit(createNewDeviceUID);
         }
         /////////////////////
         //Create new deviceuid end
@@ -303,7 +314,9 @@ public class MainActivity extends FragmentActivity {
 
         interstitialAd.setAdListener(new AdListener() {
             @Override
-            public
+            public void onAdOpened() {
+
+            }
 
             @Override
             public void onAdClosed() {
@@ -496,77 +509,79 @@ public class MainActivity extends FragmentActivity {
         /////////////////////
     }
 
-    private void createNewDeviceUID(){
-        MediaType MEDIA_TYPE =
-                MediaType.parse("application/json");
-
-        //RequestBody body = RequestBody.create(json, jsonstring);
-        JSONObject postdata = new JSONObject();
-        try {
-            postdata.put("model", deviceInfo.get("model"));
-            postdata.put("brand", deviceInfo.get("brand"));
-            postdata.put("device", deviceInfo.get("device"));
-            postdata.put("buildid", deviceInfo.get("buildid"));
-            postdata.put("manufacturer", deviceInfo.get("manufacturer"));
-            postdata.put("user", deviceInfo.get("user"));
-            postdata.put("product", deviceInfo.get("product"));
-            postdata.put("releaseversion", deviceInfo.get("releaseversion"));
-            postdata.put("sdkversion", deviceInfo.get("sdkversion"));
-        } catch(JSONException e){
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+    final Runnable playad = new Runnable() {
+        public void run() {
+            Log.d("berttest", "playad runnable called");
         }
+    };
 
-        RequestBody body = RequestBody.create(MEDIA_TYPE,
-                postdata.toString());
-        Request request = new Request.Builder()
-                .addHeader("Content-Type", "application/json")
-                .url("https://scratcherserver.herokuapp.com/api/create")
-                .post(body)
-                .build();
+    final Runnable adclosed = new Runnable() {
+        public void run() {
+            Log.d("berttest", "adclosed runnable called");
+        }
+    };
 
-        OkHttpClient client = new OkHttpClient();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
+    final Runnable createNewDeviceUID = new Runnable() {
+        public void run() {
+            MediaType MEDIA_TYPE =
+                    MediaType.parse("application/json");
+
+            JSONObject postdata = new JSONObject();
+            try {
+                postdata.put("model", deviceInfo.get("model"));
+                postdata.put("brand", deviceInfo.get("brand"));
+                postdata.put("device", deviceInfo.get("device"));
+                postdata.put("buildid", deviceInfo.get("buildid"));
+                postdata.put("manufacturer", deviceInfo.get("manufacturer"));
+                postdata.put("user", deviceInfo.get("user"));
+                postdata.put("product", deviceInfo.get("product"));
+                postdata.put("releaseversion", deviceInfo.get("releaseversion"));
+                postdata.put("sdkversion", deviceInfo.get("sdkversion"));
+            } catch(JSONException e){
+                // TODO Auto-generated catch block
                 e.printStackTrace();
-                Log.d("berttest", "berttest onFailure http not sent");
             }
 
-            @Override
-            public void onResponse(Call call, final Response response) throws IOException {
-                Log.d("berttest", "berttest onResponse http sent");
-                //Log.d("berttest", "response string is:" + response.body().string());
-                if (!response.isSuccessful()) {
-                    throw new IOException("Unexpected code " + response);
-                }
+            RequestBody body = RequestBody.create(MEDIA_TYPE,
+                    postdata.toString());
+            Request request = new Request.Builder()
+                    .addHeader("Content-Type", "application/json")
+                    .url("https://scratcherserver.herokuapp.com/api/create")
+                    .post(body)
+                    .build();
 
-                String jsonData = response.body().string();
-                Log.d("berttest","jsonData string is:" + jsonData);
-                try {
-                    JSONObject jsonObject = new JSONObject(jsonData);
-                    String newdeviceuid = jsonObject.getString("deviceuid");
-                    Log.d("berttest", "deviceuid:"+newdeviceuid);
-
-                    //create new file start
-                    //creates new file and new entry even if exists
-                    String filename = "startdust";
-                    deviceuid = newdeviceuid;
-                    String fileContents = newdeviceuid;
-                    FileOutputStream outputStream;
+            OkHttpClient client = new OkHttpClient();
+            try {
+                Response response = client.newCall(request).execute();
+                if(response.isSuccessful()){
+                    String jsonData = response.body().string();
+                    Log.d("berttest","jsonData string is:" + jsonData);
                     try {
-                        outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
-                        outputStream.write(fileContents.getBytes());
-                        outputStream.close();
-                    } catch (Exception e) {
+                        JSONObject jsonObject = new JSONObject(jsonData);
+                        String newdeviceuid = jsonObject.getString("deviceuid");
+                        Log.d("berttest", "deviceuid:"+newdeviceuid);
+
+                        //create new file start
+                        //creates new file and new entry even if exists
+                        String filename = "startdust";
+                        deviceuid = newdeviceuid;
+                        String fileContents = newdeviceuid;
+                        FileOutputStream outputStream;
+                        try {
+                            outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
+                            outputStream.write(fileContents.getBytes());
+                            outputStream.close();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        //create new file end
+                    } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    //create new file end
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        });
-    }
+        }
+    };
 }
