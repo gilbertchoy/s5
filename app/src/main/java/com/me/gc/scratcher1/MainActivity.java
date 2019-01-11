@@ -162,6 +162,15 @@ public class MainActivity extends FragmentActivity {
         /////////////////////
 
 
+        String test = "sadf-qwe";
+        String[] parts = test.split("-");
+        String part1 = parts[0]; // 004
+        String part2 = parts[1]; // 034556
+
+
+        Log.d("berttest", "part1:"+part1 + " part2:" + part2);
+
+
         /////////////////////
         //Create new deviceuid start
         /////////////////////
