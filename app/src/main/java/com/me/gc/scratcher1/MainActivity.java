@@ -57,8 +57,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -93,9 +95,11 @@ public class MainActivity extends FragmentActivity {
     private boolean flagRewardUserAfterAdOfDay;
     private FusedLocationProviderClient mFusedLocationClient;
     private String deviceuid;
+    private String hashkey;
     private ArrayMap<String,String> deviceInfo = new ArrayMap<>();
     //for running thread synchronously
     private ExecutorService executorService = Executors.newSingleThreadExecutor();
+    Server server;
 
     //ads
     private InterstitialAd interstitialAd;
@@ -137,7 +141,20 @@ public class MainActivity extends FragmentActivity {
         }
 
 */
+        String hash = "";
+        Hashing hashing = new Hashing();
+        try {
+            hash = hashing.sha1("1234");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
+        server = new Server(context);
+
+
+        Log.d("berttest", "hash is:" + hash);
 
         executorService.submit(playad);
         executorService.submit(adclosed);
@@ -161,19 +178,11 @@ public class MainActivity extends FragmentActivity {
         //Get device info end
         /////////////////////
 
-
-        String test = "sadf-qwe";
-        String[] parts = test.split("-");
-        String part1 = parts[0]; // 004
-        String part2 = parts[1]; // 034556
-
-
-        Log.d("berttest", "part1:"+part1 + " part2:" + part2);
-
-
+        server.create();
         /////////////////////
         //Create new deviceuid start
         /////////////////////
+        /*works
         try {
             FileInputStream userInputStream = context.openFileInput("startdust");
             InputStreamReader inputStreamReader = new InputStreamReader(userInputStream);
@@ -181,13 +190,16 @@ public class MainActivity extends FragmentActivity {
             String lineData = bufferedReader.readLine();
             Log.d("berttest","lineData length is:" + lineData.length());
             int fileLength = lineData.length();
-            if(fileLength>29 && fileLength<58){
+            if(fileLength>90 && fileLength<100){
                 //deviceuid exists do nothing
-                deviceuid = lineData;
-                Log.d("berttest", "deviceuid exists and is:" + deviceuid);
+                String[] parts = lineData.split("-");
+                deviceuid = parts[0]; // 004
+                hashkey = parts[1]; // 034556
+                Log.d("berttest", "deviceuid exists and is:" + deviceuid + " hashkey:" + hashkey);
             }else{
                 //createNewDeviceUID();
-                executorService.submit(createNewDeviceUID);
+                //executorService.submit(createNewDeviceUID);
+                server.createNewDeviceUID
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -198,6 +210,7 @@ public class MainActivity extends FragmentActivity {
             //createNewDeviceUID();
             executorService.submit(createNewDeviceUID);
         }
+        */
         /////////////////////
         //Create new deviceuid end
         /////////////////////
@@ -537,6 +550,7 @@ public class MainActivity extends FragmentActivity {
 
             JSONObject postdata = new JSONObject();
             try {
+                //currentlu data is unsed serverside
                 postdata.put("model", deviceInfo.get("model"));
                 postdata.put("brand", deviceInfo.get("brand"));
                 postdata.put("device", deviceInfo.get("device"));
@@ -569,12 +583,13 @@ public class MainActivity extends FragmentActivity {
                         JSONObject jsonObject = new JSONObject(jsonData);
                         String newdeviceuid = jsonObject.getString("deviceuid");
                         Log.d("berttest", "deviceuid:"+newdeviceuid);
-
+                        String newhk = jsonObject.getString("hk");
                         //create new file start
                         //creates new file and new entry even if exists
                         String filename = "startdust";
                         deviceuid = newdeviceuid;
-                        String fileContents = newdeviceuid;
+                        hashkey = newhk;
+                        String fileContents = deviceuid + "-" + hashkey;
                         FileOutputStream outputStream;
                         try {
                             outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
