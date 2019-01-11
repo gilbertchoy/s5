@@ -141,79 +141,9 @@ public class MainActivity extends FragmentActivity {
         }
 
 */
-        String hash = "";
-        Hashing hashing = new Hashing();
-        try {
-            hash = hashing.sha1("1234");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
 
-        server = new Server(context);
-
-
-        Log.d("berttest", "hash is:" + hash);
-
-        executorService.submit(playad);
-        executorService.submit(adclosed);
-
-        /////////////////////
-        //Get device info start
-        /////////////////////
-        deviceInfo.put("model", android.os.Build.MODEL);
-        deviceInfo.put("brand", Build.BRAND);
-        deviceInfo.put("device", Build.DEVICE);
-        deviceInfo.put("buildid", Build.ID);
-        deviceInfo.put("manufacturer", Build.MANUFACTURER);
-        deviceInfo.put("user", Build.USER);
-        deviceInfo.put("product", Build.PRODUCT);
-        deviceInfo.put("releaseversion", Build.VERSION.RELEASE);
-        Integer sdkInt = android.os.Build.VERSION.SDK_INT;
-        deviceInfo.put("sdkversion", sdkInt.toString());
-
-        Log.d("berttest", "array test model:" + deviceInfo.get("model") + " sdkversio:" + deviceInfo.get("sdkversion"));
-        /////////////////////
-        //Get device info end
-        /////////////////////
-
+        //check if deviceuid exists, create new deviceuid if DNE
         server.create();
-        /////////////////////
-        //Create new deviceuid start
-        /////////////////////
-        /*works
-        try {
-            FileInputStream userInputStream = context.openFileInput("startdust");
-            InputStreamReader inputStreamReader = new InputStreamReader(userInputStream);
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            String lineData = bufferedReader.readLine();
-            Log.d("berttest","lineData length is:" + lineData.length());
-            int fileLength = lineData.length();
-            if(fileLength>90 && fileLength<100){
-                //deviceuid exists do nothing
-                String[] parts = lineData.split("-");
-                deviceuid = parts[0]; // 004
-                hashkey = parts[1]; // 034556
-                Log.d("berttest", "deviceuid exists and is:" + deviceuid + " hashkey:" + hashkey);
-            }else{
-                //createNewDeviceUID();
-                //executorService.submit(createNewDeviceUID);
-                server.createNewDeviceUID
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            //createNewDeviceUID();
-            executorService.submit(createNewDeviceUID);
-        } catch (IOException e) {
-            e.printStackTrace();
-            //createNewDeviceUID();
-            executorService.submit(createNewDeviceUID);
-        }
-        */
-        /////////////////////
-        //Create new deviceuid end
-        /////////////////////
 
         /////////////////////
         //Ads start
@@ -375,6 +305,11 @@ public class MainActivity extends FragmentActivity {
         //Ads end
         ///////////////
 
+
+
+        //stopped here, put playAd into admob callback
+
+
         //Play Ad when play ad button pressed
         viewModel.getAdOfDayPressed().observe(this, new Observer() {
             @Override
@@ -530,82 +465,4 @@ public class MainActivity extends FragmentActivity {
         //Drawer End
         /////////////////////
     }
-
-    final Runnable playad = new Runnable() {
-        public void run() {
-            Log.d("berttest", "playad runnable called");
-        }
-    };
-
-    final Runnable adclosed = new Runnable() {
-        public void run() {
-            Log.d("berttest", "adclosed runnable called");
-        }
-    };
-
-    final Runnable createNewDeviceUID = new Runnable() {
-        public void run() {
-            MediaType MEDIA_TYPE =
-                    MediaType.parse("application/json");
-
-            JSONObject postdata = new JSONObject();
-            try {
-                //currentlu data is unsed serverside
-                postdata.put("model", deviceInfo.get("model"));
-                postdata.put("brand", deviceInfo.get("brand"));
-                postdata.put("device", deviceInfo.get("device"));
-                postdata.put("buildid", deviceInfo.get("buildid"));
-                postdata.put("manufacturer", deviceInfo.get("manufacturer"));
-                postdata.put("user", deviceInfo.get("user"));
-                postdata.put("product", deviceInfo.get("product"));
-                postdata.put("releaseversion", deviceInfo.get("releaseversion"));
-                postdata.put("sdkversion", deviceInfo.get("sdkversion"));
-            } catch(JSONException e){
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-            RequestBody body = RequestBody.create(MEDIA_TYPE,
-                    postdata.toString());
-            Request request = new Request.Builder()
-                    .addHeader("Content-Type", "application/json")
-                    .url("https://scratcherserver.herokuapp.com/api/create")
-                    .post(body)
-                    .build();
-
-            OkHttpClient client = new OkHttpClient();
-            try {
-                Response response = client.newCall(request).execute();
-                if(response.isSuccessful()){
-                    String jsonData = response.body().string();
-                    Log.d("berttest","jsonData string is:" + jsonData);
-                    try {
-                        JSONObject jsonObject = new JSONObject(jsonData);
-                        String newdeviceuid = jsonObject.getString("deviceuid");
-                        Log.d("berttest", "deviceuid:"+newdeviceuid);
-                        String newhk = jsonObject.getString("hk");
-                        //create new file start
-                        //creates new file and new entry even if exists
-                        String filename = "startdust";
-                        deviceuid = newdeviceuid;
-                        hashkey = newhk;
-                        String fileContents = deviceuid + "-" + hashkey;
-                        FileOutputStream outputStream;
-                        try {
-                            outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
-                            outputStream.write(fileContents.getBytes());
-                            outputStream.close();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        //create new file end
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    };
 }

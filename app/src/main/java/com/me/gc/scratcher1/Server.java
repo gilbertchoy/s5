@@ -31,6 +31,7 @@ public class Server {
     private ExecutorService executorService = Executors.newSingleThreadExecutor();
     private String deviceuid;
     private String hashkey;
+    private Integer transactionid;
 
     public Server(Context c){
         context = c;
@@ -44,6 +45,9 @@ public class Server {
         deviceInfo.put("releaseversion", Build.VERSION.RELEASE);
         Integer sdkInt = android.os.Build.VERSION.SDK_INT;
         deviceInfo.put("sdkversion", sdkInt.toString());
+        transactionid = null;
+        hashkey = "";
+        deviceuid = "";
     }
 
     //ping server and save new deviceuid and new hashkey
@@ -123,7 +127,7 @@ public class Server {
         }
     };
 
-    private final Runnable playad = new Runnable() {
+    private final Runnable playAd = new Runnable() {
         public void run() {
             Hashing hashing = new Hashing();
             String hash = "";
@@ -137,7 +141,6 @@ public class Server {
 
             MediaType MEDIA_TYPE =
                     MediaType.parse("application/json");
-
             JSONObject postdata = new JSONObject();
             try {
                 //currentlu data is unsed serverside
@@ -150,7 +153,8 @@ public class Server {
                 postdata.put("product", deviceInfo.get("product"));
                 postdata.put("releaseversion", deviceInfo.get("releaseversion"));
                 postdata.put("sdkversion", deviceInfo.get("sdkversion"));
-                postdata.put("hash",hash);
+                postdata.put("deviceuid", deviceuid);
+                postdata.put("hash", hash);
             } catch(JSONException e){
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -172,22 +176,7 @@ public class Server {
                     Log.d("berttest","playad jsonData string is:" + jsonData);
                     try {
                         JSONObject jsonObject = new JSONObject(jsonData);
-                        String newdeviceuid = jsonObject.getString("deviceuid");
-                        Log.d("berttest", "deviceuid:"+newdeviceuid);
-                        String newhk = jsonObject.getString("hk");
-                        //create new file start
-                        //creates new file and new entry even if exists
-                        String filename = "startdust";
-                        String fileContents = newdeviceuid + "-" + newhk;
-                        FileOutputStream outputStream;
-                        try {
-                            outputStream = context.openFileOutput(filename, Context.MODE_PRIVATE);
-                            outputStream.write(fileContents.getBytes());
-                            outputStream.close();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        //create new file end
+                        transactionid = jsonObject.getInt("transactionid");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -225,8 +214,8 @@ public class Server {
         }
     }
 
-    public void playad(){
-
+    public void playAd(){
+        executorService.submit(playAd);
     }
 
 }
