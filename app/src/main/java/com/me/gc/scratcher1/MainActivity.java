@@ -143,7 +143,9 @@ public class MainActivity extends FragmentActivity {
 */
 
         //check if deviceuid exists, create new deviceuid if DNE
+        server = new Server(context);
         server.create();
+        server.playAd();
 
         /////////////////////
         //Ads start
@@ -267,7 +269,7 @@ public class MainActivity extends FragmentActivity {
         interstitialAd.setAdListener(new AdListener() {
             @Override
             public void onAdOpened() {
-
+                server.playAd();
             }
 
             @Override

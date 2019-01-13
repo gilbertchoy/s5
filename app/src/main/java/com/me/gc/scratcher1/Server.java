@@ -132,7 +132,9 @@ public class Server {
             Hashing hashing = new Hashing();
             String hash = "";
             try {
-                hash = hashing.sha1(deviceuid + hashkey + deviceInfo.get("model"));
+                hash = hashing.sha1(deviceuid + "." + hashkey + "." + deviceInfo.get("model"));
+                Log.d("berttest", "hash is" + hash);
+                Log.d("berttest", "model is: " + deviceInfo.get("model"));
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             } catch (UnsupportedEncodingException e) {
@@ -143,7 +145,7 @@ public class Server {
                     MediaType.parse("application/json");
             JSONObject postdata = new JSONObject();
             try {
-                //currentlu data is unsed serverside
+                //currently data is unsed serverside
                 postdata.put("model", deviceInfo.get("model"));
                 postdata.put("brand", deviceInfo.get("brand"));
                 postdata.put("device", deviceInfo.get("device"));
@@ -177,6 +179,71 @@ public class Server {
                     try {
                         JSONObject jsonObject = new JSONObject(jsonData);
                         transactionid = jsonObject.getInt("transactionid");
+                        Log.d("berttest", "transactionid:" + transactionid);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    private final Runnable adclosed = new Runnable() {
+        public void run() {
+            Hashing hashing = new Hashing();
+            String hash = "";
+            try {
+                hash = hashing.sha1(transactionid + "." + deviceuid + "." + hashkey + "." + deviceInfo.get("model"));
+                Log.d("berttest", "hash is" + hash);
+                Log.d("berttest", "model is: " + deviceInfo.get("model"));
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+            MediaType MEDIA_TYPE =
+                    MediaType.parse("application/json");
+            JSONObject postdata = new JSONObject();
+            try {
+                //currently data is unsed serverside
+                postdata.put("model", deviceInfo.get("model"));
+                postdata.put("brand", deviceInfo.get("brand"));
+                postdata.put("device", deviceInfo.get("device"));
+                postdata.put("buildid", deviceInfo.get("buildid"));
+                postdata.put("manufacturer", deviceInfo.get("manufacturer"));
+                postdata.put("user", deviceInfo.get("user"));
+                postdata.put("product", deviceInfo.get("product"));
+                postdata.put("releaseversion", deviceInfo.get("releaseversion"));
+                postdata.put("sdkversion", deviceInfo.get("sdkversion"));
+                postdata.put("deviceuid", deviceuid);
+                postdata.put("hash", hash);
+                postdata.put("transactionid", transactionid);
+            } catch(JSONException e){
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            RequestBody body = RequestBody.create(MEDIA_TYPE,
+                    postdata.toString());
+            Request request = new Request.Builder()
+                    .addHeader("Content-Type", "application/json")
+                    .url("https://scratcherserver.herokuapp.com/api/adclosed")
+                    .post(body)
+                    .build();
+
+            OkHttpClient client = new OkHttpClient();
+            try {
+                Response response = client.newCall(request).execute();
+                if(response.isSuccessful()){
+                    String jsonData = response.body().string();
+                    Log.d("berttest","playad jsonData string is:" + jsonData);
+                    try {
+                        JSONObject jsonObject = new JSONObject(jsonData);
+                        Integer serverResponse = jsonObject.getInt("reponse");
+                        Log.d("berttest", "adclosed response:" + serverResponse);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -216,6 +283,10 @@ public class Server {
 
     public void playAd(){
         executorService.submit(playAd);
+    }
+
+    public void adClosed(){
+        executorService.submit(adclosed);
     }
 
 }
