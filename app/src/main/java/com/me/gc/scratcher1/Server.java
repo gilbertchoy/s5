@@ -179,7 +179,7 @@ public class Server {
                     try {
                         JSONObject jsonObject = new JSONObject(jsonData);
                         transactionid = jsonObject.getInt("transactionid");
-                        Log.d("berttest", "transactionid:" + transactionid);
+                        Log.d("berttest", "playad transactionid:" + transactionid);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -195,9 +195,9 @@ public class Server {
             Hashing hashing = new Hashing();
             String hash = "";
             try {
-                hash = hashing.sha1(transactionid + "." + deviceuid + "." + hashkey + "." + deviceInfo.get("model"));
-                Log.d("berttest", "hash is" + hash);
-                Log.d("berttest", "model is: " + deviceInfo.get("model"));
+                hash = hashing.sha1(transactionid.toString() + "." + deviceuid + "." + hashkey + "." + deviceInfo.get("model"));
+                Log.d("berttest", "adclosed hash is " + hash);
+                Log.d("berttest", "adclosed transactionid:" + transactionid.toString());
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             } catch (UnsupportedEncodingException e) {

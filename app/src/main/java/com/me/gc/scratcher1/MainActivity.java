@@ -16,6 +16,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -105,6 +106,8 @@ public class MainActivity extends FragmentActivity {
     private InterstitialAd interstitialAd;
     private ConsentForm form;
 
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,13 +126,16 @@ public class MainActivity extends FragmentActivity {
         sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         points = sharedPref.getInt("points",1000); //returns -1 if points value is 0
 
-        //test code for setting points
-        editor = sharedPref.edit();
-        editor.putInt("points", 10000);
-        editor.commit();
-        viewModel.setPoints(10000);
+        //works: test code for setting points
 
-        /*  works this is deployment code
+        editor = sharedPref.edit();
+        editor.putInt("points", 100000);
+        editor.commit();
+        viewModel.setPoints(100000);
+
+
+        //  works this is deployment code
+        /*
         if(points == -1) { //check if 1st time init, check if points value exists if not then input starting points value
             Log.d("berttest", "input points");
             SharedPreferences.Editor editor = sharedPref.edit();
@@ -139,20 +145,22 @@ public class MainActivity extends FragmentActivity {
         }else{
             viewModel.setPoints(points);
         }
-
-*/
+        */
 
         //check if deviceuid exists, create new deviceuid if DNE
         server = new Server(context);
         server.create();
-        server.playAd();
 
         /////////////////////
         //Ads start
         /////////////////////
         MobileAds.initialize(this, "ca-app-pub-6760835969070814~3267571022");
+        //MobileAds.initialize(this, "ca-app-pub-6760835969070814~5912740615");
+
         interstitialAd = new InterstitialAd(this);
-        interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        //interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        interstitialAd.setAdUnitId("ca-app-pub-6760835969070814/8300405855");
+
         //get GDPR consent value
         sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         int consentStored = sharedPref.getInt("targeted",0);
@@ -268,6 +276,16 @@ public class MainActivity extends FragmentActivity {
 
         interstitialAd.setAdListener(new AdListener() {
             @Override
+            public void onAdLoaded() {
+                Log.d("berttest", "onAdLoaded");
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                Log.d("berttest", "onAdFailedToLoad errorcode:" + errorCode);
+            }
+
+            @Override
             public void onAdOpened() {
                 server.playAd();
             }
@@ -276,6 +294,7 @@ public class MainActivity extends FragmentActivity {
             public void onAdClosed() {
                 // Load the next interstitial.
                 interstitialAd.loadAd(adRequest);
+                server.adClosed();
                 if(flagRewardUserAfterAdOfDay==true){
                     flagRewardUserAfterAdOfDay = false;
                     //add points
@@ -327,7 +346,7 @@ public class MainActivity extends FragmentActivity {
                 Integer selected = (Integer) position;
                 Log.d("berttest", "MainActivity selected osberved: " + selected.toString());
 
-                if(scratcherCount%3 == 0) {
+                if(scratcherCount%2 == 0) {
                     interstitialAd.show();
                 }
                 // Create a new FragmentManager
@@ -466,5 +485,12 @@ public class MainActivity extends FragmentActivity {
         /////////////////////
         //Drawer End
         /////////////////////
+
+
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                MY_PERMISSIONS_REQUEST_LOCATION);
+
+
     }
 }
