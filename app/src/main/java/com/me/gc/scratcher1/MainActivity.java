@@ -33,6 +33,14 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.applovin.adview.AppLovinInterstitialAd;
+import com.applovin.adview.AppLovinInterstitialAdDialog;
+import com.applovin.sdk.AppLovinAd;
+import com.applovin.sdk.AppLovinAdDisplayListener;
+import com.applovin.sdk.AppLovinAdLoadListener;
+import com.applovin.sdk.AppLovinAdSize;
+import com.applovin.sdk.AppLovinPrivacySettings;
+import com.applovin.sdk.AppLovinSdk;
 import com.google.ads.consent.ConsentForm;
 import com.google.ads.consent.ConsentFormListener;
 import com.google.ads.consent.ConsentInfoUpdateListener;
@@ -103,8 +111,13 @@ public class MainActivity extends FragmentActivity {
     Server server;
 
     //ads
+    //admob
     private InterstitialAd interstitialAd;
     private ConsentForm form;
+    //applovin
+    private AppLovinInterstitialAdDialog applovinInterstitialAd;
+    private AppLovinAd applovinLoadedAd;
+
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
@@ -117,7 +130,6 @@ public class MainActivity extends FragmentActivity {
         flagRewardUserAfterAdOfDay = false;
         this.fragmentManager = getSupportFragmentManager();
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         screenHeight = displayMetrics.heightPixels;
@@ -125,14 +137,11 @@ public class MainActivity extends FragmentActivity {
         //1st time init - if points value is null then add points
         sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         points = sharedPref.getInt("points",1000); //returns -1 if points value is 0
-
         //works: test code for setting points
-
         editor = sharedPref.edit();
         editor.putInt("points", 100000);
         editor.commit();
         viewModel.setPoints(100000);
-
 
         //  works this is deployment code
         /*
@@ -154,6 +163,57 @@ public class MainActivity extends FragmentActivity {
         /////////////////////
         //Ads start
         /////////////////////
+
+        //Applovin Start
+        //Applovin
+        AppLovinSdk.initializeSdk(context);
+        applovinInterstitialAd = AppLovinInterstitialAd.create( AppLovinSdk.getInstance( context ), context );
+        AppLovinSdk.getInstance( context ).getAdService().loadNextAd( AppLovinAdSize.INTERSTITIAL, new AppLovinAdLoadListener()
+        {
+            @Override
+            public void adReceived(AppLovinAd ad)
+            {
+                Log.d("berttest","applovin adReceived");
+                applovinLoadedAd = ad;
+            }
+
+            @Override
+            public void failedToReceiveAd(int errorCode)
+            {
+                Log.d("berttest","applovin failedToReceiveAd");
+            }
+        } );
+
+        applovinInterstitialAd = AppLovinInterstitialAd.create(AppLovinSdk.getInstance( context ), context);
+        applovinInterstitialAd.setAdDisplayListener(new AppLovinAdDisplayListener() {
+            @Override
+            public void adDisplayed(AppLovinAd appLovinAd) {
+                server.playAd();
+                Log.d("berttest", "applovin adDisplayed");
+            }
+            @Override
+            public void adHidden(AppLovinAd appLovinAd) {
+                Log.d("berttest", "applovin adHidden");
+                server.adClosed();
+                AppLovinSdk.getInstance( context ).getAdService().loadNextAd( AppLovinAdSize.INTERSTITIAL, new AppLovinAdLoadListener()
+                {
+                    @Override
+                    public void adReceived(AppLovinAd ad)
+                    {
+                        Log.d("berttest","applovin adReceived1");
+                    }
+
+                    @Override
+                    public void failedToReceiveAd(int errorCode)
+                    {
+                        Log.d("berttest","applovin failedToReceiveAd1");
+                    }
+                } );
+            }
+        });
+        //Applovin End
+
+        //Admob Start (admob consent form used for both admob and applovin
         MobileAds.initialize(this, "ca-app-pub-6760835969070814~3267571022");
         //MobileAds.initialize(this, "ca-app-pub-6760835969070814~5912740615");
 
@@ -166,12 +226,12 @@ public class MainActivity extends FragmentActivity {
         int consentStored = sharedPref.getInt("targeted",0);
         //concent form
         final ConsentInformation consentInformation = ConsentInformation.getInstance(context);
-        //for testing only
+        //for testing consent only
         /*
         ConsentInformation.getInstance(context).addTestDevice("935FAE0E91CBAAC1C5FA5E91E419651A");
         ConsentInformation.getInstance(context).
                 setDebugGeography(DebugGeography.DEBUG_GEOGRAPHY_EEA);
-                */
+        */
         Log.d("berttest","consentStored:" +consentStored);
         String[] publisherIds = {"pub-6760835969070814"};
         consentInformation.requestConsentInfoUpdate(publisherIds, new ConsentInfoUpdateListener() {
@@ -216,6 +276,7 @@ public class MainActivity extends FragmentActivity {
                                         " userPrefersAdFree: " + userPrefersAdFree.toString());
 
                                 if(consentStatus.toString() == "PERSONALIZED"){
+                                    AppLovinPrivacySettings.setHasUserConsent( true, context );
                                     //set Google to personalized
                                     ConsentInformation.getInstance(context)
                                             .setConsentStatus(ConsentStatus.PERSONALIZED);
@@ -226,6 +287,7 @@ public class MainActivity extends FragmentActivity {
                                     adRequest = new AdRequest.Builder().build();
                                 }
                                 else{
+                                    AppLovinPrivacySettings.setHasUserConsent( false, context );
                                     //set Google to nonpersonalized
                                     ConsentInformation.getInstance(context)
                                             .setConsentStatus(ConsentStatus.NON_PERSONALIZED);
@@ -252,6 +314,7 @@ public class MainActivity extends FragmentActivity {
                 form.load();
             }
             else{
+                AppLovinPrivacySettings.setHasUserConsent( true, context );
                 //set Google to personalized
                 ConsentInformation.getInstance(context)
                         .setConsentStatus(ConsentStatus.PERSONALIZED);
@@ -272,7 +335,7 @@ public class MainActivity extends FragmentActivity {
                     .addNetworkExtrasBundle(AdMobAdapter.class, extras)
                     .build();
         }
-        interstitialAd.loadAd(adRequest);
+        //interstitialAd.loadAd(adRequest);  works
 
         interstitialAd.setAdListener(new AdListener() {
             @Override
@@ -287,14 +350,12 @@ public class MainActivity extends FragmentActivity {
 
             @Override
             public void onAdOpened() {
-                server.playAd();
             }
 
             @Override
             public void onAdClosed() {
                 // Load the next interstitial.
                 interstitialAd.loadAd(adRequest);
-                server.adClosed();
                 if(flagRewardUserAfterAdOfDay==true){
                     flagRewardUserAfterAdOfDay = false;
                     //add points
@@ -322,21 +383,19 @@ public class MainActivity extends FragmentActivity {
                 }
             }
         });
+        //Admob End
+
         ////////////////
         //Ads end
         ///////////////
-
-
-
-        //stopped here, put playAd into admob callback
-
 
         //Play Ad when play ad button pressed
         viewModel.getAdOfDayPressed().observe(this, new Observer() {
             @Override
             public void onChanged(@Nullable Object position){
                 flagRewardUserAfterAdOfDay = true;
-                interstitialAd.show();
+                applovinInterstitialAd.showAndRender( applovinLoadedAd );
+                //interstitialAd.show(); admob
             }
         });
 
@@ -347,7 +406,8 @@ public class MainActivity extends FragmentActivity {
                 Log.d("berttest", "MainActivity selected osberved: " + selected.toString());
 
                 if(scratcherCount%2 == 0) {
-                    interstitialAd.show();
+                    //interstitialAd.show(); admob
+                    applovinInterstitialAd.showAndRender( applovinLoadedAd );
                 }
                 // Create a new FragmentManager
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -485,12 +545,5 @@ public class MainActivity extends FragmentActivity {
         /////////////////////
         //Drawer End
         /////////////////////
-
-
-        ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                MY_PERMISSIONS_REQUEST_LOCATION);
-
-
     }
 }
