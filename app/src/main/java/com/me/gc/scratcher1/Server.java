@@ -104,6 +104,8 @@ public class Server {
                         String newdeviceuid = jsonObject.getString("deviceuid");
                         Log.d("berttest", "deviceuid:"+newdeviceuid);
                         String newhk = jsonObject.getString("hk");
+                        hashkey = newhk;
+                        deviceuid = newdeviceuid;
                         //create new file start
                         //creates new file and new entry even if exists
                         String filename = "startdust";
