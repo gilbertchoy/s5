@@ -144,7 +144,6 @@ public class MainActivity extends FragmentActivity {
         viewModel.setPoints(100000);
 
         //  works this is deployment code
-        /*
         if(points == -1) { //check if 1st time init, check if points value exists if not then input starting points value
             Log.d("berttest", "input points");
             SharedPreferences.Editor editor = sharedPref.edit();
@@ -154,7 +153,6 @@ public class MainActivity extends FragmentActivity {
         }else{
             viewModel.setPoints(points);
         }
-        */
 
         //check if deviceuid exists, create new deviceuid if DNE
         server = new Server(context);
