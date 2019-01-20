@@ -1,28 +1,19 @@
 package com.me.gc.scratcher1;
 
 
-
-import android.Manifest;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.util.ArrayMap;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.DisplayMetrics;
@@ -30,7 +21,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.applovin.adview.AppLovinInterstitialAd;
@@ -46,42 +36,14 @@ import com.google.ads.consent.ConsentFormListener;
 import com.google.ads.consent.ConsentInfoUpdateListener;
 import com.google.ads.consent.ConsentInformation;
 import com.google.ads.consent.ConsentStatus;
-import com.google.ads.consent.DebugGeography;
 import com.google.ads.mediation.admob.AdMobAdapter;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.NoSuchAlgorithmException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class MainActivity extends FragmentActivity {
     private MainViewModel viewModel;
@@ -102,13 +64,7 @@ public class MainActivity extends FragmentActivity {
     private int snackbarHeight;
     private Snackbar snackbar;
     private boolean flagRewardUserAfterAdOfDay;
-    private FusedLocationProviderClient mFusedLocationClient;
-    private String deviceuid;
-    private String hashkey;
-    private ArrayMap<String,String> deviceInfo = new ArrayMap<>();
-    //for running thread synchronously
-    private ExecutorService executorService = Executors.newSingleThreadExecutor();
-    Server server;
+    private Server server;
 
     //ads
     //admob
@@ -119,14 +75,12 @@ public class MainActivity extends FragmentActivity {
     private AppLovinAd applovinLoadedAd;
 
 
-    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = this;
-        scratcherCount = 0;
+        scratcherCount = 1; //start at 1 so ad isn't shown for 1st scratcher
         flagRewardUserAfterAdOfDay = false;
         this.fragmentManager = getSupportFragmentManager();
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
@@ -134,23 +88,28 @@ public class MainActivity extends FragmentActivity {
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         screenHeight = displayMetrics.heightPixels;
 
-        //1st time init - if points value is null then add points
-        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        points = sharedPref.getInt("points",1000); //returns -1 if points value is 0
+
+        sharedPref = context.getSharedPreferences("scratcher",Context.MODE_PRIVATE);
+        //TEST CODE 1st time init - if points value is null then add points
         //works: test code for setting points
-        editor = sharedPref.edit();
+        /*
+        SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt("points", 100000);
         editor.commit();
         viewModel.setPoints(100000);
+        points = 100000;
+        */
 
         //  works this is deployment code
-        if(points == -1) { //check if 1st time init, check if points value exists if not then input starting points value
+        if(sharedPref.contains("points") == false) { //check if 1st time init, check if points value exists if not then input starting points value
             Log.d("berttest", "input points");
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putInt("points", 1000);
+            editor.putInt("points", 2000);
             editor.commit();
-            viewModel.setPoints(1000);
+            viewModel.setPoints(2000);
+            points = 2000;
         }else{
+            points = sharedPref.getInt("points", 0);
             viewModel.setPoints(points);
         }
 
@@ -161,7 +120,6 @@ public class MainActivity extends FragmentActivity {
         /////////////////////
         //Ads start
         /////////////////////
-
         //Applovin Start
         //Applovin
         AppLovinSdk.initializeSdk(context);
@@ -220,7 +178,6 @@ public class MainActivity extends FragmentActivity {
         interstitialAd.setAdUnitId("ca-app-pub-6760835969070814/8300405855");
 
         //get GDPR consent value
-        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         int consentStored = sharedPref.getInt("targeted",0);
         //concent form
         final ConsentInformation consentInformation = ConsentInformation.getInstance(context);
@@ -403,7 +360,7 @@ public class MainActivity extends FragmentActivity {
                 Integer selected = (Integer) position;
                 Log.d("berttest", "MainActivity selected osberved: " + selected.toString());
 
-                if(scratcherCount%2 == 0) {
+                if(scratcherCount%3 == 0) {
                     //interstitialAd.show(); admob
                     applovinInterstitialAd.showAndRender( applovinLoadedAd );
                 }

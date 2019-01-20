@@ -65,6 +65,7 @@ public class ScratcherCardFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        context = getActivity();
         //selected value
         viewModel = ViewModelProviders.of(this.getActivity()).get(MainViewModel.class);
         int selected = (int) viewModel.getSelected().getValue();
@@ -194,7 +195,7 @@ public class ScratcherCardFragment extends Fragment {
 
             @Override
             public void onRevealPercentChangedListener(ScratchImageView siv, float percent) {
-                if(percent>0.1) {
+                if(percent>0.8) {
                     scratchRevealed = percent;
                     if(revealFlag==true){
                         revealCheck();
@@ -213,7 +214,7 @@ public class ScratcherCardFragment extends Fragment {
 
             @Override
             public void onRevealPercentChangedListener(ScratchImageView siv, float percent) {
-                if(percent>0.1) {
+                if(percent>0.7) {
                     extraScratchRevealed = percent;
                     if(revealFlag==true){
                         revealCheck();
@@ -232,9 +233,10 @@ public class ScratcherCardFragment extends Fragment {
     }
 
     public void revealCheck(){
-        if(extraScratchRevealed>0.9){
-            if(scratchRevealed>0.9){
-                sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        if(extraScratchRevealed>0.7){
+            if(scratchRevealed>0.8){
+                //sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                sharedPref = context.getSharedPreferences("scratcher",Context.MODE_PRIVATE);
                 int totalPoints = viewModel.getPoints().getValue() + sum;
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt("points", totalPoints);

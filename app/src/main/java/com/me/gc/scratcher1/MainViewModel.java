@@ -3,9 +3,6 @@ package com.me.gc.scratcher1;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
-import android.content.ClipData;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 public class MainViewModel extends ViewModel {

@@ -69,7 +69,6 @@ public class Server {
 
             JSONObject postdata = new JSONObject();
             try {
-                //currentlu data is unsed serverside
                 postdata.put("model", deviceInfo.get("model"));
                 postdata.put("brand", deviceInfo.get("brand"));
                 postdata.put("device", deviceInfo.get("device"));

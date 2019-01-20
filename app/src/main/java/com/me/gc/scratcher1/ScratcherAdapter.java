@@ -52,7 +52,8 @@ public class ScratcherAdapter extends RecyclerView.Adapter<ScratcherAdapter.View
     @Override
     public ScratcherAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         viewModel = ViewModelProviders.of(fragment.getActivity()).get(MainViewModel.class);
-        sharedPref = fragment.getActivity().getPreferences(Context.MODE_PRIVATE);
+        //sharedPref = fragment.getActivity().getPreferences(Context.MODE_PRIVATE);
+        sharedPref = context.getSharedPreferences("scratcher",Context.MODE_PRIVATE);
 
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.scratcher_cell, parent, false);
