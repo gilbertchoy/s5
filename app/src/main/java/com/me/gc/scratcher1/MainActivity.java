@@ -90,6 +90,7 @@ public class MainActivity extends FragmentActivity {
 
 
         sharedPref = context.getSharedPreferences("scratcher",Context.MODE_PRIVATE);
+        
         //TEST CODE 1st time init - if points value is null then add points
         //works: test code for setting points
         /*
