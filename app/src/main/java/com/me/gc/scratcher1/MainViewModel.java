@@ -85,18 +85,4 @@ public class MainViewModel extends ViewModel {
         Log.d("berttest", "viewmodel openDrawer works");
         return openDrawer;
     }
-
-    /*
-    //for points in drawer
-    public void setPointsDrawer(Integer i) {
-        Log.d("berttest","viewmodel setbackToHome works");
-        openDrawer.setValue(i);
-    }
-
-    //for points in drawer
-    public LiveData<Integer> getPointsDrawer() {
-        Log.d("berttest", "viewmodel openDrawer works");
-        return openDrawer;
-    }
-    */
 }
