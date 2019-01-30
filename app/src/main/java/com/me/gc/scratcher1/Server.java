@@ -146,7 +146,6 @@ public class Server {
                     MediaType.parse("application/json");
             JSONObject postdata = new JSONObject();
             try {
-                //currently data is unsed serverside
                 postdata.put("model", deviceInfo.get("model"));
                 postdata.put("brand", deviceInfo.get("brand"));
                 postdata.put("device", deviceInfo.get("device"));
@@ -159,7 +158,6 @@ public class Server {
                 postdata.put("deviceuid", deviceuid);
                 postdata.put("hash", hash);
             } catch(JSONException e){
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 
