@@ -135,6 +135,7 @@ public class Server {
             try {
                 hash = hashing.sha1(deviceuid + "." + hashkey + "." + deviceInfo.get("model"));
                 Log.d("berttest", "hash is" + hash);
+                Log.d("berttest", "model is: " + deviceInfo.get("model"));
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             } catch (UnsupportedEncodingException e) {
