@@ -264,7 +264,6 @@ public class Server {
             int fileLength = lineData.length();
             if(fileLength>90 && fileLength<100){
                 //deviceuid exists do nothing
-                
                 String[] parts = lineData.split("-");
                 deviceuid = parts[0]; // 004
                 hashkey = parts[1]; // 034556
