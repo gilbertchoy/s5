@@ -253,6 +253,7 @@ public class Server {
         }
     };
 
+    
     //check if deviceuid exists, if not ping server
     public void create(){
         try {
