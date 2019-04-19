@@ -90,7 +90,6 @@ public class MainActivity extends FragmentActivity {
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         screenHeight = displayMetrics.heightPixels;
 
-
         sharedPref = context.getSharedPreferences("scratcher",Context.MODE_PRIVATE);
 
         //TEST CODE 1st time init - if points value is null then add points
@@ -166,6 +165,9 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void adHidden(AppLovinAd appLovinAd) {
                 Log.d("berttest", "applovin adHidden");
+                if(flagRewardUserAfterAdOfDay==true) {
+                    rewardUser200points();
+                }
                 server.adClosed();
                 AppLovinSdk.getInstance( context ).getAdService().loadNextAd( AppLovinAdSize.INTERSTITIAL, new AppLovinAdLoadListener()
                 {
@@ -328,29 +330,7 @@ public class MainActivity extends FragmentActivity {
                 // Load the next interstitial.
                 interstitialAd.loadAd(adRequest);
                 if(flagRewardUserAfterAdOfDay==true){
-                    flagRewardUserAfterAdOfDay = false;
-                    //add points
-                    int totalPoints = viewModel.getPoints().getValue() + 200;
-                    editor = sharedPref.edit();
-                    editor.putInt("points", totalPoints);
-                    editor.commit();
-                    viewModel.setPoints(totalPoints);
-                    //show snackbar
-                    snackbar = Snackbar.make(findViewById(R.id.snackbar_action),
-                            R.string.snackbar_200_coins_earned,
-                            Snackbar.LENGTH_SHORT);
-                    View sbView = snackbar.getView();
-                    TextView sbTextView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                        sbTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                    } else {
-                        sbTextView.setGravity(Gravity.CENTER_HORIZONTAL);
-                    }
-                    CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams)
-                            snackbar.getView().getLayoutParams();
-                    params.setMargins(0, 0, 0, snackbarHeight);
-                    sbView.setLayoutParams(params);
-                    snackbar.show();
+                    rewardUser200points();
                 }
             }
         });
@@ -520,5 +500,31 @@ public class MainActivity extends FragmentActivity {
         /////////////////////
         //Drawer End
         /////////////////////
+    }
+
+    public void rewardUser200points(){
+        flagRewardUserAfterAdOfDay = false;
+        //add points
+        int totalPoints = viewModel.getPoints().getValue() + 200;
+        editor = sharedPref.edit();
+        editor.putInt("points", totalPoints);
+        editor.commit();
+        viewModel.setPoints(totalPoints);
+        //show snackbar
+        snackbar = Snackbar.make(findViewById(R.id.snackbar_action),
+                R.string.snackbar_200_coins_earned,
+                Snackbar.LENGTH_SHORT);
+        View sbView = snackbar.getView();
+        TextView sbTextView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            sbTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        } else {
+            sbTextView.setGravity(Gravity.CENTER_HORIZONTAL);
+        }
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams)
+                snackbar.getView().getLayoutParams();
+        params.setMargins(0, 0, 0, snackbarHeight);
+        sbView.setLayoutParams(params);
+        snackbar.show();
     }
 }
