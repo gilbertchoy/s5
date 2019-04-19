@@ -13,6 +13,7 @@ public class MainViewModel extends ViewModel {
     private final MutableLiveData<Integer> notEnoughPointsPurchaseScratcher = new MutableLiveData<Integer>();
     private final MutableLiveData<Integer> openDrawer = new MutableLiveData<Integer>();
     private final MutableLiveData<Integer> adOfDayPressed = new MutableLiveData<Integer>();
+    private final MutableLiveData<Integer> privacyPolicy = new MutableLiveData<Integer>();
 
     public void setSelected(Integer i) {
         Log.d("berttest","setSelected works");
@@ -84,5 +85,15 @@ public class MainViewModel extends ViewModel {
     public LiveData<Integer> getOpenDrawer() {
         Log.d("berttest", "viewmodel openDrawer works");
         return openDrawer;
+    }
+
+    public void setOpenBrowserPrivacyPolicy(Integer i) {
+        Log.d("berttest","viewmodel setPrivacyPolicy works");
+        privacyPolicy.setValue(i);
+    }
+
+    public LiveData<Integer> getOpenBrowserPrivacyPolicy() {
+        Log.d("berttest", "viewmodel getPrivacyPolicy works");
+        return privacyPolicy;
     }
 }

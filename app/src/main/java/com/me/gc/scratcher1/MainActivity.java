@@ -4,7 +4,9 @@ package com.me.gc.scratcher1;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -117,6 +119,19 @@ public class MainActivity extends FragmentActivity {
         //check if deviceuid exists, create new deviceuid if DNE
         server = new Server(context);
         server.create();
+
+        /////////////////////
+        //Open privacy policy in browser
+        /////////////////////
+        viewModel.getOpenBrowserPrivacyPolicy().observe(this, new Observer() {
+            @Override
+            public void onChanged(@Nullable Object position){
+                Log.d("berttest", "privacy policy pressed 1");
+                Uri uriUrl = Uri.parse("https://scratcherserver.herokuapp.com/privacypolicy/");
+                Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+                startActivity(launchBrowser);
+            }
+        });
 
         /////////////////////
         //Ads start
@@ -477,6 +492,10 @@ public class MainActivity extends FragmentActivity {
                                             R.string.snackbar_withdraw_not_enough_coins,
                                             Snackbar.LENGTH_SHORT);
                                 }
+                                break;
+                            case "Privacy Policy (Link)":
+                                Log.d("besttest", "privacy policy selected");
+                                viewModel.setOpenBrowserPrivacyPolicy(1);
                                 break;
                             default:
                                 Log.d("berttest","defualt drawer selection");

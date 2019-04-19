@@ -11,5 +11,9 @@
             android:id="@+id/withdraw"
             android:title="Withdraw"
             android:icon="@drawable/icon_redeem_white_24dp" />
+        <item
+            android:id="@+id/privacypolicy"
+            android:title="Privacy Policy (Link)"
+            android:icon="@drawable/icon_privacypolicy_white_24dp" />
     </group>
 </menu>
