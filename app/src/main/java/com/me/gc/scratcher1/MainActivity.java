@@ -350,6 +350,7 @@ public class MainActivity extends FragmentActivity {
             }
         });
 
+        //when user clicks a cell
         viewModel.getSelected().observe(this, new Observer() {
             @Override
             public void onChanged(@Nullable Object position){
