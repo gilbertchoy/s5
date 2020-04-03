@@ -17,10 +17,10 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-6760835969070814~3267571022"/>
         <!--applovin start-->
-        <meta-data android:name="applovin.sdk.key"
-            android:value="zWx_1M5MQM4vp7UfTc8rJCaPu6aACLiAte9u_EEPaJJORp3vPCkkOJ8GQiRc38nwnxon91BlLV7nIBfiNOQnhZ"  />
-        <activity android:name="com.applovin.adview.AppLovinInterstitialActivity" android:configChanges="orientation|screenSize"/>
-        <activity android:name="com.applovin.adview.AppLovinConfirmationActivity" android:configChanges="orientation|screenSize"/>
+        <!-- <meta-data android:name="applovin.sdk.key"
+            android:value="zWx_1M5MQM4vp7UfTc8rJCaPu6aACLiAte9u_EEPaJJORp3vPCkkOJ8GQiRc38nwnxon91BlLV7nIBfiNOQnhZ"  /> -->
+        <!--<activity android:name="com.applovin.adview.AppLovinInterstitialActivity" android:configChanges="orientation|screenSize"/> -->
+        <!--<activity android:name="com.applovin.adview.AppLovinConfirmationActivity" android:configChanges="orientation|screenSize"/> -->
         <!--applovin end-->
         <activity android:name=".MainActivity" android:screenOrientation="portrait" android:theme="@style/AppTheme">
         </activity>
