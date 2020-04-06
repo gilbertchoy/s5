@@ -32,5 +32,7 @@
     <string name="lg_name7">lg_surfing</string>
     <string name="lg_name8">lg_guns</string>
     <string name="lg_name9">lg_cat</string>
+    <string name="vungle_appid">5e88fdb1312e3200014f6269</string>
+    <string name="vungle_placementid">INT-0631576</string>
 </resources>
 

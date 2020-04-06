@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     defaultConfig {
         applicationId "com.me.gc.scratcher1"
         minSdkVersion 21
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 6
         versionName "1.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -29,8 +29,19 @@ dependencies {
     implementation 'android.arch.lifecycle:extensions:1.1.0'
     implementation 'com.squareup.okhttp3:okhttp:3.12.1'
 
-    implementation 'com.applovin:applovin-sdk:+'
-    implementation 'com.google.android.gms:play-services-ads:16.0.0'
+    //implementation 'com.applovin:applovin-sdk:+'
+    //implementation 'com.google.android.gms:play-services-ads:16.0.0'
+
+    // Vungle Start
+//    implementation 'com.vungle:publisher-sdk-android:6.5.3'
+//    implementation "androidx.core:core:1.1.0"
+//    implementation "androidx.localbroadcastmanager:localbroadcastmanager:1.0.0"
+//    Recommended for SDK to be able to get Android Advertising ID
+//    implementation 'com.google.android.gms:play-services-basement:17.1.1'
+//    implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
+//    implementation 'androidx.appcompat:appcompat:1.0.2'
+    //    Vungle End
+
 
     implementation 'com.google.android.gms:play-services-location:16.0.0'
     implementation 'android.arch.lifecycle:viewmodel:1.1.0'
@@ -41,6 +52,7 @@ dependencies {
     implementation ('com.android.support:design:27.1.1'){
         force = true
     }
+
     implementation ('com.android.support:support-media-compat:27.1.1'){
         force = true
     }

@@ -25,14 +25,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.applovin.adview.AppLovinInterstitialAd;
-import com.applovin.adview.AppLovinInterstitialAdDialog;
-import com.applovin.sdk.AppLovinAd;
-import com.applovin.sdk.AppLovinAdDisplayListener;
-import com.applovin.sdk.AppLovinAdLoadListener;
-import com.applovin.sdk.AppLovinAdSize;
-import com.applovin.sdk.AppLovinPrivacySettings;
-import com.applovin.sdk.AppLovinSdk;
+//import com.applovin.adview.AppLovinInterstitialAd;
+//import com.applovin.adview.AppLovinInterstitialAdDialog;
+//import com.applovin.sdk.AppLovinAd;
+//import com.applovin.sdk.AppLovinAdDisplayListener;
+//import com.applovin.sdk.AppLovinAdLoadListener;
+//import com.applovin.sdk.AppLovinAdSize;
+//import com.applovin.sdk.AppLovinPrivacySettings;
+//import com.applovin.sdk.AppLovinSdk;
 import com.google.ads.consent.ConsentForm;
 import com.google.ads.consent.ConsentFormListener;
 import com.google.ads.consent.ConsentInfoUpdateListener;
@@ -45,6 +45,17 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import java.net.MalformedURLException;
 import java.net.URL;
+//import com.vungle.warren.Vungle;
+//import com.vungle.warren.AdConfig;              // Custom ad configurations
+//import com.vungle.warren.InitCallback;          // Initialization callback
+//import com.vungle.warren.LoadAdCallback;        // Load ad callback
+//import com.vungle.warren.PlayAdCallback;        // Play ad callback
+//import com.vungle.warren.VungleNativeAd;        // MREC ad
+//import com.vungle.warren.Banners;               // Banner ad
+//import com.vungle.warren.VungleBanner;          // Banner ad
+//import com.vungle.warren.Vungle.Consent;        // GDPR consent
+//import com.vungle.warren.VungleSettings;        // Minimum disk space
+//import com.vungle.warren.error.VungleException;  // onError message
 
 
 public class MainActivity extends FragmentActivity {
@@ -69,12 +80,15 @@ public class MainActivity extends FragmentActivity {
     private Server server;
 
     //ads
+    private String vungleAppId;
+    private String vunglePlacementId;
+
     //admob
     private InterstitialAd interstitialAd;
     private ConsentForm form;
     //applovin
-    private AppLovinInterstitialAdDialog applovinInterstitialAd;
-    private AppLovinAd applovinLoadedAd;
+//    private AppLovinInterstitialAdDialog applovinInterstitialAd;
+//    private AppLovinAd applovinLoadedAd;
 
 
     @Override
@@ -91,6 +105,29 @@ public class MainActivity extends FragmentActivity {
         screenHeight = displayMetrics.heightPixels;
 
         sharedPref = context.getSharedPreferences("scratcher",Context.MODE_PRIVATE);
+
+        //Vungle
+        //vungleAppId = context.getResources().getString(R.string.vungle_appid);
+        //vunglePlacementId = context.getResources().getString(R.string.vungle_placementid);
+
+        //Vungle Load Ad
+        /*
+        if (Vungle.isInitialized()) {
+            Vungle.loadAd("INT-0631576", new LoadAdCallback() {
+                @Override
+                public void onAdLoad(String placementReferenceId) {
+                    // Placement reference ID for the placement to load ad assets
+                    Log.d("berttest", "onAdLoad");
+                }
+                @Override
+                public void onError(String placementReferenceId, VungleException exception) {
+                    // Placement reference ID for the placement that failed to download ad assets
+                    // VungleException contains error code and message
+                    Log.d("berttest", "load ad placement:" + placementReferenceId + "onError:" + exception);
+                }
+            });
+        }
+         */
 
         //TEST CODE 1st time init - if points value is null then add points
         //works: test code for setting points
@@ -135,6 +172,49 @@ public class MainActivity extends FragmentActivity {
         /////////////////////
         //Ads start
         /////////////////////
+        //Vungle
+        /*
+        Vungle.init(vungleAppId, getApplicationContext(), new InitCallback() {
+            @Override
+            public void onSuccess() {
+                // Initialization has succeeded and SDK is ready to load an ad or play one if there
+                // is one pre-cached already
+                Log.d("berttest", "init onSuccess");
+            }
+
+            @Override
+            public void onError(VungleException exception) {
+                // Initialization error occurred - exception.getLocalizedMessage() contains error message
+                Log.d("berttest", "init error");
+            }
+
+            @Override
+            public void onAutoCacheAdAvailable(String placementId) {
+                // Callback to notify when an ad becomes available for the cache optimized placement
+                // NOTE: This callback works only for the cache optimized placement. Otherwise, please use
+                // LoadAdCallback with loadAd API for loading placements.
+                Log.d("berttest", "init onAutoCacheAdAvailable");
+            }
+        });
+
+        LoadAdCallback vungleLoadAdCallback = new LoadAdCallback() {
+            @Override
+            public void onAdLoad(String placementReferenceId) {
+                // Placement reference ID for the placement to load ad assets
+                Log.d("berttest", "onAdLoad");
+            }
+
+            @Override
+            public void onError(String placementReferenceId, VungleException exception) {
+                // Placement reference ID for the placement that failed to download ad assets
+                // VungleException contains error code and message
+                Log.d("berttest", "load ad onError:" + exception);
+            }
+        };
+        //Vungle End
+        */
+
+        /* old
         //Applovin Start
         //Applovin
         AppLovinSdk.initializeSdk(context);
@@ -200,11 +280,10 @@ public class MainActivity extends FragmentActivity {
         //concent form
         final ConsentInformation consentInformation = ConsentInformation.getInstance(context);
         //for testing consent only
-        /*
-        ConsentInformation.getInstance(context).addTestDevice("935FAE0E91CBAAC1C5FA5E91E419651A");
-        ConsentInformation.getInstance(context).
-                setDebugGeography(DebugGeography.DEBUG_GEOGRAPHY_EEA);
-        */
+//        ConsentInformation.getInstance(context).addTestDevice("935FAE0E91CBAAC1C5FA5E91E419651A");
+//        ConsentInformation.getInstance(context).
+//                setDebugGeography(DebugGeography.DEBUG_GEOGRAPHY_EEA);
+//
         Log.d("berttest","consentStored:" +consentStored);
         String[] publisherIds = {"pub-6760835969070814"};
         consentInformation.requestConsentInfoUpdate(publisherIds, new ConsentInfoUpdateListener() {
@@ -336,6 +415,8 @@ public class MainActivity extends FragmentActivity {
         });
         //Admob End
 
+        */
+
         ////////////////
         //Ads end
         ///////////////
@@ -345,8 +426,69 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void onChanged(@Nullable Object position){
                 flagRewardUserAfterAdOfDay = true;
-                applovinInterstitialAd.showAndRender( applovinLoadedAd );
+                //applovinInterstitialAd.showAndRender( applovinLoadedAd );
                 //interstitialAd.show(); admob
+                //Vungle Start
+                /*
+                if (Vungle.canPlayAd("INT-0631576")) {
+                    Vungle.playAd("INT-0631576", null, new PlayAdCallback() {
+                        @Override
+                        public void onAdStart(String placementReferenceId) {
+                            // Placement reference ID for the placement to be played
+                            Log.d("berttest", "onAdStart placement:" + placementReferenceId);
+                        }
+                        @Override
+                        public void onAdEnd(String placementReferenceId, boolean completed, boolean isCTAClicked) {
+                            // Placement reference ID for the placement that has completed ad experience
+                            // completed has value of true or false to notify whether video was
+                            // watched for 80% or more
+                            // isCTAClkcked has value of true or false to indicate whether download button
+                            // of an ad has been clicked by the user
+                            Log.d("berttest", "onAdEnd placemnt:" + placementReferenceId + " completed:" + completed + " isCTAClicked:" + isCTAClicked);
+                            if (Vungle.isInitialized()) {
+                                Vungle.loadAd("INT-0631576", new LoadAdCallback() {
+                                    @Override
+                                    public void onAdLoad(String placementReferenceId) {
+                                        // Placement reference ID for the placement to load ad assets
+                                        Log.d("berttest", "onAdLoad");
+                                    }
+                                    @Override
+                                    public void onError(String placementReferenceId, VungleException exception) {
+                                        // Placement reference ID for the placement that failed to download ad assets
+                                        // VungleException contains error code and message
+                                        Log.d("berttest", "load ad placement:" + placementReferenceId + "onError:" + exception);
+                                    }
+                                });
+                            }
+                        }
+                        @Override
+                        public void onError(String placementReferenceId, VungleException exception) {
+                            // Placement reference ID for the placement that failed to play an ad
+                            // VungleException contains error code and message
+                            Log.d("berttest", "play ad onError:" + exception);
+                        }
+                    });
+                }
+                else{
+                    if (Vungle.isInitialized()) {
+                        Vungle.loadAd("INT-0631576", new LoadAdCallback() {
+                            @Override
+                            public void onAdLoad(String placementReferenceId) {
+                                // Placement reference ID for the placement to load ad assets
+                                Log.d("berttest", "onAdLoad");
+                            }
+                            @Override
+                            public void onError(String placementReferenceId, VungleException exception) {
+                                // Placement reference ID for the placement that failed to download ad assets
+                                // VungleException contains error code and message
+                                Log.d("berttest", "load ad placement:" + placementReferenceId + "onError:" + exception);
+                            }
+                        });
+                    }
+                }
+
+                //Vunble end
+                 */
             }
         });
 
@@ -359,7 +501,67 @@ public class MainActivity extends FragmentActivity {
 
                 if(scratcherCount%3 == 0) {
                     //interstitialAd.show(); admob
-                    applovinInterstitialAd.showAndRender( applovinLoadedAd );
+                    //applovinInterstitialAd.showAndRender( applovinLoadedAd );
+                    /*
+                    //Vungle Start
+                    if (Vungle.canPlayAd("INT-0631576")) {
+                        Vungle.playAd("INT-0631576", null, new PlayAdCallback() {
+                            @Override
+                            public void onAdStart(String placementReferenceId) {
+                                // Placement reference ID for the placement to be played
+                                Log.d("berttest", "onAdStart placement:" + placementReferenceId);
+                            }
+                            @Override
+                            public void onAdEnd(String placementReferenceId, boolean completed, boolean isCTAClicked) {
+                                // Placement reference ID for the placement that has completed ad experience
+                                // completed has value of true or false to notify whether video was
+                                // watched for 80% or more
+                                // isCTAClkcked has value of true or false to indicate whether download button
+                                // of an ad has been clicked by the user
+                                Log.d("berttest", "onAdEnd placemnt:" + placementReferenceId + " completed:" + completed + " isCTAClicked:" + isCTAClicked);
+                                if (Vungle.isInitialized()) {
+                                    Vungle.loadAd("INT-0631576", new LoadAdCallback() {
+                                        @Override
+                                        public void onAdLoad(String placementReferenceId) {
+                                            // Placement reference ID for the placement to load ad assets
+                                            Log.d("berttest", "onAdLoad");
+                                        }
+                                        @Override
+                                        public void onError(String placementReferenceId, VungleException exception) {
+                                            // Placement reference ID for the placement that failed to download ad assets
+                                            // VungleException contains error code and message
+                                            Log.d("berttest", "load ad placement:" + placementReferenceId + "onError:" + exception);
+                                        }
+                                    });
+                                }
+                            }
+                            @Override
+                            public void onError(String placementReferenceId, VungleException exception) {
+                                // Placement reference ID for the placement that failed to play an ad
+                                // VungleException contains error code and message
+                                Log.d("berttest", "play ad onError:" + exception);
+                            }
+                        });
+                    }
+                    else{
+                        if (Vungle.isInitialized()) {
+                            Vungle.loadAd("INT-0631576", new LoadAdCallback() {
+                                @Override
+                                public void onAdLoad(String placementReferenceId) {
+                                    // Placement reference ID for the placement to load ad assets
+                                    Log.d("berttest", "onAdLoad");
+                                }
+                                @Override
+                                public void onError(String placementReferenceId, VungleException exception) {
+                                    // Placement reference ID for the placement that failed to download ad assets
+                                    // VungleException contains error code and message
+                                    Log.d("berttest", "load ad placement:" + placementReferenceId + "onError:" + exception);
+                                }
+                            });
+                        }
+                    }
+                    //Vunble end
+                     */
                 }
                 // Create a new FragmentManager
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
