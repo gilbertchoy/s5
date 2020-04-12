@@ -1,4 +1,4 @@
-package com.me.gc.scratcher1;
+package com.me.gc.scratcher6;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -29,7 +29,7 @@ public class ScratcherCardFragment extends Fragment {
     private ImageView backgroundImage;
     private TextView scratcherCost;
     private ImageView scorecardBackgroundImage;
-    private com.me.gc.scratcher1.ScratchImageView scratchImageView;
+    private com.me.gc.scratcher6.ScratchImageView scratchImageView;
     private ScratchImageView extraScratchImageView;
     private MainViewModel viewModel;
     private Drawable drawable;

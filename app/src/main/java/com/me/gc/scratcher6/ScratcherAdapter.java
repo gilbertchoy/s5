@@ -1,4 +1,4 @@
-package com.me.gc.scratcher1;
+package com.me.gc.scratcher6;
 
 import android.app.Activity;
 import android.arch.lifecycle.ViewModelProvider;

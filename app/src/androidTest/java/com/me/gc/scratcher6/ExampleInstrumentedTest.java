@@ -1,4 +1,4 @@
-package com.me.gc.scratcher1;
+package com.me.gc.scratcher6;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.me.gc.scratcher1", appContext.getPackageName());
+        assertEquals("com.me.gc.scratcher6", appContext.getPackageName());
     }
 }

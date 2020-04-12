@@ -1,4 +1,4 @@
-package com.me.gc.scratcher1;
+package com.me.gc.scratcher6;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

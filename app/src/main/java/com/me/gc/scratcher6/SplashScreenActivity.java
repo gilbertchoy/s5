@@ -1,4 +1,4 @@
-package com.me.gc.scratcher1;
+package com.me.gc.scratcher6;
 
 import android.content.Intent;
 import android.os.Bundle;

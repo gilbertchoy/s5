@@ -110,7 +110,7 @@
             />
 
         <!-- scratch area overlay start -->
-        <com.me.gc.scratcher1.ScratchImageView
+        <com.me.gc.scratcher6.ScratchImageView
             android:id="@+id/scratchImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -245,7 +245,7 @@
             android:elevation="20dp"/>
 
         <!-- scratch area overlay start -->
-        <com.me.gc.scratcher1.ScratchImageView
+        <com.me.gc.scratcher6.ScratchImageView
             android:id="@+id/extraScratchImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -273,7 +273,7 @@
     <!-- Extra Score Card End-->
 
     <!--Extra Scratch Card Image start
-    <com.me.gc.scratcher1.ScratchImageView
+    <com.me.gc.scratcher6.ScratchImageView
         android:id="@+id/extraScratchImage"
         android:layout_width="130dp"
         android:layout_height="70dp"
