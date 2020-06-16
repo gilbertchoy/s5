@@ -45,17 +45,12 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import java.net.MalformedURLException;
 import java.net.URL;
-//import com.vungle.warren.Vungle;
-//import com.vungle.warren.AdConfig;              // Custom ad configurations
-//import com.vungle.warren.InitCallback;          // Initialization callback
-//import com.vungle.warren.LoadAdCallback;        // Load ad callback
-//import com.vungle.warren.PlayAdCallback;        // Play ad callback
-//import com.vungle.warren.VungleNativeAd;        // MREC ad
-//import com.vungle.warren.Banners;               // Banner ad
-//import com.vungle.warren.VungleBanner;          // Banner ad
-//import com.vungle.warren.Vungle.Consent;        // GDPR consent
-//import com.vungle.warren.VungleSettings;        // Minimum disk space
-//import com.vungle.warren.error.VungleException;  // onError message
+
+//Vungle
+import com.vungle.publisher.AdConfig;
+import com.vungle.publisher.VungleAdEventListener;
+import com.vungle.publisher.VungleInitListener;
+import com.vungle.publisher.VunglePub;
 
 
 public class MainActivity extends FragmentActivity {
@@ -79,10 +74,6 @@ public class MainActivity extends FragmentActivity {
     private boolean flagRewardUserAfterAdOfDay;
     private Server server;
 
-    //ads
-    private String vungleAppId;
-    private String vunglePlacementId;
-
     //admob
     private InterstitialAd interstitialAd;
     private ConsentForm form;
@@ -90,6 +81,13 @@ public class MainActivity extends FragmentActivity {
 //    private AppLovinInterstitialAdDialog applovinInterstitialAd;
 //    private AppLovinAd applovinLoadedAd;
 
+    //Vungle
+    private final VunglePub vunglePub = VunglePub.getInstance();
+    private AdConfig vungleGlobalAdConfig;
+    private String vungleAppId;
+    private String vunglePlacementId;
+
+    private String LOG_TAG = "berttest";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,31 +101,33 @@ public class MainActivity extends FragmentActivity {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         screenHeight = displayMetrics.heightPixels;
-
         sharedPref = context.getSharedPreferences("scratcher",Context.MODE_PRIVATE);
+        vungleAppId = context.getResources().getString(R.string.vungle_appid);
+        vunglePlacementId = context.getResources().getString(R.string.vungle_placementid);
 
-        //Vungle
-        //vungleAppId = context.getResources().getString(R.string.vungle_appid);
-        //vunglePlacementId = context.getResources().getString(R.string.vungle_placementid);
-
-        //Vungle Load Ad
         /*
-        if (Vungle.isInitialized()) {
-            Vungle.loadAd("INT-0631576", new LoadAdCallback() {
-                @Override
-                public void onAdLoad(String placementReferenceId) {
-                    // Placement reference ID for the placement to load ad assets
-                    Log.d("berttest", "onAdLoad");
-                }
-                @Override
-                public void onError(String placementReferenceId, VungleException exception) {
-                    // Placement reference ID for the placement that failed to download ad assets
-                    // VungleException contains error code and message
-                    Log.d("berttest", "load ad placement:" + placementReferenceId + "onError:" + exception);
-                }
-            });
-        }
-         */
+        //Vungle
+        vunglePub.init(this, vungleAppId, new String[] { vungleAppId }, new VungleInitListener() {
+
+            @Override
+            public void onSuccess() {
+                vungleGlobalAdConfig = vunglePub.getGlobalAdConfig();
+                vungleGlobalAdConfig.setSoundEnabled(true);
+                Log.d(LOG_TAG,"Init onSuccess");
+                Log.d(LOG_TAG,"berttest onSuccess");
+            }
+            @Override
+            public void onFailure(Throwable e){
+                Log.d(LOG_TAG,"Init onFailure:" + e.toString());
+            }
+        });
+        */
+
+
+
+
+
+
 
         //TEST CODE 1st time init - if points value is null then add points
         //works: test code for setting points
@@ -173,249 +173,6 @@ public class MainActivity extends FragmentActivity {
         //Ads start
         /////////////////////
         //Vungle
-        /*
-        Vungle.init(vungleAppId, getApplicationContext(), new InitCallback() {
-            @Override
-            public void onSuccess() {
-                // Initialization has succeeded and SDK is ready to load an ad or play one if there
-                // is one pre-cached already
-                Log.d("berttest", "init onSuccess");
-            }
-
-            @Override
-            public void onError(VungleException exception) {
-                // Initialization error occurred - exception.getLocalizedMessage() contains error message
-                Log.d("berttest", "init error");
-            }
-
-            @Override
-            public void onAutoCacheAdAvailable(String placementId) {
-                // Callback to notify when an ad becomes available for the cache optimized placement
-                // NOTE: This callback works only for the cache optimized placement. Otherwise, please use
-                // LoadAdCallback with loadAd API for loading placements.
-                Log.d("berttest", "init onAutoCacheAdAvailable");
-            }
-        });
-
-        LoadAdCallback vungleLoadAdCallback = new LoadAdCallback() {
-            @Override
-            public void onAdLoad(String placementReferenceId) {
-                // Placement reference ID for the placement to load ad assets
-                Log.d("berttest", "onAdLoad");
-            }
-
-            @Override
-            public void onError(String placementReferenceId, VungleException exception) {
-                // Placement reference ID for the placement that failed to download ad assets
-                // VungleException contains error code and message
-                Log.d("berttest", "load ad onError:" + exception);
-            }
-        };
-        //Vungle End
-        */
-
-        /* old
-        //Applovin Start
-        //Applovin
-        AppLovinSdk.initializeSdk(context);
-        applovinInterstitialAd = AppLovinInterstitialAd.create( AppLovinSdk.getInstance( context ), context );
-        AppLovinSdk.getInstance( context ).getAdService().loadNextAd( AppLovinAdSize.INTERSTITIAL, new AppLovinAdLoadListener()
-        {
-            @Override
-            public void adReceived(AppLovinAd ad)
-            {
-                Log.d("berttest","applovin adReceived");
-                applovinLoadedAd = ad;
-            }
-
-            @Override
-            public void failedToReceiveAd(int errorCode)
-            {
-                Log.d("berttest","applovin failedToReceiveAd");
-            }
-        } );
-
-        applovinInterstitialAd = AppLovinInterstitialAd.create(AppLovinSdk.getInstance( context ), context);
-        applovinInterstitialAd.setAdDisplayListener(new AppLovinAdDisplayListener() {
-            @Override
-            public void adDisplayed(AppLovinAd appLovinAd) {
-                server.playAd();
-                Log.d("berttest", "applovin adDisplayed");
-            }
-            @Override
-            public void adHidden(AppLovinAd appLovinAd) {
-                Log.d("berttest", "applovin adHidden");
-                if(flagRewardUserAfterAdOfDay==true) {
-                    rewardUser200points();
-                }
-                server.adClosed();
-                AppLovinSdk.getInstance( context ).getAdService().loadNextAd( AppLovinAdSize.INTERSTITIAL, new AppLovinAdLoadListener()
-                {
-                    @Override
-                    public void adReceived(AppLovinAd ad)
-                    {
-                        Log.d("berttest","applovin adReceived1");
-                    }
-
-                    @Override
-                    public void failedToReceiveAd(int errorCode)
-                    {
-                        Log.d("berttest","applovin failedToReceiveAd1");
-                    }
-                } );
-            }
-        });
-        //Applovin End
-
-        //Admob Start (admob consent form used for both admob and applovin
-        MobileAds.initialize(this, "ca-app-pub-6760835969070814~3267571022");
-        //MobileAds.initialize(this, "ca-app-pub-6760835969070814~5912740615");
-
-        interstitialAd = new InterstitialAd(this);
-        //interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        interstitialAd.setAdUnitId("ca-app-pub-6760835969070814/8300405855");
-
-        //get GDPR consent value
-        int consentStored = sharedPref.getInt("targeted",0);
-        //concent form
-        final ConsentInformation consentInformation = ConsentInformation.getInstance(context);
-        //for testing consent only
-//        ConsentInformation.getInstance(context).addTestDevice("935FAE0E91CBAAC1C5FA5E91E419651A");
-//        ConsentInformation.getInstance(context).
-//                setDebugGeography(DebugGeography.DEBUG_GEOGRAPHY_EEA);
-//
-        Log.d("berttest","consentStored:" +consentStored);
-        String[] publisherIds = {"pub-6760835969070814"};
-        consentInformation.requestConsentInfoUpdate(publisherIds, new ConsentInfoUpdateListener() {
-            @Override
-            public void onConsentInfoUpdated(ConsentStatus consentStatus) {
-                // User's consent status successfully updated.
-                Log.d("berttest", "berttest onConsentInfoUpdated: " + consentStatus.toString());
-            }
-
-            @Override
-            public void onFailedToUpdateConsentInfo(String errorDescription) {
-                Log.d("berttest", "berttest onFailedToUpdateConsentInfo:" + errorDescription.toString());
-            }
-        });
-        if (consentStored == 0) {
-            if(consentInformation.isRequestLocationInEeaOrUnknown() == true){
-                URL privacyUrl = null;
-                try {
-                    privacyUrl = new URL("https://policies.google.com/technologies/partner-sites");
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                    Log.d("berttest","error loading privacyUrl");
-                }
-
-                form = new ConsentForm.Builder(context, privacyUrl)
-                        .withListener(new ConsentFormListener() {
-                            @Override
-                            public void onConsentFormLoaded() {
-                                Log.d("berttest","onConsentFormLoaded");
-                                form.show();
-                            }
-
-                            @Override
-                            public void onConsentFormOpened() {
-                                Log.d("berttest","onConsentFormOpened");
-                            }
-
-                            @Override
-                            public void onConsentFormClosed(
-                                    ConsentStatus consentStatus, Boolean userPrefersAdFree) {
-                                Log.d("berttest","onConsentFormClosed consentStatus: " + consentStatus.toString() +
-                                        " userPrefersAdFree: " + userPrefersAdFree.toString());
-
-                                if(consentStatus.toString() == "PERSONALIZED"){
-                                    AppLovinPrivacySettings.setHasUserConsent( true, context );
-                                    //set Google to personalized
-                                    ConsentInformation.getInstance(context)
-                                            .setConsentStatus(ConsentStatus.PERSONALIZED);
-                                    //set shared pref variable to personalized
-                                    SharedPreferences.Editor editor = sharedPref.edit();
-                                    editor.putInt("targeted", 1); //1 personalized, 2 non-personalized, 0 no value
-                                    editor.commit();
-                                    adRequest = new AdRequest.Builder().build();
-                                }
-                                else{
-                                    AppLovinPrivacySettings.setHasUserConsent( false, context );
-                                    //set Google to nonpersonalized
-                                    ConsentInformation.getInstance(context)
-                                            .setConsentStatus(ConsentStatus.NON_PERSONALIZED);
-                                    //set shared pref variable to non-personalized
-                                    SharedPreferences.Editor editor = sharedPref.edit();
-                                    editor.putInt("targeted", 2); //1 personalized, 2 non-personalized, 0 no value
-                                    editor.commit();
-                                    //set admob ad request to non-personalized
-                                    extras.putString("npa", "1");
-                                    adRequest = new AdRequest.Builder()
-                                            .addNetworkExtrasBundle(AdMobAdapter.class, extras)
-                                            .build();
-                                }
-                            }
-
-                            @Override
-                            public void onConsentFormError(String errorDescription) {
-                                Log.d("berttest","onConsentFormError: " + errorDescription.toString());
-                            }
-                        })
-                        .withPersonalizedAdsOption()
-                        .withNonPersonalizedAdsOption()
-                        .build();
-                form.load();
-            }
-            else{
-                AppLovinPrivacySettings.setHasUserConsent( true, context );
-                //set Google to personalized
-                ConsentInformation.getInstance(context)
-                        .setConsentStatus(ConsentStatus.PERSONALIZED);
-                //set shared pref variable to personalized
-                editor = sharedPref.edit();
-                editor.putInt("targeted", 1); //1 personalized, 2 non-personalized, 0 no value
-                editor.commit();
-                adRequest = new AdRequest.Builder().build();
-            }
-        }
-        if(consentStored == 1){
-            //do nothing, by default admob ads are personalized
-            adRequest = new AdRequest.Builder().build();
-        }
-        if(consentStored == 2){
-            extras.putString("npa", "1");
-            adRequest = new AdRequest.Builder()
-                    .addNetworkExtrasBundle(AdMobAdapter.class, extras)
-                    .build();
-        }
-        //interstitialAd.loadAd(adRequest);  works
-
-        interstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                Log.d("berttest", "onAdLoaded");
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                Log.d("berttest", "onAdFailedToLoad errorcode:" + errorCode);
-            }
-
-            @Override
-            public void onAdOpened() {
-            }
-
-            @Override
-            public void onAdClosed() {
-                // Load the next interstitial.
-                interstitialAd.loadAd(adRequest);
-                if(flagRewardUserAfterAdOfDay==true){
-                    rewardUser200points();
-                }
-            }
-        });
-        //Admob End
-
-        */
 
         ////////////////
         //Ads end
