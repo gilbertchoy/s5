@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -76,6 +77,20 @@ public class ScratcherCardFragment extends Fragment {
         backgroundImage = v.findViewById(R.id.backgroundImage);
         scratcherCost = v.findViewById(R.id.scratcherCost);
         scratcherCost.setText(cost.toString());
+
+        mRecyclerView = (RecyclerView) bottomFragmentView.findViewById(R.id.recycler_view);
+
+
+
+
+
+
+
+
+
+
+
+
 
         //set background image
         switch (selected){
