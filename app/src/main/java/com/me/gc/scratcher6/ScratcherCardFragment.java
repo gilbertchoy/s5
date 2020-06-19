@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -27,6 +28,7 @@ import static android.view.View.VISIBLE;
 
 public class ScratcherCardFragment extends Fragment {
     private Context context;
+    private RecyclerView mRecyclerView;
     private ImageView backgroundImage;
     private TextView scratcherCost;
     private ImageView scorecardBackgroundImage;
@@ -78,7 +80,10 @@ public class ScratcherCardFragment extends Fragment {
         scratcherCost = v.findViewById(R.id.scratcherCost);
         scratcherCost.setText(cost.toString());
 
-        mRecyclerView = (RecyclerView) bottomFragmentView.findViewById(R.id.recycler_view);
+        mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new GridLayoutManager(context,1);
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
 
 
