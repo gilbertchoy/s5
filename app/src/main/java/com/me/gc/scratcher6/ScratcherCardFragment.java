@@ -48,6 +48,11 @@ public class ScratcherCardFragment extends Fragment {
     private TextView textView4;
     private TextView textView5;
     private TextView textView6;
+    private ImageView rewardImage;
+
+    private String rewardImageName;
+
+
     private TextView rewardTextView;
     private TextView rewardTitle;
     private TextView clickHere;
@@ -80,20 +85,13 @@ public class ScratcherCardFragment extends Fragment {
         scratcherCost = v.findViewById(R.id.scratcherCost);
         scratcherCost.setText(cost.toString());
 
-        mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new GridLayoutManager(context,1);
-        mRecyclerView.setLayoutManager(mLayoutManager);
 
+        rewardImage = v.findViewById(R.id.rewardImage);
 
-
-
-
-
-
-
-
-
+        String imageN = getString(R.string.lg_name);
+        int i = getResources().getIdentifier(imageN, "drawable", getActivity().getPackageName());
+        Drawable drawable1 = getResources().getDrawable(i);
+        rewardImage.setImageDrawable(drawable1);
 
 
 
