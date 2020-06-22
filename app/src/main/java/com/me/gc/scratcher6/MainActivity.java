@@ -131,15 +131,16 @@ public class MainActivity extends FragmentActivity {
 
         //TEST CODE 1st time init - if points value is null then add points
         //works: test code for setting points
-        /*
+
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt("points", 100000);
         editor.commit();
         viewModel.setPoints(100000);
         points = 100000;
-        */
+
 
         //  works this is deployment code
+        /*
         if(sharedPref.contains("points") == false) { //check if 1st time init, check if points value exists if not then input starting points value
             Log.d("berttest", "input points");
             SharedPreferences.Editor editor = sharedPref.edit();
@@ -151,6 +152,7 @@ public class MainActivity extends FragmentActivity {
             points = sharedPref.getInt("points", 0);
             viewModel.setPoints(points);
         }
+         */
 
         //check if deviceuid exists, create new deviceuid if DNE
         server = new Server(context);

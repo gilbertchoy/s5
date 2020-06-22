@@ -49,8 +49,8 @@ public class ScratcherCardFragment extends Fragment {
     private TextView textView5;
     private TextView textView6;
     private ImageView rewardImage;
+    private ImageView rewardImage1;
 
-    private String rewardImageName;
 
 
     private TextView rewardTextView;
@@ -87,11 +87,16 @@ public class ScratcherCardFragment extends Fragment {
 
 
         rewardImage = v.findViewById(R.id.rewardImage);
+        rewardImage1 = v.findViewById(R.id.rewardImage1);
 
         String imageN = getString(R.string.lg_name1);
         int i = getResources().getIdentifier(imageN, "drawable", getActivity().getPackageName());
         Drawable drawable1 = getResources().getDrawable(i);
         rewardImage.setImageDrawable(drawable1);
+
+        int j = getResources().getIdentifier(getString(R.string.lg_name2), "drawable", getActivity().getPackageName());
+        Drawable drawable2 = getResources().getDrawable(j);
+        rewardImage1.setImageDrawable(drawable2);
 
 
 
