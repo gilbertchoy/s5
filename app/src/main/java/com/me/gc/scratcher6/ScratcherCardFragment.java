@@ -88,7 +88,7 @@ public class ScratcherCardFragment extends Fragment {
 
         rewardImage = v.findViewById(R.id.rewardImage);
 
-        String imageN = getString(R.string.lg_name);
+        String imageN = getString(R.string.lg_name1);
         int i = getResources().getIdentifier(imageN, "drawable", getActivity().getPackageName());
         Drawable drawable1 = getResources().getDrawable(i);
         rewardImage.setImageDrawable(drawable1);
