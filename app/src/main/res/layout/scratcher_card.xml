@@ -165,6 +165,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="fitCenter"
+            android:elevation="22dp"
             app:layout_constraintBottom_toBottomOf="@id/guidelineHorizontal"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="@id/guidelineVertical"
@@ -185,11 +186,20 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
+        <!--
+            6/24/20
+             new imageview should be elevation 22dp in production
+
+             -->
+
+
         <ImageView
             android:id="@+id/rewardImage1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="fitCenter"
+            android:elevation="22dp"
             app:layout_constraintBottom_toBottomOf="@id/guidelineHorizontal"
             app:layout_constraintLeft_toLeftOf="@id/guidelineVertical"
             app:layout_constraintRight_toRightOf="parent"
@@ -209,6 +219,17 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="@id/guidelineVertical"
             app:layout_constraintTop_toTopOf="@id/guidelineHorizontal" />
+
+        <ImageView
+            android:id="@+id/rewardImage2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="@id/guidelineHorizontal1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="@id/guidelineVertical"
+            app:layout_constraintTop_toTopOf="@id/guidelineHorizontal"
+            />
 
         <TextView
             android:id="@+id/textView3"
@@ -277,7 +298,7 @@
             android:id="@+id/extraScratchImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:elevation="22dp"
+            android:elevation="23dp"
             android:src="@drawable/transparent"
             />
         <!-- scratch area overlay end -->
