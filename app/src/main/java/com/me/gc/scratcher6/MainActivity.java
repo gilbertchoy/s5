@@ -123,10 +123,7 @@ public class MainActivity extends FragmentActivity {
         });
         */
 
-
-
-
-
+        
 
 
         //TEST CODE 1st time init - if points value is null then add points
