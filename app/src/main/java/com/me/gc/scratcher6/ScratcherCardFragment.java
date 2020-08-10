@@ -3,6 +3,7 @@ package com.me.gc.scratcher6;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -90,7 +91,9 @@ public class ScratcherCardFragment extends Fragment {
         rewardImage = v.findViewById(R.id.rewardImage);
         rewardImage1 = v.findViewById(R.id.rewardImage1);
         rewardImage2 = v.findViewById(R.id.rewardImage2);
+        ImageView testImage = v.findViewById(R.id.testImageView);
 
+        /*
         String imageN = getString(R.string.lg_name1);
         int i = getResources().getIdentifier(imageN, "drawable", getActivity().getPackageName());
         Drawable drawable1 = getResources().getDrawable(i);
@@ -105,7 +108,11 @@ public class ScratcherCardFragment extends Fragment {
         Drawable drawable3 = getResources().getDrawable(j);
         rewardImage2.setImageDrawable(drawable3);
         rewardImage2.setScaleType(ImageView.ScaleType.CENTER);
+        */
 
+        rewardImage.setBackgroundColor(Color.RED);
+        rewardImage1.setBackgroundColor(Color.GREEN);
+        testImage.setBackgroundColor(Color.GREEN);
 
 
         //set background image
